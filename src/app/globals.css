@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+.open-sans {
+  font-family: var(--font-open-sans), sans-serif;
+}
+.plus-jakarta-sans {
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
+}
+.poiret-one-regular {
+  font-family: var(--font-poiret-one), sans-serif;
+}
+html {
+  scrollbar-gutter: stable;
+}
+@theme {
+  --color-primary-bg: #F0F7FF;
+  --color-primary: #0071E5;
+  --color-primary-hover: #024d9b;
+  --color-secondary: #26394D;
+  --color-orange: #FD661F;
+  --color-orange-hover: #92390e;
+  --color-dark-blue: #26394D;
+}
+
+/* Hide vertical scrollbar but keep scrolling functional */
+.hide-scrollbar {
+  overflow: auto;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and old Edge */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, Opera */
+}
+
+@media (hover: hover) {
+
+  .btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 10px;
+    height: 10px;
+    bottom: -50px;
+    background: #0071E5;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 0;
+  }
+
+  .btn:hover::after {
+    transform: scale(60);
+  }
+
+  .service-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 10px;
+    height: 10px;
+    bottom: -50px;
+    background: #ffffff;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 0;
+  }
+
+  .service-btn:hover::after {
+    transform: scale(60);
+  }
+
+}
+
+.testimonial-anim {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.testimonial-anim.show {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.blog-content h1 {
+  font-size: 36px;
+  font-weight: 700;
+  margin-top: 15px;
+  margin-bottom: 15px;
+
+}
+
+.blog-content h2 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.blog-content p {
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+
+.blog-content ul {
+  padding-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.blog-content li {
+  list-style: disc;
+  margin-bottom: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .blog-content h1 {
+    line-height: 35px;
+  }
+
+  .blog-content h2 {
+    line-height: 35px;
+  }
+
+  .blog-content h3 {
+    line-height: 30px;
+  }
+}
