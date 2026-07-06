@@ -11,19 +11,26 @@ const RelatedBlogs = ({ title }) => {
      const [itemsPerView, setItemsPerView] = useState(3);
      const { blogs, loading } = useBlogs();
 
+     // Calculate itemsPerView synchronously on mount to prevent 120ms layout shifts
      useEffect(() => {
+          const getVal = () => {
+               const w = window.innerWidth;
+               return w < 768 ? 1 : w < 1024 ? 2 : 3;
+          };
+          setItemsPerView(getVal());
+
           let timeout;
-          const update = () => {
+          const handleResize = () => {
                clearTimeout(timeout);
                timeout = setTimeout(() => {
-                    const w = window.innerWidth;
-                    const val = w < 768 ? 1 : w < 1024 ? 2 : 3;
-                    setItemsPerView((prev) => (prev !== val ? val : prev));
+                    setItemsPerView(getVal());
                }, 120);
           };
-          update();
-          window.addEventListener("resize", update);
-          return () => window.removeEventListener("resize", update);
+          window.addEventListener("resize", handleResize);
+          return () => {
+               clearTimeout(timeout);
+               window.removeEventListener("resize", handleResize);
+          };
      }, []);
 
      const maxIndex = useMemo(
@@ -31,7 +38,7 @@ const RelatedBlogs = ({ title }) => {
           [blogs.length, itemsPerView]
      );
 
-     // currentIndex ko maxIndex se clamp karo jab resize ho
+     // Clamp currentIndex to maxIndex when itemsPerView or blogs length changes
      useEffect(() => {
           setCurrentIndex((prev) => Math.min(prev, maxIndex));
      }, [maxIndex]);
@@ -49,7 +56,6 @@ const RelatedBlogs = ({ title }) => {
           setCurrentIndex((p) => Math.min(maxIndex, p + 1));
      }, [maxIndex]);
 
-     // ✅ Yahi main fix hai — cardWidth % se slide karo, itemsPerView se divide karke
      const cardWidthPercent = 100 / itemsPerView;
 
      return (
@@ -61,7 +67,7 @@ const RelatedBlogs = ({ title }) => {
 
                <div className="relative">
 
-                    {/* LEFT BUTTON — half bahar, half andar */}
+                    {/* LEFT BUTTON */}
                     <button
                          onClick={prev}
                          aria-label="Previous Blog"
@@ -69,9 +75,9 @@ const RelatedBlogs = ({ title }) => {
                          className="absolute left-2 md:-left-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9 bg-white rounded-full shadow-md flex items-center justify-center disabled:opacity-40 border border-gray-100 cursor-pointer"
                     >
                          <ChevronLeft size={18} />
-                    </button>
+                     </button>
 
-                    {/* RIGHT BUTTON — half bahar, half andar */}
+                    {/* RIGHT BUTTON */}
                     <button
                          onClick={next}
                          aria-label="Next Blog"
@@ -86,7 +92,6 @@ const RelatedBlogs = ({ title }) => {
                          <div
                               className="flex transition-transform duration-300 ease-out will-change-transform "
                               style={{
-                                   // ✅ Yahi correct formula — har card apni width ke hisaab se shift hoga
                                    transform: `translateX(-${currentIndex * cardWidthPercent}%)`,
                               }}
                          >
