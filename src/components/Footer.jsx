@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { getLocations } from '../utils/locations';
+import { API_URL } from '../utils/api.js';
 import {
   FaFacebookF,
   FaFacebook,
@@ -221,7 +222,7 @@ export default function Footer() {
 
           const fetchFooterColumns = async () => {
                try {
-                    const res = await fetch(`${(process.env.NEXT_PUBLIC_API_URL || process.env.VITE_API_URL) || "http://localhost:5000/api"}/footer-columns`);
+                     const res = await fetch(`${API_URL}/footer-columns`);
                     if (res.ok) {
                          const data = await res.json();
                          if (data && data.length > 0) {
@@ -235,7 +236,7 @@ export default function Footer() {
 
           const fetchFooterSettings = async () => {
                try {
-                    const res = await fetch(`${(process.env.NEXT_PUBLIC_API_URL || process.env.VITE_API_URL) || "http://localhost:5000/api"}/footer-columns/global`);
+                     const res = await fetch(`${API_URL}/footer-columns/global`);
                     if (res.ok) {
                          const data = await res.json();
                          setSettings(data);
