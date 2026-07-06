@@ -130,7 +130,7 @@ export default function TeamCarousel({ data: teamData }) {
                                         />
 
                                         {/* Card */}
-                                        <div className="bg-primary text-white rounded-xl px-5 py-4 -mt-7.5 w-55 md:w-[320px] shadow-lg">
+                                        <div className="bg-[#0050B3] text-white rounded-xl px-5 py-4 -mt-7.5 w-55 md:w-[320px] shadow-lg">
                                              <h3 className="font-bold text-sm md:text-[20px]">
                                                   {item.name}
                                              </h3>

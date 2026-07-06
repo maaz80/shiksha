@@ -315,11 +315,11 @@ export default function ContactForm() {
                                                        }}
                                                        className="mt-1 accent-primary"
                                                   />
-                                                  <label htmlFor="terms-checkbox" className="text-[12px] text-gray-500 leading-4">
+                                                  <label htmlFor="terms-checkbox" className="text-[12px] text-gray-600 leading-4">
                                                        By providing your contact details, you agree to our{" "}
-                                                       <span className="text-primary cursor-pointer">Terms of Use</span>
+                                                       <span className="text-[#0050B3] cursor-pointer">Terms of Use</span>
                                                        {" "}&{" "}
-                                                       <span className="text-primary cursor-pointer">Privacy Policy</span>
+                                                       <span className="text-[#0050B3] cursor-pointer">Privacy Policy</span>
                                                   </label>
                                              </div>
                                              {errors.terms && <p className="text-red-500 text-xs mt-1">{errors.terms}</p>}

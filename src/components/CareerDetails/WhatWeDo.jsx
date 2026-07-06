@@ -5,14 +5,14 @@ import icon3 from '../../assets/placement.webp';
 const WhatWeDo = () => {
      return (
           <div className='min-h-63.75 md:min-h-60.25 2xl:min-h-75.75 relative flex flex-col md:flex-row items-center justify-center gap-10 2xl:gap-25 mt-10'>
-               <picture className='absolute inset-0 w-full z-5 min-h-63.75 md:min-h-60.25 2xl:min-h-75.75'>
+               <picture className='absolute inset-0 w-full h-full z-5 min-h-63.75 md:min-h-60.25 2xl:min-h-75.75'>
                     <source media="(max-width: 767px)" srcSet="/images/whatwedobg-tab.webp" />
                     <img
                          src="/images/whatwedobg.webp"
                          alt="What We Do Bg"
                          loading="lazy"
                          decoding="async"
-                         className='absolute inset-0 w-full z-5 min-h-63.75 md:min-h-60.25 2xl:min-h-75.75'
+                         className='absolute inset-0 w-full h-full object-cover z-5 min-h-63.75 md:min-h-60.25 2xl:min-h-75.75'
                     />
                </picture>
 
