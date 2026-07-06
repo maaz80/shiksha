@@ -328,7 +328,7 @@ export default function Navbar({ isModal, setIsModal, setIsLogin, isLogin, onCou
                                    />
                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4" />
                                    {searchTerm.length >= 2 && (
-                                        <div className="absolute top-full mt-2 left-0 w-80 bg-white border border-zinc-200 rounded-md shadow-2xl overflow-y-auto max-h-80 z-[9999]">
+                                        <div className="absolute top-full mt-2 left-0 w-80 bg-white border border-zinc-200 rounded-md shadow-2xl overflow-y-auto max-h-80 z-9999">
                                              {loadingSearch ? (
                                                   <div className="p-3 text-gray-500 text-center text-xs">Searching...</div>
                                              ) : filteredCourses.length > 0 || suggestedCourses.length > 0 ? (
@@ -406,7 +406,7 @@ export default function Navbar({ isModal, setIsModal, setIsLogin, isLogin, onCou
                                {/* Dropdown Links Panel */}
                                <div
                                     className={`absolute top-12 right-0 bg-white border border-gray-100 p-6 rounded-b-lg opacity-0 invisible -translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 z-99999 shadow-lg ${
-                                         colsCount === 1 ? "w-[15rem]" : colsCount === 2 ? "w-[28rem]" : colsCount === 3 ? "w-[40rem]" : "w-[52rem]"
+                                         colsCount === 1 ? "w-60" : colsCount === 2 ? "w-md" : colsCount === 3 ? "w-160" : "w-208"
                                     }`}
                                >
                                     <div className={`grid gap-6 text-left ${
@@ -467,7 +467,7 @@ export default function Navbar({ isModal, setIsModal, setIsLogin, isLogin, onCou
 
                 {/* Mobile Search Bar Panel */}
                 {isSearchOpen && (
-                     <div ref={mobileSearchRef} className="absolute top-full left-0 right-0 bg-white border-b border-gray-200 px-4 py-3 flex flex-col gap-2 2xl:hidden shadow-md z-[9999]">
+                     <div ref={mobileSearchRef} className="absolute top-full left-0 right-0 bg-white border-b border-gray-200 px-4 py-3 flex flex-col gap-2 2xl:hidden shadow-md z-9999">
                           <div className="relative">
                                <input
                                     type="text"
