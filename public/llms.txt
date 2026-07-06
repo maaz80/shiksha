@@ -1,0 +1,11 @@
+# Shiksha - Master In-Demand Skills & Get Certified
+
+Master in-demand skills with industry-leading courses. Get certified, land your dream job, and join thousands of successful graduates.
+
+## Quick Links
+
+- [Home Page](https://shikksha.netlify.app/)
+- [Courses Catalog](https://shikksha.netlify.app/courses)
+- [Latest Blogs](https://shikksha.netlify.app/category/blogs)
+- [About Us](https://shikksha.netlify.app/about-us)
+- [Contact Us](https://shikksha.netlify.app/contact-us)
