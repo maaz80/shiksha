@@ -10,14 +10,19 @@ const RelatedBlogs = lazy(() => import('../components/RelatedBlogs'))
 const FAQ = lazy(() => import('../components/FAQ'))
 
 const RelatedBlogsSkeleton = () => (
-     <div className="min-h-130 px-6 md:px-0">
+     <div className="px-6 md:px-0">
           <div className="h-9 w-52 animate-pulse rounded-md bg-gray-100 mb-6" />
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
-               {Array.from({ length: 4 }).map((_, index) => (
-                    <div key={index} className="h-103 animate-pulse rounded-xl bg-gray-100" />
-               ))}
+          <div className="flex gap-5 overflow-hidden">
+               <div className="w-full md:w-1/2 xl:w-1/3 shrink-0 h-103 animate-pulse rounded-xl bg-gray-100" />
+               <div className="hidden md:block w-1/2 xl:w-1/3 shrink-0 h-103 animate-pulse rounded-xl bg-gray-100" />
+               <div className="hidden xl:block w-1/3 shrink-0 h-103 animate-pulse rounded-xl bg-gray-100" />
           </div>
-          <div className="h-12 mt-6" />
+          {/* Carousel dots placeholder to match height of loaded component dots */}
+          <div className="flex justify-center mt-6 gap-2 py-2">
+               <div className="w-6 h-2 rounded-full bg-gray-200 animate-pulse" />
+               <div className="w-2 h-2 rounded-full bg-gray-200 animate-pulse" />
+               <div className="w-2 h-2 rounded-full bg-gray-200 animate-pulse" />
+          </div>
      </div>
 )
 
