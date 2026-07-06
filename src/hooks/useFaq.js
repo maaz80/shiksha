@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
-const API_URL = (process.env.NEXT_PUBLIC_API_URL || process.env.VITE_API_URL) || 'http://localhost:5000/api';
+import { API_URL } from '../utils/api.js';
 
 // Per-page cache — sirf jo fetch hua woh store hoga
 const faqCache = new Map();

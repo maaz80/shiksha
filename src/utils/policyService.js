@@ -1,4 +1,4 @@
-const API_URL = (process.env.NEXT_PUBLIC_API_URL || process.env.VITE_API_URL) || "http://localhost:5000/api";
+import { API_URL } from "./api.js";
 
 let policyDataCache = null;
 let policyDataPromise = null;

@@ -1,10 +1,6 @@
-const getApiBase = () => {
-     const baseUrl = ((process.env.NEXT_PUBLIC_API_URL || process.env.VITE_API_URL) || "").replace(/\/$/, "");
-     if (!baseUrl) return "/api";
-     return baseUrl.endsWith("/api") ? baseUrl : `${baseUrl}/api`;
-};
+import { API_URL } from './api.js';
 
-const API = getApiBase();
+const API = API_URL;
 
 // Store token in localStorage
 export const setUserToken = (token) => {

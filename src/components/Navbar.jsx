@@ -7,6 +7,7 @@ import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { getCurrentUser, isUserLoggedIn, logoutUser } from '../utils/auth.js';
+import { API_URL } from '../utils/api.js';
 import { useCourses } from '../context/CourseContext.jsx';
 
 export default function Navbar({ isModal, setIsModal, setIsLogin, isLogin, onCoursesMouseEnter, onCoursesMouseLeave }) {
@@ -88,7 +89,6 @@ export default function Navbar({ isModal, setIsModal, setIsLogin, isLogin, onCou
      useEffect(() => {
           const fetchNavbarData = async () => {
                try {
-                    const API_URL = (process.env.NEXT_PUBLIC_API_URL || process.env.VITE_API_URL) || "http://localhost:5000/api";
                     const res = await fetch(`${API_URL}/navbar-data`);
                     if (res.ok) {
                          const data = await res.json();

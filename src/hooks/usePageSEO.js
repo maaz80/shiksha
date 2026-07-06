@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { usePathname } from 'next/navigation';
 
-const API_URL = ((process.env.NEXT_PUBLIC_API_URL || process.env.VITE_API_URL) || "http://localhost:5000/api").replace(/\/$/, "");
+import { API_URL } from "../utils/api.js";
 const DEFAULT_TITLE = "Shiksha - Master In-Demand Skills & Get Certified";
 const DEFAULT_DESCRIPTION =
      "Shiksha - Master in-demand skills with industry-leading courses. Get certified, land your dream job, and join thousands of successful graduates.";
