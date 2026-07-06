@@ -3,6 +3,7 @@
 import { lazy, Suspense, useEffect, useState } from "react"
 import Courses from '../components/AllCourses/AllCourses';
 import Breadcrumb from "../components/BreadCrumb";
+import { API_URL } from "../utils/api";
 import useFaq from "../hooks/useFaq";
 import { getHomeData } from "../utils/homeService";
 const RelatedBlogs = lazy(() => import('../components/RelatedBlogs'))
@@ -42,7 +43,6 @@ const AllCourses = () => {
 
           const fetchCoursePageData = async () => {
                try {
-                    const API_URL = (process.env.NEXT_PUBLIC_API_URL || process.env.VITE_API_URL) || "http://localhost:5000/api";
                     const res = await fetch(`${API_URL}/coursepage-data`);
                     if (res.ok) {
                          const data = await res.json();

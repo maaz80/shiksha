@@ -18,7 +18,7 @@ const CourseCard = ({ course }) => {
                {/* LEFT IMAGE SECTION */}
                <div className="relative w-full sm:w-[50%] md:w-[39%] xl:w-[25%] aspect-video">
 
-                    <span className="absolute top-4 left-4 bg-orange-500 text-white text-xs font-medium px-3 py-1 rounded-md z-10">
+                    <span className="absolute top-4 left-4 bg-orange text-white text-xs font-medium px-3 py-1 rounded-md z-10">
                          {course.category || "Development"}
                     </span>
 
@@ -46,19 +46,19 @@ const CourseCard = ({ course }) => {
 
                          <div className="grid grid-cols-2 xl:grid-cols-4 items-center gap-2 xl:gap-6 text-sm">
                               <div className="flex items-center gap-1">
-                                   <Clock size={16} className="text-orange-500" />
+                                   <Clock size={16} className="text-orange" />
                                    <span>{course.courseLength || "--"}</span>
                               </div>
                               <div className="flex items-center gap-1">
-                                   <Users size={16} className="text-orange-500" />
+                                   <Users size={16} className="text-orange" />
                                    <span>{course.students || 0} Students</span>
                               </div>
                               <div className="flex items-center gap-1">
-                                   <BarChart3 size={16} className="text-orange-500" />
+                                   <BarChart3 size={16} className="text-orange" />
                                    <span>{course.level || "All levels"}</span>
                               </div>
                               <div className="flex items-center gap-1">
-                                   <FileText size={16} className="text-orange-500" />
+                                   <FileText size={16} className="text-orange" />
                                    <span>{course.totalLessons || 0} Lessons</span>
                               </div>
                          </div>
@@ -68,14 +68,14 @@ const CourseCard = ({ course }) => {
 
                     <div className="flex items-center justify-between text-[20px] font-bold">
                          <div className="flex items-center gap-2">
-                              <span className="text-[#8FA1B2] line-through">$29.0</span>
-                              <span className="text-orange-500">Free</span>
+                              <span className="text-gray-600 line-through">$29.0</span>
+                              <span className="text-orange">Free</span>
                          </div>
 
                          <button
                               onClick={handleViewMore}
                               aria-label="View more about this course"
-                              className="text-[16px] hover:text-orange-500 transition-all duration-300 ease-in-out cursor-pointer"
+                              className="text-[16px] hover:text-orange transition-all duration-300 ease-in-out cursor-pointer"
                          >
                               View more
                          </button>

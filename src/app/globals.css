@@ -20,6 +20,33 @@ html {
   --color-orange: #C2410C;
   --color-orange-hover: #92390e;
   --color-dark-blue: #26394D;
+
+  /* Custom spacing classes used throughout the app */
+  --spacing-17: 4.25rem;
+  --spacing-22: 5.5rem;
+  --spacing-26: 6.5rem;
+  --spacing-43: 10.75rem;
+  --spacing-43\.5: 10.875rem;
+  --spacing-45: 11.25rem;
+  --spacing-52\.75: 13.1875rem;
+  --spacing-57: 14.25rem;
+  --spacing-65: 16.25rem;
+  --spacing-72\.25: 18.0625rem;
+  --spacing-72\.5: 18.125rem;
+  --spacing-77\.25: 19.3125rem;
+  --spacing-79: 19.75rem;
+  --spacing-84\.75: 21.1875rem;
+  --spacing-86: 21.5rem;
+  --spacing-91: 22.75rem;
+  --spacing-93\.75: 23.4375rem;
+  --spacing-100: 25rem;
+  --spacing-103: 25.75rem;
+  --spacing-122: 30.5rem;
+  --spacing-125: 31.25rem;
+  --spacing-130: 32.5rem;
+  --spacing-142\.5: 35.625rem;
+  --spacing-245: 61.25rem;
+  --spacing-330: 82.5rem;
 }
 
 /* Hide vertical scrollbar but keep scrolling functional */
