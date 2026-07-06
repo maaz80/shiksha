@@ -60,7 +60,7 @@ const Hero = ({ data }) => {
                                         {desktopAvatars.map((avatar, index) => (
                                              <div
                                                   key={index}
-                                                  className={`relative w-9 md:w-13 h-9 md:h-13 rounded-full border-2 border-[#0b6ff8] overflow-hidden bg-white ${index !== 0 ? "-ml-3" : ""}`}
+                                                  className={`relative w-9 md:w-13 h-9 md:h-13 rounded-full border-2 border-[#0071E5] overflow-hidden bg-white ${index !== 0 ? "-ml-3" : ""}`}
                                                   style={{ zIndex: desktopAvatars.length + index }}
                                              >
                                                   <img
@@ -81,7 +81,7 @@ const Hero = ({ data }) => {
                                                        key={star}
                                                        xmlns="http://www.w3.org/2000/svg"
                                                        viewBox="0 0 24 24"
-                                                       fill="#0b6ff8"
+                                                       fill="#0071E5"
                                                        className="w-4.5 md:w-6 h-4.5 md:h-6"
                                                   >
                                                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
@@ -96,21 +96,21 @@ const Hero = ({ data }) => {
                                              >
                                                   <defs>
                                                        <linearGradient id="halfStar">
-                                                            <stop offset="50%" stopColor="#0b6ff8" />
+                                                            <stop offset="50%" stopColor="#0071E5" />
                                                             <stop offset="50%" stopColor="transparent" />
                                                        </linearGradient>
                                                   </defs>
                                                   <path
                                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
                                                        fill="url(#halfStar)"
-                                                       stroke="#0b6ff8"
+                                                       stroke="#0071E5"
                                                        strokeWidth="1.5"
                                                   />
                                              </svg>
                                         </div>
 
                                         {/* Label */}
-                                        <span className="text-[#0b6ff8] text-[14px] font-normal tracking-tight leading-none">
+                                        <span className="text-[#0071E5] text-[14px] font-normal tracking-tight leading-none">
                                              ( Google Rating )
                                         </span>
                                    </div>
@@ -150,7 +150,7 @@ const Hero = ({ data }) => {
                               {mobileAvatars.map((avatar, index) => (
                                    <div
                                         key={index}
-                                        className={`relative w-9 md:w-13 h-9 md:h-13 rounded-full border-2 border-[#0b6ff8] overflow-hidden bg-white ${index !== 0 ? "-ml-3" : ""}`}
+                                        className={`relative w-9 md:w-13 h-9 md:h-13 rounded-full border-2 border-[#0071E5] overflow-hidden bg-white ${index !== 0 ? "-ml-3" : ""}`}
                                         style={{ zIndex: mobileAvatars.length + index }}
                                    >
                                         <img
@@ -173,7 +173,7 @@ const Hero = ({ data }) => {
                                              key={star}
                                              xmlns="http://www.w3.org/2000/svg"
                                              viewBox="0 0 24 24"
-                                             fill="#0b6ff8"
+                                             fill="#0071E5"
                                              className="w-4.5 md:w-6 h-4.5 md:h-6"
                                         >
                                              <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
@@ -188,21 +188,21 @@ const Hero = ({ data }) => {
                                    >
                                         <defs>
                                              <linearGradient id="halfStarMobile">
-                                                  <stop offset="50%" stopColor="#0b6ff8" />
+                                                  <stop offset="50%" stopColor="#0071E5" />
                                                   <stop offset="50%" stopColor="transparent" />
                                              </linearGradient>
                                         </defs>
                                         <path
                                              d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
                                              fill="url(#halfStarMobile)"
-                                             stroke="#0b6ff8"
+                                             stroke="#0071E5"
                                              strokeWidth="1.5"
                                         />
                                    </svg>
                               </div>
 
                               {/* Label */}
-                              <span className="text-[#0b6ff8] text-[12px] font-normal tracking-tight leading-none">
+                              <span className="text-[#0071E5] text-[12px] font-normal tracking-tight leading-none">
                                    ( Google Rating )
                               </span>
                          </div>

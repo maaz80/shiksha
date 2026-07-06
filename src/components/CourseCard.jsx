@@ -21,7 +21,7 @@ export default function CourseCard({ course, setIsModal = false }) {
                          src={course?.image || CourseImage}
                          sizes="(max-width: 768px) 100vw, 280px"
                          alt={course?.alt || course?.title || "Course Cover Image"}
-                         className="w-full h-full object-fill"
+                         className="w-full h-full object-cover"
                     />
                </div>
 
