@@ -267,3 +267,80 @@ export const resetPassword = async (email, otp, newPassword) => {
           throw error;
      }
 };
+
+export const sendOTP = async (email, type) => {
+     try {
+          const res = await fetch(`${API}/auth/send-otp`, {
+               method: "POST",
+               headers: {
+                    "Content-Type": "application/json",
+               },
+               body: JSON.stringify({ email, type }),
+          });
+
+          const data = await res.json();
+
+          if (!res.ok) {
+               throw new Error(data.error || "Failed to send OTP");
+          }
+
+          return data;
+     } catch (error) {
+          console.error("Send OTP error:", error);
+          throw error;
+     }
+};
+
+export const loginWithOTP = async (email, otp) => {
+     try {
+          const res = await fetch(`${API}/auth/login-otp`, {
+               method: "POST",
+               headers: {
+                    "Content-Type": "application/json",
+               },
+               body: JSON.stringify({ email, otp }),
+          });
+
+          const data = await res.json();
+
+          if (!res.ok) {
+               throw new Error(data.error || "Login failed");
+          }
+
+          if (data.token) {
+               setUserToken(data.token);
+          }
+
+          return data;
+     } catch (error) {
+          console.error("Login with OTP error:", error);
+          throw error;
+     }
+};
+
+export const signupWithOTP = async (name, email, phone, otp) => {
+     try {
+          const res = await fetch(`${API}/auth/signup-otp`, {
+               method: "POST",
+               headers: {
+                    "Content-Type": "application/json",
+               },
+               body: JSON.stringify({ name, email, phone, otp }),
+          });
+
+          const data = await res.json();
+
+          if (!res.ok) {
+               throw new Error(data.error || "Signup failed");
+          }
+
+          if (data.token) {
+               setUserToken(data.token);
+          }
+
+          return data;
+     } catch (error) {
+          console.error("Signup with OTP error:", error);
+          throw error;
+     }
+};

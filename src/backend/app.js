@@ -71,7 +71,9 @@ app.use(hpp({ checkQuery: false }));
 app.use(sanitizeRequest);
 
 // Connect to MongoDB
-connectDB();
+connectDB().catch((err) => {
+     console.error("MongoDB connection error in app.js:", err.message);
+});
 
 // API auth guard for admin write access
 app.use("/api", requireAdminForWrites);
