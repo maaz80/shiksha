@@ -265,7 +265,7 @@ export default function Footer() {
 
                          {/* Follow us */}
                          <div className="order-1 md:order-3 2xl:order-1">
-                              <h3 className="text-[20px] mb-5">{settings?.buttontitle || "Follow us!"}</h3>
+                              <h2 className="text-[20px] mb-5">{settings?.buttontitle || "Follow us!"}</h2>
 
                               {(settings?.buttonname || !settings) && (
                                    <button className="w-43 h-11 border border-white/70 rounded-lg text-[12px] text-white/80 mb-5 hover:bg-white/5 transition">
@@ -398,7 +398,7 @@ export default function Footer() {
 function FooterColumn({ title, links }) {
      return (
           <div>
-               <h3 className="text-[20px] mb-5">{title}</h3>
+               <h2 className="text-[20px] mb-5">{title}</h2>
                <div className="space-y-3 text-[14px] text-white/70 leading-none flex flex-col">
                     {links.map((link, index) => (
                          <Link href={link.key} key={index} className="hover:text-white/80 transition cursor-pointer">
@@ -429,9 +429,9 @@ function FooterTextBlock({ title, slug, items }) {
      return (
           <div className="mb-10 last:mb-0">
 
-               <h3 className="text-[18px] mb-5">
+               <h2 className="text-[18px] mb-5">
                     {title}
-               </h3>
+               </h2>
 
                <div className="flex gap-2 flex-wrap">
 

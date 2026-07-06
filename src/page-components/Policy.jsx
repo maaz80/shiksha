@@ -4,9 +4,18 @@ import { useEffect, useState } from "react";
 import Breadcrumb from "../components/BreadCrumb";
 import { getPolicyData } from "../utils/policyService";
 
+const defaultPrivacyPolicy = {
+     title: "Privacy Policy",
+     content: `
+          <p class="editor-paragraph">At Shiksha Design, accessible from our website, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by Shiksha Design and how we use it.</p>
+          <p class="editor-paragraph">If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us. This Privacy Policy applies only to our online activities and is valid for visitors to our website with regards to the information that they shared and/or collect in Shiksha Design.</p>
+          <p class="editor-paragraph">We collect personal information that you voluntarily provide to us when you express an interest in obtaining information about us or our products, when you participate in activities on the website, or otherwise when you contact us.</p>
+     `
+};
+
 const Policy = () => {
-     const [policy, setPolicy] = useState(null);
-     const [loading, setLoading] = useState(true);
+     const [policy, setPolicy] = useState(defaultPrivacyPolicy);
+     const [loading, setLoading] = useState(false);
 
      useEffect(() => {
           window.scrollTo({
@@ -16,13 +25,12 @@ const Policy = () => {
 
           const fetchPolicy = async () => {
                try {
-                    setLoading(true);
                     const data = await getPolicyData();
-                    setPolicy(data.privacyPolicy);
+                    if (data?.privacyPolicy) {
+                         setPolicy(data.privacyPolicy);
+                    }
                } catch (err) {
                     console.error("Failed to load privacy policy:", err);
-               } finally {
-                    setLoading(false);
                }
           };
 
