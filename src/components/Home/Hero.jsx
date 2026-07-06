@@ -110,7 +110,7 @@ const Hero = ({ data }) => {
                                         </div>
 
                                         {/* Label */}
-                                        <span className="text-[#0071E5] text-[14px] font-normal tracking-tight leading-none">
+                                        <span className="text-[#0050B3] text-[14px] font-normal tracking-tight leading-none">
                                              ( Google Rating )
                                         </span>
                                    </div>
@@ -202,7 +202,7 @@ const Hero = ({ data }) => {
                               </div>
 
                               {/* Label */}
-                              <span className="text-[#0071E5] text-[12px] font-normal tracking-tight leading-none">
+                              <span className="text-[#0050B3] text-[12px] font-normal tracking-tight leading-none">
                                    ( Google Rating )
                               </span>
                          </div>

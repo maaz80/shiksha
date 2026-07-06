@@ -268,7 +268,7 @@ export default function Footer() {
                               <h3 className="text-[20px] mb-5">{settings?.buttontitle || "Follow us!"}</h3>
 
                               {(settings?.buttonname || !settings) && (
-                                   <button className="w-43 h-11 border border-white/70 rounded-lg text-[12px] text-[#8FA1B2] mb-5 hover:bg-white/5 transition">
+                                   <button className="w-43 h-11 border border-white/70 rounded-lg text-[12px] text-white/80 mb-5 hover:bg-white/5 transition">
                                         {settings?.buttonname || "Refer & Earn"}
                                    </button>
                               )}
@@ -388,7 +388,7 @@ export default function Footer() {
                          />
 
 
-                         <p className="mt-8 text-[13px] text-white/40">{settings?.copyright || "© 2026 - Shiksha Design All Rights Reserved."}</p>
+                         <p className="mt-8 text-[13px] text-white/70">{settings?.copyright || "© 2026 - Shiksha Design All Rights Reserved."}</p>
                     </div>
                </div>
           </footer>
@@ -399,7 +399,7 @@ function FooterColumn({ title, links }) {
      return (
           <div>
                <h3 className="text-[20px] mb-5">{title}</h3>
-               <div className="space-y-3 text-[14px] text-white/45 leading-none flex flex-col">
+               <div className="space-y-3 text-[14px] text-white/70 leading-none flex flex-col">
                     {links.map((link, index) => (
                          <Link href={link.key} key={index} className="hover:text-white/80 transition cursor-pointer">
                               {link.value}
@@ -442,7 +442,7 @@ function FooterTextBlock({ title, slug, items }) {
                          >
 
                               <Link href={item?.hero?.title && `/${item.slug || item._id}`}
-                                   className="text-[13px] text-white/45 leading-8 hover:text-white transition-colors"
+                                   className="text-[13px] text-white/70 leading-8 hover:text-white transition-colors"
                               >
                                    {item.title}
                               </Link>
@@ -464,7 +464,7 @@ function FooterNav({ title, items }) {
      return (
           <div className="mb-6">
 
-               <div className="flex justify-start items-center gap-3 text-[14px] text-white/45 flex-wrap">
+               <div className="flex justify-start items-center gap-3 text-[14px] text-white/70 flex-wrap">
                     {items?.map((item, index) => (
                          <div key={index} className="flex items-center gap-3">
                               <Link href={item.to} className="hover:text-white transition-all duration-300 ease-in-out">

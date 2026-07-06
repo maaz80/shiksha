@@ -29,7 +29,7 @@ const JoinUs = () => {
                     <div >
                          {/* 1st card  */}
                          <div className='w-91 2xl:w-142.5 h-17 2xl:h-26 flex items-center justify-between text-secondary -mt-2' >
-                              <div className='font-bold text-[48px] 2xl:text-[96px] leading-25 opacity-15 text-primary-bg'>01</div>
+                              <div className='font-bold text-[48px] 2xl:text-[96px] leading-25 opacity-25 text-primary-bg' aria-hidden="true">01</div>
                               <div className="bg-white flex items-center justify-start gap-5 rounded-[20px] p-3 2xl:p-6 w-77.25 2xl:w-md h-auto">
                                    <div className='w-10 2xl:w-14 h-10 2xl:h-14 bg-[#E1E9FE] text-[24px] rounded-full flex items-center justify-center text-secondary'><LogIn /></div>
                                    <div className='spacey-1'>
@@ -47,12 +47,12 @@ const JoinUs = () => {
 
                                    </div>
                               </div>
-                              <div className='font-bold text-[48px] 2xl:text-[96px] leading-25 opacity-15 text-primary-bg'>02</div>
+                              <div className='font-bold text-[48px] 2xl:text-[96px] leading-25 opacity-25 text-primary-bg' aria-hidden="true">02</div>
                          </div>
 
                          {/* 3rd card  */}
                          <div className='w-91 2xl:w-142.5 h-17 2xl:h-26 flex items-center justify-between text-secondary mt-8 2xl:mt-6' >
-                              <div className='font-bold text-[48px] 2xl:text-[96px] leading-25 opacity-15 text-primary-bg'>03</div>
+                              <div className='font-bold text-[48px] 2xl:text-[96px] leading-25 opacity-25 text-primary-bg' aria-hidden="true">03</div>
                               <div className="bg-white flex items-center justify-start gap-5 rounded-[20px] p-3 2xl:p-6 w-77.25 2xl:w-md h-auto">
                                    <div className='w-10 2xl:w-14 h-10 2xl:h-14 bg-[#F6E2FF] text-[24px] rounded-full flex items-center justify-center text-[#AA16EF]'><TicketPercent /></div>
                                    <div className='spacey-1'>
