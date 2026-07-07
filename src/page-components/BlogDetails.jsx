@@ -1,15 +1,17 @@
 "use client";
 
-import { lazy, Suspense, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useParams } from 'next/navigation';
+import Image from 'next/image';
+import { preload } from 'react-dom';
 import CourseCard from '../components/CourseCard'
 import { useCourses } from '../context/CourseContext';
 import { useBlogs } from '../context/BlogContext';
 import Template from '../assets/template.webp';
 import Breadcrumb from '../components/BreadCrumb';
 import useFaq from '../hooks/useFaq';
-const RelatedBlogs = lazy(() => import('../components/RelatedBlogs'))
-const FAQ = lazy(() => import('../components/FAQ'))
+import RelatedBlogs from '../components/RelatedBlogs';
+import FAQ from '../components/FAQ';
 
 const CourseCardSkeleton = () => (
      <div className="w-70 md:w-51 2xl:w-70 min-h-83 rounded-xl shadow-[0_0px_8px_0px] shadow-[#000000]/7 bg-white p-1.5 animate-pulse">
@@ -110,78 +112,88 @@ const BlogDetails = ({ blog: propBlog, slug: propSlug }) => {
           // 👉 warna direct return (local / external)
           return url;
      };
-     const imageSrc = blog?.image || Template;
-     return (
-          <main className=''>
-               <Breadcrumb />
-               <div className='pt-7 max-w-90 sm:max-w-150 lg:max-w-200 xl:max-w-327.5 mx-auto text-secondary'>
-                    <div className='w-full flex flex-col md:flex-row items-start justify-between'>
-                         <div className='w-full md:w-[70%]'>
-                              <h1 className="text-[24px] md:text-[48px] leading-8 md:leading-15 2xl:leading-15 font-bold text-start mx-auto z-20 relative pb-8">
-                                   {blog ? blog.title : error || 'Loading...'}
-                              </h1>
+      const imageSrc = blog?.image || Template;
+      if (blog) {
+           preload(optimizeImage(imageSrc, 890), {
+                as: 'image',
+                imageSrcSet: blog?.image
+                     ? `
+          ${optimizeImage(blog.image, 500)} 480w,
+          ${optimizeImage(blog.image, 800)} 768w,
+          ${optimizeImage(blog.image, 890)} 1200w
+        `
+                     : undefined,
+                imageSizes: "(max-width: 480px) 500px, (max-width: 768px) 800px, 890px"
+           });
+      }
 
-                              {blog ? (
-                                   <>
-                                        <div className="mb-10">
-                                             <img
-                                                  fetchPriority="high"
-                                                  loading="eager"
-                                                  decoding="async"
-                                                  src={optimizeImage(imageSrc, 890)}
-                                                  srcSet={
-                                                       blog?.image
-                                                            ? `
-        ${optimizeImage(blog.image, 500)} 480w,
-        ${optimizeImage(blog.image, 800)} 768w,
-        ${optimizeImage(blog.image, 890)} 1200w
-      `
-                                                            : undefined
-                                                  }
-                                                  sizes="(max-width: 480px) 500px, (max-width: 768px) 800px, 890px"
-                                                  alt={blog?.alt || blog?.title || "Blog Image"}
-                                                  width={890}
-                                                  height={486}
-                                                  className="w-full h-114.5 object-cover rounded-md mx-auto"
-                                             />
-                                        </div>
+      return (
+           <main className=''>
+                <Breadcrumb />
+                <div className='pt-7 max-w-90 sm:max-w-150 lg:max-w-200 xl:max-w-327.5 mx-auto text-secondary'>
+                     <div className='w-full flex flex-col md:flex-row items-start justify-between'>
+                          <div className='w-full md:w-[70%]'>
+                               <h1 className="text-[24px] md:text-[48px] leading-8 md:leading-15 2xl:leading-15 font-bold text-start mx-auto z-20 relative pb-8">
+                                    {blog ? blog.title : error || 'Loading...'}
+                               </h1>
 
-                                        <div
-                                             className="text-dark-black/75 leading-5 lg:leading-8 blog-content"
-                                             dangerouslySetInnerHTML={{ __html: blog.content }}
-                                        />
-                                   </>
-                              ) : (
-                                   <BlogContentFallback />
-                              )}
-                         </div>
+                               {blog ? (
+                                    <>
+                                         <div className="mb-10">
+                                              <img
+                                                   fetchPriority="high"
+                                                   loading="eager"
+                                                   decoding="async"
+                                                   src={optimizeImage(imageSrc, 890)}
+                                                   srcSet={
+                                                        blog?.image
+                                                             ? `
+         ${optimizeImage(blog.image, 500)} 480w,
+         ${optimizeImage(blog.image, 800)} 768w,
+         ${optimizeImage(blog.image, 890)} 1200w
+       `
+                                                             : undefined
+                                                   }
+                                                   sizes="(max-width: 480px) 500px, (max-width: 768px) 800px, 890px"
+                                                   alt={blog?.alt || blog?.title || "Blog Image"}
+                                                   width={890}
+                                                   height={486}
+                                                   className="w-full h-114.5 object-cover rounded-md mx-auto"
+                                              />
+                                         </div>
 
-                         <div className='w-full md:w-[30%] min-h-180 md:min-h-185 flex items-start md:items-start justify-start flex-col gap-5 pl-2 md:pl-15 mt-10 md:mt-0'>
-                              <h2 className="text-[24px] md:text-[32px] leading-8 md:leading-15 2xl:leading-20 font-bold text-start z-20 relative text-primary">
-                                   Related Course
-                              </h2>
-                              {coursesLoading
-                                   ? Array.from({ length: 2 }).map((_, index) => (
-                                        <CourseCardSkeleton key={index} />
-                                   ))
-                                   : courses.slice(0, 2).map((course) => (
-                                        <CourseCard key={course._id} course={course} />
-                                   ))}
-                         </div>
-                    </div>
-               </div>
+                                         <div
+                                              className="text-dark-black/75 leading-5 lg:leading-8 blog-content"
+                                              dangerouslySetInnerHTML={{ __html: blog.content }}
+                                         />
+                                    </>
+                               ) : (
+                                    <BlogContentFallback />
+                                )}
+                          </div>
 
-               <div className='max-w-330 mx-auto space-y-10 mt-10 min-h-282.5 md:min-h-250'>
-                    <Suspense fallback={<RelatedBlogsFallback />}>
-                         <RelatedBlogs />
-                    </Suspense>
+                          <div className='w-full md:w-[30%] min-h-180 md:min-h-185 flex items-start md:items-start justify-start flex-col gap-5 pl-2 md:pl-15 mt-10 md:mt-0'>
+                               <h2 className="text-[24px] md:text-[32px] leading-8 md:leading-15 2xl:leading-20 font-bold text-start z-20 relative text-primary">
+                                    Related Course
+                               </h2>
+                               {coursesLoading
+                                    ? Array.from({ length: 2 }).map((_, index) => (
+                                         <CourseCardSkeleton key={index} />
+                                    ))
+                                    : courses.slice(0, 2).map((course) => (
+                                         <CourseCard key={course._id} course={course} />
+                                    ))}
+                          </div>
+                     </div>
+                </div>
 
-                    <Suspense fallback={<FAQFallback />}>
-                         <FAQ faqData={blog?.faq && blog.faq.length > 0 ? { faq: blog.faq } : faqData} />
-                    </Suspense>
-               </div>
-          </main>
-     )
+                <div className='max-w-330 mx-auto space-y-10 mt-10 min-h-282.5 md:min-h-250'>
+                     <RelatedBlogs />
+
+                     <FAQ faqData={blog?.faq && blog.faq.length > 0 ? { faq: blog.faq } : faqData} />
+                </div>
+           </main>
+      )
 }
 
 export default BlogDetails
