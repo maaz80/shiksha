@@ -7,12 +7,12 @@ import Career from '../assets/shiksha-template-image.webp'
 // ✅ Top pe hain — lazy nahi
 import Hero from '../components/CourseDetails/Hero'
 import Navigator from '../components/CourseDetails/Navigator'
+import Overview from '../components/CourseDetails/Overview'
 import { getCourseBySlug } from '../utils/courseService'
 import Breadcrumb from '../components/BreadCrumb'
 import useFaq from '../hooks/useFaq'
 
 // ✅ Below fold — lazy
-const Overview = lazy(() => import('../components/CourseDetails/Overview'))
 const Accordion = lazy(() => import('../components/CourseDetails/Accordion'))
 const Form = lazy(() => import('../components/CourseDetails/Form'))
 const Review = lazy(() => import('../components/CourseDetails/Review'))
@@ -21,18 +21,6 @@ const RelatedBlogs = lazy(() => import('../components/RelatedBlogs'))
 
 const SectionSkeleton = () => (
   <div className="w-full animate-pulse bg-gray-100 rounded-md h-48 my-4" />
-)
-
-const OverviewSkeleton = () => (
-  <section id="overview" className="min-h-48 scroll-mt-24 animate-pulse" aria-hidden="true">
-    <div className="h-9 w-36 bg-gray-100 rounded-md mb-5" />
-    <div className="space-y-3">
-      <div className="h-4 bg-gray-100 rounded w-full" />
-      <div className="h-4 bg-gray-100 rounded w-11/12" />
-      <div className="h-4 bg-gray-100 rounded w-full" />
-      <div className="h-4 bg-gray-100 rounded w-4/5" />
-    </div>
-  </section>
 )
 
 const CourseDetails = ({ isLogin, setIsLogin, course: propCourse, slug: propSlug }) => {
@@ -90,9 +78,7 @@ const CourseDetails = ({ isLogin, setIsLogin, course: propCourse, slug: propSlug
             <div className='w-full xl:w-[70%] space-y-10'>
               <Navigator />
 
-              <Suspense fallback={<OverviewSkeleton />}>
-                <Overview overview={course.overview} />
-              </Suspense>
+              <Overview overview={course.overview} />
 
               <Suspense fallback={<SectionSkeleton />}>
                 <Accordion sections={course.sections} courseId={course._id} />
