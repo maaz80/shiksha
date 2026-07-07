@@ -8,9 +8,9 @@ import { getBlogBySlug } from '../utils/blogService';
 import { useCourses } from '../context/CourseContext';
 import { useBlogs } from '../context/BlogContext';
 
-const Location = lazy(() => import('./Location'));
-const CourseDetails = lazy(() => import('./CourseDetails'));
-const BlogDetails = lazy(() => import('./BlogDetails'));
+import Location from './Location';
+import CourseDetails from './CourseDetails';
+import BlogDetails from './BlogDetails';
 
 const LoadingScreen = () => (
      <div className="min-h-screen flex items-center justify-center bg-primary-bg">
@@ -32,14 +32,17 @@ const LOCATION_SLUGS = new Set([
      "full-stack-development-courses-shiksha"
 ]);
 
-const ItemPage = ({ isLogin, setIsLogin }) => {
+const ItemPage = ({ isLogin, setIsLogin, initialPageType, initialResolvedData }) => {
      const { itemSlug } = useParams();
      const { courses, loading: coursesLoading } = useCourses();
      const { blogs, loading: blogsLoading } = useBlogs();
-     const [pageType, setPageType] = useState(null); // 'location', 'course', 'blog', 'notfound'
-     const [resolvedData, setResolvedData] = useState(null);
+     const [pageType, setPageType] = useState(initialPageType || null); // 'location', 'course', 'blog', 'notfound'
+     const [resolvedData, setResolvedData] = useState(initialResolvedData || null);
 
      useEffect(() => {
+          if (initialPageType && initialResolvedData) {
+               return;
+          }
           const resolveSlug = async () => {
                // Synchronous check for known locations to allow instant rendering and LCP
                if (LOCATION_SLUGS.has(itemSlug)) {
