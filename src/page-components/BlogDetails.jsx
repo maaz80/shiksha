@@ -3,7 +3,6 @@
 import { useEffect } from 'react'
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
-import { preload } from 'react-dom';
 import CourseCard from '../components/CourseCard'
 import { useCourses } from '../context/CourseContext';
 import { useBlogs } from '../context/BlogContext';
@@ -113,19 +112,16 @@ const BlogDetails = ({ blog: propBlog, slug: propSlug }) => {
           return url;
      };
       const imageSrc = blog?.image || Template;
-      if (blog) {
-           preload(optimizeImage(imageSrc, 890), {
-                as: 'image',
-                imageSrcSet: blog?.image
-                     ? `
-          ${optimizeImage(blog.image, 500)} 480w,
-          ${optimizeImage(blog.image, 800)} 768w,
-          ${optimizeImage(blog.image, 890)} 1200w
-        `
-                     : undefined,
-                imageSizes: "(max-width: 480px) 500px, (max-width: 768px) 800px, 890px"
-           });
-      }
+
+      const cloudinaryLoader = ({ src, width }) => {
+           if (typeof src === 'string' && src.includes("/upload/")) {
+                return src.replace(
+                     "/upload/",
+                     `/upload/w_${width},c_fill,q_auto:eco,f_auto/`
+                );
+           }
+           return src;
+      };
 
       return (
            <main className=''>
@@ -139,26 +135,15 @@ const BlogDetails = ({ blog: propBlog, slug: propSlug }) => {
 
                                {blog ? (
                                     <>
-                                         <div className="mb-10">
-                                              <img
-                                                   fetchPriority="high"
-                                                   loading="eager"
-                                                   decoding="async"
-                                                   src={optimizeImage(imageSrc, 890)}
-                                                   srcSet={
-                                                        blog?.image
-                                                             ? `
-         ${optimizeImage(blog.image, 500)} 480w,
-         ${optimizeImage(blog.image, 800)} 768w,
-         ${optimizeImage(blog.image, 890)} 1200w
-       `
-                                                             : undefined
-                                                   }
+                                         <div className="mb-10 relative w-full h-114.5">
+                                              <Image
+                                                   loader={cloudinaryLoader}
+                                                   priority
+                                                   src={imageSrc}
                                                    sizes="(max-width: 480px) 500px, (max-width: 768px) 800px, 890px"
                                                    alt={blog?.alt || blog?.title || "Blog Image"}
-                                                   width={890}
-                                                   height={486}
-                                                   className="w-full h-114.5 object-cover rounded-md mx-auto"
+                                                   fill
+                                                   className="object-cover rounded-md mx-auto"
                                               />
                                          </div>
 
