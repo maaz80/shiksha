@@ -38,11 +38,13 @@ export default function LeadModal() {
           if (typeof window === "undefined") return;
           const html = document.documentElement;
           if (isOpen) {
-               const scrollbarWidth = window.innerWidth - html.clientWidth;
-               html.style.overflow = "hidden";
-               if (scrollbarWidth > 0) {
-                    html.style.paddingRight = `${scrollbarWidth}px`;
-               }
+               requestAnimationFrame(() => {
+                    const scrollbarWidth = window.innerWidth - html.clientWidth;
+                    html.style.overflow = "hidden";
+                    if (scrollbarWidth > 0) {
+                         html.style.paddingRight = `${scrollbarWidth}px`;
+                    }
+               });
           } else {
                html.style.overflow = "";
                html.style.paddingRight = "";

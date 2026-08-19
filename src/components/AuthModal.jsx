@@ -25,9 +25,11 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
           const html = document.documentElement;
 
           if (isOpen) {
-               const scrollbarWidth = window.innerWidth - html.clientWidth;
-               html.style.overflow = "hidden";
-               html.style.paddingRight = `${scrollbarWidth}px`;
+               requestAnimationFrame(() => {
+                    const scrollbarWidth = window.innerWidth - html.clientWidth;
+                    html.style.overflow = "hidden";
+                    html.style.paddingRight = `${scrollbarWidth}px`;
+               });
           } else {
                html.style.overflow = "";
                html.style.paddingRight = "";

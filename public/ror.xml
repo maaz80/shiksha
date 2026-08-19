@@ -63,35 +63,5 @@
     <ror:sortOrder>9</ror:sortOrder>
     <ror:resourceOf>sitemap</ror:resourceOf>
   </item>
-  <item>
-    <link>https://shikshadesign.com/blog/what-is-the-difference-between-ui-and-ux</link>
-    <title>Shiksha Design Page</title>
-    <ror:sortOrder>10</ror:sortOrder>
-    <ror:resourceOf>sitemap</ror:resourceOf>
-  </item>
-  <item>
-    <link>https://shikshadesign.com/blog/hey-there</link>
-    <title>Shiksha Design Page</title>
-    <ror:sortOrder>11</ror:sortOrder>
-    <ror:resourceOf>sitemap</ror:resourceOf>
-  </item>
-  <item>
-    <link>https://shikshadesign.com/courses/web-development-course-in-delhi</link>
-    <title>Shiksha Design Page</title>
-    <ror:sortOrder>12</ror:sortOrder>
-    <ror:resourceOf>sitemap</ror:resourceOf>
-  </item>
-  <item>
-    <link>https://shikshadesign.com/courses/figma-professional-training</link>
-    <title>Shiksha Design Page</title>
-    <ror:sortOrder>13</ror:sortOrder>
-    <ror:resourceOf>sitemap</ror:resourceOf>
-  </item>
-  <item>
-    <link>https://shikshadesign.com/location/full-stack-development-courses-shiksha</link>
-    <title>Shiksha Design Page</title>
-    <ror:sortOrder>14</ror:sortOrder>
-    <ror:resourceOf>sitemap</ror:resourceOf>
-  </item>
 </channel>
 </rss>

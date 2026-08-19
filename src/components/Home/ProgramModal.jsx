@@ -24,11 +24,11 @@ const ProgramModal = ({ isModal, setIsModal, onMouseEnter, onMouseLeave }) => {
           const html = document.documentElement;
 
           if (isModal) {
-               const scrollBarWidth =
-                    window.innerWidth - html.clientWidth;
-
-               html.style.overflow = "hidden";
-               html.style.paddingRight = `${scrollBarWidth}px`;
+               requestAnimationFrame(() => {
+                    const scrollBarWidth = window.innerWidth - html.clientWidth;
+                    html.style.overflow = "hidden";
+                    html.style.paddingRight = `${scrollBarWidth}px`;
+               });
           } else {
                html.style.overflow = "";
                html.style.paddingRight = "";

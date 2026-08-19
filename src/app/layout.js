@@ -73,6 +73,8 @@ export default async function RootLayout({ children }) {
       <head>
         <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+        <link rel="preload" as="image" href="/images/whatwedobg.webp" media="(min-width: 768px)" fetchPriority="high" />
+        <link rel="preload" as="image" href="/images/whatwedobg-tab.webp" media="(max-width: 767px)" fetchPriority="high" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(globalSchema) }}
