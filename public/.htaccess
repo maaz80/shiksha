@@ -22,11 +22,9 @@ DirectorySlash Off
     RewriteCond %{HTTPS} off
     RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-    # 4. CANONICAL HOST REDIRECT (Force www.shikshdesign.com)
-    RewriteCond %{HTTP_HOST} ^shikshdesign\.com$ [NC,OR]
-    RewriteCond %{HTTP_HOST} ^shikshadesign\.com$ [NC,OR]
-    RewriteCond %{HTTP_HOST} ^www\.shikshadesign\.com$ [NC]
-    RewriteRule ^ https://www.shikshdesign.com%{REQUEST_URI} [R=301,L]
+    # 4. CANONICAL HOST REDIRECT (Force www.shikshadesign.com)
+    RewriteCond %{HTTP_HOST} ^shikshadesign\.com$ [NC]
+    RewriteRule ^ https://www.shikshadesign.com%{REQUEST_URI} [R=301,L]
 
     # 5. BLOCK BAD BOTS & EMPTY USER AGENTS
     RewriteCond %{HTTP_USER_AGENT} (curl|wget|python|nikto|sqlmap|masscan|zgrab|nmap|dirbuster|gobuster|wfuzz|hydra|metasploit) [NC,OR]
