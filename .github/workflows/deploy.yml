@@ -1,0 +1,56 @@
+name: Deploy Next.js to Hostinger
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  repository_dispatch:
+    types: [admin_content_update]
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build static site
+        env:
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+          NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL || 'https://www.shikshadesign.com' }}
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+        run: npm run build
+
+      - name: Check export folder
+        run: |
+          if [ -d "out" ]; then echo "OUT_EXISTS=true"; else echo "OUT_EXISTS=false"; fi
+          ls -la out || true
+
+      - name: Upload to Hostinger via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER || 'ftp.shikshadesign.com' }}
+          username: ${{ secrets.FTP_USERNAME || 'u947813591.shikshadesign' }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT || 21 }}
+          protocol: ${{ secrets.FTP_PROTOCOL || 'ftp' }}
+          security: loose
+          local-dir: ./out/
+          server-dir: /
+          state-name: .ftp-deploy-sync-state.json
+          dry-run: false
