@@ -70,10 +70,17 @@ const Services = ({ location }) => {
                                         </div>
 
                                         {/* Bottom Text */}
-                                        <div className="bg-white/5 min-h-32 flex items-center justify-center px-5">
-                                             <p className="text-[18px] leading-6 md:leading-7 text-white/90">
-                                                  {item.para || item.title}
-                                             </p>
+                                        <div className="bg-white/5 min-h-32 flex flex-col justify-center px-5 text-left py-4">
+                                             {item.title && (
+                                                  <h3 className="font-bold text-[18px] leading-6 text-white mb-1 line-clamp-1">
+                                                       {item.title}
+                                                  </h3>
+                                             )}
+                                             {(item.para || (!item.title ? item.title : "")) && (
+                                                  <p className="text-[14px] md:text-[15px] leading-5 md:leading-6 text-white/80 line-clamp-3">
+                                                       {item.para || (!item.title ? item.title : "")}
+                                                  </p>
+                                             )}
                                         </div>
                                    </div>
                               )
@@ -104,8 +111,8 @@ const Services = ({ location }) => {
                               document.getElementById('courses')?.scrollIntoView({
                                    behavior: 'smooth',
                               });
-                         }} className="flex h-12 md:h-14 justify-center w-50.25 md:w-60 rounded-md bg-orange text-white text-[14px] md:text-[16px] items-center gap-2 shadow-sm hover:bg-orange-hover cursor-pointer transition-all duration-300 ease-in-out ">
-                              <Grip />
+                         }} className="flex h-12 md:h-14 justify-center w-50.25 md:w-60 rounded-md bg-primary text-white text-[14px] md:text-[16px] items-center gap-2 shadow-sm hover:bg-primary-hover cursor-pointer transition-all duration-300 ease-in-out ">
+                              {/* <Grip /> */}
                               Explore Program
                          </button>
                     </div>

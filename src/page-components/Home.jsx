@@ -1,27 +1,20 @@
 "use client";
 
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Hero from '../components/Home/Hero'
 import WhatWeDo from '../components/Home/WhatWeDo'
+import OurPrograms from '../components/Home/OurPrograms'
+import HowItWorks from '../components/Home/HowItWorks'
+import Companies from '../components/Home/Companies'
+import Community from '../components/Home/Community'
+import StatsBanner from '../components/Home/StatsBanner'
+import Testimonials from '../components/Home/Testimonials'
+import RelatedBlogs from '../components/RelatedBlogs'
+import FAQ from '../components/FAQ'
 import useFaq from '../hooks/useFaq'
 import { getHomeData } from '../utils/homeService'
 
-//  Lazy load all components
-const OurPrograms = lazy(() => import('../components/Home/OurPrograms'))
-const HowItWorks = lazy(() => import('../components/Home/HowItWorks'))
-const Companies = lazy(() => import('../components/Home/Companies'))
-const Community = lazy(() => import('../components/Home/Community'))
-const StatsBanner = lazy(() => import('../components/Home/StatsBanner'))
-const Testimonials = lazy(() => import('../components/Home/Testimonials'))
-const RelatedBlogs = lazy(() => import('../components/RelatedBlogs'))
-const FAQ = lazy(() => import('../components/FAQ'))
-
-//  Reusable skeleton fallback
-const SectionSkeleton = () => (
-     <div className="w-full animate-pulse bg-gray-100 rounded-md h-48 my-4" />
-)
-
-const Home = () => {
+const Home = ({ initialBlogs = [], initialTestimonials = [], initialCompanies = null }) => {
      const { faqData } = useFaq();
      const [homeData, setHomeData] = useState(null);
      const [loadingHome, setLoadingHome] = useState(true);
@@ -45,7 +38,7 @@ const Home = () => {
           };
 
           fetchHomeContent();
-     }, [])
+     }, []);
 
      return (
           <main className='open-sans'>
@@ -53,43 +46,27 @@ const Home = () => {
 
                <WhatWeDo data={homeData?.whatwedo} />
 
-               <Suspense fallback={<SectionSkeleton />}>
-                    <OurPrograms data={homeData?.ourprograms} />
-               </Suspense>
+               <OurPrograms data={homeData?.ourprograms} />
 
-               <Suspense fallback={<SectionSkeleton />}>
-                    <HowItWorks data={homeData?.howitworks} />
-               </Suspense>
+               <HowItWorks data={homeData?.howitworks} />
 
-               <Suspense fallback={<SectionSkeleton />}>
-                    <Companies />
-               </Suspense>
+               <Companies initialCompanies={initialCompanies} />
 
-               <Suspense fallback={<SectionSkeleton />}>
-                    <Community data={homeData?.community} />
-               </Suspense>
+               <Community data={homeData?.community} />
 
-               <Suspense fallback={<SectionSkeleton />}>
-                    <StatsBanner data={homeData?.communityBar} />
-               </Suspense>
+               <StatsBanner data={homeData?.communityBar} />
 
                <div className="relative">
-                    <Suspense fallback={<SectionSkeleton />}>
-                         <Testimonials data={homeData?.testimonialstitle} />
-                    </Suspense>
+                    <Testimonials data={homeData?.testimonialstitle} initialTestimonials={initialTestimonials} />
                </div>
 
                <div className='max-w-330 mx-auto space-y-10'>
-                    <Suspense fallback={<SectionSkeleton />}>
-                         <RelatedBlogs title={homeData?.relatedblogstitle} />
-                    </Suspense>
+                    <RelatedBlogs title={homeData?.relatedblogstitle} initialBlogs={initialBlogs} />
 
-                    <Suspense fallback={<SectionSkeleton />}>
-                         <FAQ faqData={faqData} />
-                    </Suspense>
+                    <FAQ faqData={faqData} />
                </div>
           </main>
      )
 }
 
-export default Home
+export default Home;

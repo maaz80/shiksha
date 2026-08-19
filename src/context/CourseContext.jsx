@@ -1,38 +1,45 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { usePathname } from 'next/navigation';
 import { getCourses } from "../utils/courseService";
 
-const CourseContext = createContext();
+const CourseContext = createContext({ courses: [], loading: false });
+
+let preloadedCourses = [];
+try {
+     const initialData = await getCourses();
+     if (Array.isArray(initialData) && initialData.length > 0) {
+          preloadedCourses = initialData;
+     }
+} catch (e) {
+     // Preload fallback if offline during build
+}
 
 export const CourseProvider = ({ children }) => {
-     const [courses, setCourses] = useState([]);
-     const [loading, setLoading] = useState(true);
-     const pathname = usePathname();
+     const [courses, setCourses] = useState(preloadedCourses);
+     const [loading, setLoading] = useState(preloadedCourses.length === 0);
 
      useEffect(() => {
-          const isIgnoredPage = pathname === "/disclaimer" || pathname === "/privacy-policy";
-          if (isIgnoredPage) return;
-          if (courses.length > 0 || !loading) return;
-
+          let isMounted = true;
           const fetchCourses = async () => {
                try {
                     const data = await getCourses();
-                    if (Array.isArray(data)) {
+                    if (isMounted && Array.isArray(data) && data.length > 0) {
                          setCourses(data);
-                         setLoading(false);
                     }
                } catch (err) {
                     console.error("Course fetch error:", err);
+               } finally {
+                    if (isMounted) setLoading(false);
                }
           };
 
           fetchCourses();
-     }, [pathname, loading, courses.length]);
+          return () => { isMounted = false; };
+     }, []);
 
      return (
-          <CourseContext.Provider value={{ courses, loading }}>
+          <CourseContext.Provider value={{ courses: Array.isArray(courses) ? courses : [], loading }}>
                {children}
           </CourseContext.Provider>
      );

@@ -2,16 +2,24 @@
 
 import React, { useState, Suspense, lazy, useRef } from 'react';
 import Navbar from './Navbar';
+import Footer from './Footer';
+import QuickAccessBar from './QuickAccessBar';
 import Toast from './Toast';
 import { usePageSEO } from '../hooks/usePageSEO';
 
-// Lazy load components that are not immediately visible
-const Footer = lazy(() => import('./Footer'));
+// Lazy load modal/interactive overlays
 const ProgramModal = lazy(() => import('./Home/ProgramModal'));
 const AuthModal = lazy(() => import('./AuthModal'));
+const LeadModal = lazy(() => import('./LeadModal'));
+const Chatbot = lazy(() => import('./Chatbot'));
+const CookieBanner = lazy(() => import('./CookieBanner'));
 
-export default function LayoutShell({ children }) {
+import { usePathname } from 'next/navigation';
+
+export default function LayoutShell({ children, initialLocations = [] }) {
   usePageSEO();
+  const pathname = usePathname();
+  const isDashboardPage = pathname === "/dashboard" || pathname?.startsWith("/dashboard");
   const [isModal, setIsModal] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [authRefresh, setAuthRefresh] = useState(0);
@@ -42,7 +50,7 @@ export default function LayoutShell({ children }) {
   };
 
   return (
-    <div className="open-sans bg-primary-bg min-h-screen flex flex-col pt-15 md:pt-16 lg:pt-20">
+    <div className={`open-sans bg-primary-bg min-h-screen flex flex-col ${isDashboardPage ? "pt-15 md:pt-16 lg:pt-20" : "pt-22 md:pt-24 lg:pt-28"} pb-2 md:pb-14`}>
       <Suspense fallback={null}>
         <ProgramModal isModal={isModal} setIsModal={setIsModal} onMouseEnter={clearCloseTimeout} onMouseLeave={startCloseTimeout} />
       </Suspense>
@@ -51,6 +59,20 @@ export default function LayoutShell({ children }) {
         <AuthModal isOpen={isLogin} onClose={() => setIsLogin(false)} onAuthSuccess={handleAuthSuccess} />
       </Suspense>
 
+      <Suspense fallback={null}>
+        <LeadModal />
+      </Suspense>
+
+      <Suspense fallback={null}>
+        <Chatbot />
+      </Suspense>
+
+      <Suspense fallback={null}>
+        <CookieBanner />
+      </Suspense>
+
+      <QuickAccessBar />
+
       <Navbar key={authRefresh} isModal={isModal} setIsModal={setIsModal} isLogin={isLogin} setIsLogin={setIsLogin} onCoursesMouseEnter={clearCloseTimeout} onCoursesMouseLeave={startCloseTimeout} />
       <Toast />
 
@@ -58,9 +80,7 @@ export default function LayoutShell({ children }) {
         {children}
       </main>
 
-      <Suspense fallback={<div className="bg-dark-blue w-full mt-20 min-h-190 md:min-h-130" aria-hidden="true" />}>
-        <Footer />
-      </Suspense>
+      <Footer initialLocations={initialLocations} />
     </div>
   );
 }

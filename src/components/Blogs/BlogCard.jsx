@@ -1,17 +1,13 @@
-"use client";
-
+import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import { useRouter } from 'next/navigation';
 import CloudinaryImage from '../CloudinaryImage';
 
 const Template = '/images/shiksha-template-image.webp';
 
 const BlogCard = ({ blog, isEager = false }) => {
-     const router = useRouter();
-
      if (!blog) {
           return (
-               <div className="w-[365px] md:w-[384px] h-118 bg-white rounded-xl border border-gray-200 shadow-sm p-3 text-secondary animate-pulse">
+               <div className="w-91.25 md:w-[384px] h-118 bg-white rounded-xl border border-gray-200 shadow-sm p-3 text-secondary animate-pulse">
                     <div className="relative rounded-lg overflow-hidden">
                          <img
                               src={Template}
@@ -40,18 +36,30 @@ const BlogCard = ({ blog, isEager = false }) => {
           );
      }
 
-     const handleReadMore = () => {
-          window.scrollTo({ top: 0, behavior: "auto" });
-          router.push(`/${blog.slug}`);
+     const blogHref = `/blog/${blog.slug}`;
+
+     const handleCardClick = () => {
+          if (typeof window !== "undefined") {
+               window.scrollTo({ top: 0, behavior: "auto" });
+          }
      };
 
-     // Format date
+     // Safe date format
      const formatDate = (dateString) => {
+          if (!dateString) return new Date().toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
           const date = new Date(dateString);
+          if (isNaN(date.getTime())) return new Date().toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
           return date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
      };
+
+     const displayDate = blog.date || blog.updatedAt || blog.createdAt;
+
      return (
-          <div className="w-[365px] md:w-[384px] h-118 bg-white rounded-xl border border-gray-200 shadow-sm p-3 text-secondary">
+          <Link
+               href={blogHref}
+               onClick={handleCardClick}
+               className="block w-91.25 md:w-[384px] h-118 bg-white rounded-xl border border-gray-200 shadow-sm p-3 text-secondary cursor-pointer group hover:shadow-md transition-all duration-300"
+          >
 
                {/* IMAGE */}
                <div className="relative rounded-lg overflow-hidden">
@@ -69,7 +77,7 @@ const BlogCard = ({ blog, isEager = false }) => {
 
                     {/* BADGE */}
                     <span className="absolute top-3 left-3 bg-white text-gray-700 text-xs px-3 py-1 rounded-md shadow-sm">
-                         {blog.category}
+                         {blog.category || "Blog"}
                     </span>
                </div>
 
@@ -88,19 +96,18 @@ const BlogCard = ({ blog, isEager = false }) => {
 
                     {/* META */}
                     <p className="text-[14px] mb-6">
-                         By {blog.author} <span className="mx-2">|</span> Updated: {formatDate(blog.date)}
+                         By {blog.author || "Shiksha Team"} <span className="mx-2">|</span> Updated: {formatDate(displayDate)}
                     </p>
 
                     {/* BUTTON */}
-                    <button
-                         onClick={handleReadMore}
-                         className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2.5 text-[16px] hover:bg-gray-100 transition-all duration-500 ease-in-out cursor-pointer">
+                    <div
+                         className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2.5 text-[16px] group-hover:bg-gray-100 transition-all duration-500 ease-in-out cursor-pointer">
                          Read More
                          <ChevronRight size={20} />
-                    </button>
+                    </div>
 
                </div>
-          </div>
+          </Link>
      );
 };
 

@@ -1,21 +1,21 @@
 "use client";
 
-import React, { lazy, Suspense, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Hero from '../components/Location/Hero'
 import { getLocations } from '../utils/locations'
 import { useParams } from 'next/navigation';
+import HelpSection from '../components/Location/HelpSection'
+import Services from '../components/Location/Services'
+import WhyKreeya from '../components/Location/WhyKreeya'
+import Testimonial from '../components/Location/Testimonial'
+import YouMayLike from '../components/RelatedBlogs'
+import FaqSection from '../components/Location/LocationFaq'
 
-//  Lazy sections
-const HelpSection = lazy(() => import('../components/Location/HelpSection'))
-const Services = lazy(() => import('../components/Location/Services'))
-const WhyKreeya = lazy(() => import('../components/Location/WhyKreeya'))
-const Testimonial = lazy(() => import('../components/Location/Testimonial'))
-const YouMayLike = lazy(() => import('../components/RelatedBlogs'))
-const FaqSection = lazy(() => import('../components/Location/LocationFaq'))
-
-const Location = ({ location: propLocation }) => {
-  const { itemSlug } = useParams();
+const Location = ({ location: propLocation, slug: propSlug, initialTestimonials = [] }) => {
+  const params = useParams();
+  const locationSlug = propSlug || params?.slug || params?.itemSlug;
   const [location, setLocation] = useState(propLocation || null)
+
   useEffect(() => {
     if (propLocation) {
       setLocation(propLocation);
@@ -27,9 +27,9 @@ const Location = ({ location: propLocation }) => {
 
       let selectedItem = null;
 
-      for (const location of allLocations) {
-        const found = location.items?.find(
-          (i) => i.slug === itemSlug || i._id === itemSlug
+      for (const loc of allLocations) {
+        const found = loc.items?.find(
+          (i) => i.slug === locationSlug || i._id === locationSlug
         );
 
         if (found) {
@@ -41,54 +41,35 @@ const Location = ({ location: propLocation }) => {
       setLocation(selectedItem);
     };
 
-    if (itemSlug) fetchSingleService();
+    if (locationSlug) fetchSingleService();
 
-  }, [itemSlug, propLocation]);
-
+  }, [locationSlug, propLocation]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [itemSlug])
+  }, [locationSlug])
 
   return (
     <div>
-      {/* HERO (no lazy) */}
       <div id='location-form'>
         <Hero location={location} />
       </div>
 
-      {/* Lazy sections */}
+      <HelpSection location={location} />
 
-      <Suspense fallback={<div className="min-h-[50vh]" />}>
-        <HelpSection location={location} />
-      </Suspense>
+      <Services location={location} />
 
+      <WhyKreeya location={location} />
 
-      <Suspense fallback={null}>
-        <Services location={location} />
-      </Suspense>
-
-
-      <Suspense fallback={null}>
-        <WhyKreeya location={location} />
-      </Suspense>
-
-      <Suspense fallback={null}>
-        <div className="relative">
-
-          <Testimonial />
-        </div>
-      </Suspense>
+      <div className="relative">
+        <Testimonial initialTestimonials={initialTestimonials} />
+      </div>
 
       <div className='relative max-w-330 mx-auto plus-jakarta-sans flex flex-col justify-center items-center px-4'>
-        <Suspense fallback={null}>
-          <YouMayLike />
-        </Suspense>
+        <YouMayLike />
 
         <div className="py-24">
-          <Suspense fallback={<div className="min-h-75" />}>
-            <FaqSection location={location} />
-          </Suspense>
+          <FaqSection location={location} />
         </div>
       </div>
 
@@ -96,4 +77,4 @@ const Location = ({ location: propLocation }) => {
   )
 }
 
-export default Location
+export default Location;

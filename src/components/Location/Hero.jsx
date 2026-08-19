@@ -13,7 +13,7 @@ const Hero = ({ location }) => {
      }
 
      return (
-          <section className="relative w-full min-h-screen bg-linear-to-b from-[#003D64] via-[#007CC9] to-[#003D64] text-white ">
+          <section className="relative w-full min-h-[90vh] bg-linear-to-b from-[#003D64] via-[#007CC9] to-[#003D64] text-white ">
                {/* Background Image Overlay */}
                <div className="absolute inset-0">
                     <img
@@ -22,7 +22,7 @@ const Hero = ({ location }) => {
                          className="w-full h-full object-cover"
                     />
                </div>
-               <div className="max-w-320.5 mx-auto flex flex-col lg:flex-row gap-20 items-center justify-center px-3 md:px-6 py-4 pt-24 md:pt-28 plus-jakarta-sans">
+               <div className="max-w-320.5 mx-auto flex flex-col lg:flex-row gap-20 items-center justify-center px-3 md:px-6 py-4 pt-24 md:pt-20 plus-jakarta-sans">
 
                     {/* LEFT CONTENT */}
                     <div className="space-y-6 z-999">
@@ -73,9 +73,9 @@ const Hero = ({ location }) => {
                               document.getElementById('courses')?.scrollIntoView({
                                    behavior: 'smooth',
                               });
-                         }} className="flex h-12 md:h-14 justify-center w-50.25 md:w-60 rounded-md bg-orange text-white text-[14px] md:text-[16px] items-center gap-2 shadow-sm hover:bg-orange-hover cursor-pointer transition-all duration-300 ease-in-out ">
-                              <Grip />
-                              Explore Program
+                         }} className="flex h-12 md:h-14 justify-center w-50.25 md:w-60 rounded-md bg-white text-primary text-[14px] md:text-[16px] items-center gap-2 shadow-sm hover:bg-white/90 cursor-pointer transition-all duration-300 ease-in-out ">
+                              {/* <Grip /> */}
+                              Enquire Now
                          </button>
                     </div>
 

@@ -4,6 +4,8 @@ import { useState, useRef, useEffect } from "react";
 import { ChevronDown, FileText, Lock, Check, Play, X } from "lucide-react";
 import { getCourseEnrollment, completeLessonAndUnlockNext, isUserLoggedIn } from "../../utils/auth.js";
 import { showErrorToast, showInfoToast } from "../../utils/toast.js";
+import { useUserAuth } from "../../context/UserAuthContext";
+import CourseLockedModal from "../CourseLockedModal";
 
 const defaultData = [
      {
@@ -20,7 +22,7 @@ const defaultData = [
      },
 ];
 
-export default function Accordion({ sections = [], courseId }) {
+export default function Accordion({ sections = [], courseId, course }) {
      const [activeIndex, setActiveIndex] = useState(0);
      const [playingVideo, setPlayingVideo] = useState(null);
      const [showVideoPlayer, setShowVideoPlayer] = useState(false);
@@ -28,13 +30,18 @@ export default function Accordion({ sections = [], courseId }) {
      const [userProgress, setUserProgress] = useState(null);
      const [isEnrolled, setIsEnrolled] = useState(false);
      const [loading, setLoading] = useState(true);
+     const [isLockedModalOpen, setIsLockedModalOpen] = useState(false);
+
+     const { isCourseUnlocked: checkCourseUnlocked } = useUserAuth();
      const videoRef = useRef(null);
      const data = sections.length ? sections : defaultData;
      const getSectionLessons = (section) => section?.lessons || section?.content || [];
 
+     const isUnlockedByAuth = checkCourseUnlocked(course || { _id: courseId });
+
      const refreshEnrollment = async () => {
           if (!isUserLoggedIn()) {
-               setIsEnrolled(false);
+               setIsEnrolled(isUnlockedByAuth);
                setUserProgress(null);
                setLoading(false);
                return;
@@ -42,7 +49,7 @@ export default function Accordion({ sections = [], courseId }) {
 
           try {
                const enrollment = await getCourseEnrollment(courseId);
-               setIsEnrolled(enrollment.enrolled);
+               setIsEnrolled(enrollment.enrolled || isUnlockedByAuth);
                setUserProgress(enrollment.enrollment || null);
           } catch (error) {
                console.error("Error fetching user progress:", error);
@@ -53,7 +60,7 @@ export default function Accordion({ sections = [], courseId }) {
 
      useEffect(() => {
           refreshEnrollment();
-     }, [courseId]);
+     }, [courseId, isUnlockedByAuth]);
 
      useEffect(() => {
           const handleEnrollmentChange = (event) => {
@@ -68,12 +75,6 @@ export default function Accordion({ sections = [], courseId }) {
                window.removeEventListener("courseEnrollmentChanged", handleEnrollmentChange);
           };
      }, [courseId]);
-
-     const formatDuration = (duration) => {
-          if (!duration) return "--";
-          if (typeof duration === "string" && duration.includes(":")) return duration;
-          return `${duration} Mins`;
-     };
 
      const calculateTotalDuration = (content) => {
           let totalMinutes = 0;
@@ -92,7 +93,6 @@ export default function Accordion({ sections = [], courseId }) {
 
           if (totalMinutes === 0) return "--";
 
-          // ✅ CONVERT TO hr + min
           const hours = Math.floor(totalMinutes / 60);
           const minutes = Math.round(totalMinutes % 60);
 
@@ -103,15 +103,33 @@ export default function Accordion({ sections = [], courseId }) {
           return `${minutes} min`;
      };
 
+     const isLessonUnlocked = (sectionIndex, lessonIndex) => {
+          if (isUnlockedByAuth) return true;
+          if (!isEnrolled) return false;
+
+          if (userProgress?.completedLessons) {
+               if (sectionIndex === 0 && lessonIndex === 0) return true;
+
+               const prevLessonKey = lessonIndex === 0
+                    ? `${sectionIndex - 1}-${getSectionLessons(data[sectionIndex - 1]).length - 1}`
+                    : `${sectionIndex}-${lessonIndex - 1}`;
+
+               return userProgress.completedLessons.includes(prevLessonKey);
+          }
+
+          return sectionIndex === 0 && lessonIndex === 0;
+     };
+
+     const isLessonCompleted = (sectionIndex, lessonIndex) => {
+          if (!userProgress?.completedLessons) return false;
+          return userProgress.completedLessons.includes(`${sectionIndex}-${lessonIndex}`);
+     };
+
      const handleLessonClick = (lesson, sectionIndex, lessonIndex) => {
-          const unlocked = isLessonUnlocked(sectionIndex, lessonIndex);
+          const unlocked = isUnlockedByAuth || lesson.isPreview || isLessonUnlocked(sectionIndex, lessonIndex);
 
           if (!unlocked) {
-               showInfoToast(
-                    isEnrolled
-                         ? "Complete previous lessons first"
-                         : "Enroll the course first to unlock lessons"
-               );
+               setIsLockedModalOpen(true);
                return;
           }
 
@@ -120,7 +138,7 @@ export default function Accordion({ sections = [], courseId }) {
                return;
           }
 
-          setIsLoadingVideo(true);   // ✅ loader start immediately
+          setIsLoadingVideo(true);
           setPlayingVideo({ ...lesson, sectionIndex, lessonIndex });
           setShowVideoPlayer(true);
      };
@@ -131,10 +149,8 @@ export default function Accordion({ sections = [], courseId }) {
           const { sectionIndex, lessonIndex } = playingVideo;
 
           try {
-               // Call API to mark lesson as completed
                const result = await completeLessonAndUnlockNext(courseId, sectionIndex, lessonIndex);
                setUserProgress(result.enrollment || { progress: 0, completedLessons: [] });
-
           } catch (error) {
                console.error("Error completing lesson:", error);
                showErrorToast("Failed to save progress. Please try again.");
@@ -155,41 +171,6 @@ export default function Accordion({ sections = [], courseId }) {
 
      const handleVideoLoaded = () => {
           setIsLoadingVideo(false);
-     };
-
-     const enterFullscreen = () => {
-          if (videoRef.current) {
-               if (videoRef.current.requestFullscreen) {
-                    videoRef.current.requestFullscreen();
-               } else if (videoRef.current.webkitRequestFullscreen) {
-                    videoRef.current.webkitRequestFullscreen();
-               } else if (videoRef.current.msRequestFullscreen) {
-                    videoRef.current.msRequestFullscreen();
-               }
-          }
-     };
-
-     const isLessonUnlocked = (sectionIndex, lessonIndex) => {
-          if (!isEnrolled) {
-               return false;
-          }
-
-          if (userProgress?.completedLessons) {
-               if (sectionIndex === 0 && lessonIndex === 0) return true;
-
-               const prevLessonKey = lessonIndex === 0
-                    ? `${sectionIndex - 1}-${getSectionLessons(data[sectionIndex - 1]).length - 1}`
-                    : `${sectionIndex}-${lessonIndex - 1}`;
-
-               return userProgress.completedLessons.includes(prevLessonKey);
-          }
-
-          return sectionIndex === 0 && lessonIndex === 0;
-     };
-
-     const isLessonCompleted = (sectionIndex, lessonIndex) => {
-          if (!userProgress?.completedLessons) return false;
-          return userProgress.completedLessons.includes(`${sectionIndex}-${lessonIndex}`);
      };
 
      if (loading) {
@@ -252,16 +233,16 @@ export default function Accordion({ sections = [], courseId }) {
                                         <div className={`transition-all duration-300 ease-in-out overflow-hidden ${isOpen ? "max-h-125 opacity-100" : "max-h-0 opacity-0"}`}>
                                              <div className="px-5 pb-4 space-y-3">
                                                   {content.map((lesson, i) => {
-                                                       const isUnlocked = isLessonUnlocked(index, i);
+                                                       const isUnlocked = isUnlockedByAuth || lesson.isPreview || isLessonUnlocked(index, i);
                                                        const isCompleted = isLessonCompleted(index, i);
-                                                       const canPlay = isUnlocked && lesson.videoUrl;
+                                                       const canPlay = (isUnlocked || lesson.isPreview) && lesson.videoUrl;
 
                                                        return (
                                                             <div
                                                                  key={i}
                                                                  onClick={() => handleLessonClick(lesson, index, i)}
-                                                                 className={`flex items-center justify-between h-15 rounded-2xl px-6 py-3 transition-all duration-500 ease-in-out text-sm mt-3 group ${canPlay ? 'cursor-pointer hover:bg-primary hover:text-white' : 'cursor-not-allowed opacity-60'
-                                                                      } ${isUnlocked ? 'text-gray-600' : 'text-gray-400'}`}
+                                                                 className={`flex items-center justify-between h-15 rounded-2xl px-6 py-3 transition-all duration-500 ease-in-out text-sm mt-3 group ${isUnlocked ? 'cursor-pointer hover:bg-primary hover:text-white' : 'cursor-pointer hover:bg-amber-50 text-gray-400'
+                                                                      }`}
                                                             >
                                                                  <div className="flex items-center gap-3">
                                                                       {canPlay ? <Play size={16} /> : <FileText size={16} />}
@@ -270,7 +251,7 @@ export default function Accordion({ sections = [], courseId }) {
 
                                                                  <div className="flex items-center gap-3">
                                                                       {lesson.isPreview && (
-                                                                           <span className="group-hover:bg-white group-hover:text-primary bg-primary text-white text-xs px-2 py-1 rounded">
+                                                                           <span className="group-hover:bg-white group-hover:text-primary bg-primary text-white text-xs px-2 py-1 rounded font-bold">
                                                                                 Preview
                                                                            </span>
                                                                       )}
@@ -282,7 +263,7 @@ export default function Accordion({ sections = [], courseId }) {
                                                                       ) : isUnlocked ? (
                                                                            <Check size={16} className="group-hover:text-white text-gray-700" />
                                                                       ) : (
-                                                                           <Lock size={16} />
+                                                                           <Lock size={16} className="text-amber-500" />
                                                                       )}
                                                                  </div>
                                                             </div>
@@ -308,7 +289,7 @@ export default function Accordion({ sections = [], courseId }) {
 
                {/* Video Player Modal */}
                {showVideoPlayer && playingVideo && (
-                    <div className="fixed inset-0 bg-white/30 backdrop-blur-lg flex items-center justify-center z-999999 h-screen">
+                    <div className="fixed inset-0 bg-white/30 backdrop-blur-lg flex items-center justify-center z-[999999] h-screen">
                          <div className="relative w-full h-screen max-w-350 max-h-screen p-4">
                               <button
                                    onClick={closeVideoPlayer}
@@ -333,6 +314,13 @@ export default function Accordion({ sections = [], courseId }) {
                          </div>
                     </div>
                )}
+
+               {/* Course Locked Modal */}
+               <CourseLockedModal
+                    isOpen={isLockedModalOpen}
+                    onClose={() => setIsLockedModalOpen(false)}
+                    course={course || { _id: courseId }}
+               />
           </>
      );
 }

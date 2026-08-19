@@ -2,9 +2,11 @@
   "name": "next-user",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "prebuild": "node generate_static_sitemaps.js",
+    "build": "node generate_static_sitemaps.js && node --max-old-space-size=4096 ./node_modules/next/dist/bin/next build && node post-build.js",
     "start": "next start",
     "lint": "eslint"
   },

@@ -17,28 +17,21 @@ const defaultFaqs = [
           ques: "What Does Royalty Free Mean?",
           ans: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras facilisis faucibus odio arcu duis dui, adipiscing facilisis. Urna, donec turpis egestas volutpat. Quisque nec non amet quis. Varius tellus justo odio parturient mauris curabitur lorem in.",
      },
-     {
-          ques: "What Does Royalty Free Mean?",
-          ans: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras facilisis faucibus odio arcu duis dui, adipiscing facilisis. Urna, donec turpis egestas volutpat. Quisque nec non amet quis. Varius tellus justo odio parturient mauris curabitur lorem in.",
-     },
-     {
-          ques: "What Does Royalty Free Mean?",
-          ans: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras facilisis faucibus odio arcu duis dui, adipiscing facilisis. Urna, donec turpis egestas volutpat. Quisque nec non amet quis. Varius tellus justo odio parturient mauris curabitur lorem in.",
-     },
 ];
 
 export default function LocationFaq({ location }) {
      const [faqs, setFaqs] = useState(defaultFaqs);
      const [activeIndex, setActiveIndex] = useState(0);
-     console.log(location);
+
      const data = location?.page?.faq;
      useEffect(() => {
           if (data && data.length > 0) {
                setFaqs(data);
           }
      }, [data]);
+
      return (
-          <div id="faqs" className="px-5 min-h-45 md:min-h-40 max-h-138 md:max-h-112 min-w-85 md:min-w-150 xl:min-w-300 max-w-450 mx-auto">
+          <div id="faqs" className="px-5 py-6 h-auto w-full max-w-450 mx-auto">
                {/* Heading */}
                <h2 className="text-[24px] xl:text-[32px] font-bold text-primary mb-5">
                     FAQ
@@ -59,30 +52,20 @@ export default function LocationFaq({ location }) {
                                         className="w-full flex items-center justify-between text-left cursor-pointer"
                                    >
                                         <span
-                                             className={`text-[16px] xl:text-[18px] cursor-pointer md:text-[18px] transition-all duration-500 ease-in-out hover:text-orange
-                    ${isOpen
-                                                       ? "text-orange font-medium"
-                                                       : "text-secondary"
-                                                  }`}
+                                             className={`text-[16px] xl:text-[18px] cursor-pointer md:text-[18px] transition-all duration-500 ease-in-out hover:text-orange ${isOpen ? "text-orange font-medium" : "text-secondary"}`}
                                         >
                                              {item.ques}
                                         </span>
 
                                         <ChevronDown
                                              size={20}
-                                             className={`transition-all duration-500
-                    ${isOpen ? "rotate-180 text-orange" : "text-secondary"}
-                  `}
+                                             className={`transition-all duration-500 ${isOpen ? "rotate-180 text-orange" : "text-secondary"}`}
                                         />
                                    </button>
 
                                    {/* Answer */}
                                    <div
-                                        className={`overflow-hidden transition-all duration-300 ease-in-out
-                  ${isOpen
-                                                  ? "max-h-50 opacity-100 mt-3"
-                                                  : "max-h-0 opacity-0"
-                                             }`}
+                                        className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-200 opacity-100 mt-3" : "max-h-0 opacity-0"}`}
                                    >
                                         <p className="text-[14px] xl:text-[16px] text-secondary leading-6 pr-10">
                                              {item.ans}

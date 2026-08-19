@@ -18,7 +18,16 @@ export function getOptimizedCloudinaryUrl(url, { width, height, quality = "auto"
      if (uploadIndex === -1) return urlStr;
 
      const baseUrl = urlStr.substring(0, uploadIndex + 8);
-     const remainingUrl = urlStr.substring(uploadIndex + 8);
+     let remainingUrl = urlStr.substring(uploadIndex + 8);
+
+     // If remainingUrl already starts with transformation parameters, strip them to prevent duplication
+     const firstSlashIndex = remainingUrl.indexOf("/");
+     if (firstSlashIndex !== -1) {
+          const firstSegment = remainingUrl.substring(0, firstSlashIndex);
+          if (/^[a-z0-9_,-]+$/i.test(firstSegment) && (firstSegment.includes("_") || firstSegment.includes("q_") || firstSegment.includes("f_"))) {
+               remainingUrl = remainingUrl.substring(firstSlashIndex + 1);
+          }
+     }
 
      const transforms = [];
      if (width) transforms.push(`w_${width}`);
@@ -43,7 +52,7 @@ export function CloudinaryImage({
      priority = false, // Set to true if this image appears above the fold (e.g. Hero banner)
      sizes = "100vw",
      objectFit = "fill",
-     fallbackSrc = "/images/weekend-ux-hero-bg-template.webp",
+     fallbackSrc = "/images/shiksha-design-hero.webp",
      fetchPriority = undefined // Optional fetch priority attribute
 }) {
      let imageSrc = src || fallbackSrc;

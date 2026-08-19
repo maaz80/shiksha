@@ -1,12 +1,9 @@
 "use client";
 
-// hooks/useFaq.js
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { fetchWithFallback } from '../utils/api.js';
 
-import { API_URL } from '../utils/api.js';
-
-// Per-page cache — sirf jo fetch hua woh store hoga
 const faqCache = new Map();
 
 const useFaq = (customSlug) => {
@@ -15,52 +12,60 @@ const useFaq = (customSlug) => {
      const [loading, setLoading] = useState(true);
 
      useEffect(() => {
+          let isMounted = true;
           const loadFaq = async () => {
                try {
                     setLoading(true);
 
-                    // Current page ka slug nikalo
                     let slug = customSlug;
                     if (!slug) {
                          slug = 'home';
                          if (pathname !== '/') {
-                              if (pathname.startsWith('/blog-details/')) {
+                              if (pathname.startsWith('/blog/') || pathname.startsWith('/blog-details/')) {
                                    slug = 'blog-details';
-                              } else if (pathname.startsWith('/course-details/')){
+                              } else if (pathname.startsWith('/courses/') || pathname.startsWith('/course-details/')){
                                    slug = 'course-details';
-                              }  else if (pathname === '/category/blogs') {
-                              slug = 'blogs';
-                         } else {
-                              slug = pathname.replace(/\//g, '');
+                              } else if (pathname.startsWith('/location/')) {
+                                   slug = 'location-details';
+                              } else if (pathname === '/blog' || pathname === '/category/blogs') {
+                                   slug = 'blogs';
+                              } else {
+                                   slug = pathname.replace(/\//g, '');
+                              }
                          }
                     }
-               }
 
-                    //  Cache mein hai toh fetch mat karo
                     if (faqCache.has(slug)) {
-                    setFaqData(faqCache.get(slug));
-                    return;
+                         if (isMounted) {
+                              setFaqData(faqCache.get(slug));
+                              setLoading(false);
+                         }
+                         return;
+                    }
+
+                    const res = await fetchWithFallback(`/pages/${slug}/faq`);
+                    let data = null;
+                    if (res && res.ok) {
+                         data = await res.json();
+                    }
+
+                    faqCache.set(slug, data || null);
+                    if (isMounted) {
+                         setFaqData(data || null);
+                    }
+
+               } catch (error) {
+                    console.error(error);
+               } finally {
+                    if (isMounted) setLoading(false);
                }
+          };
 
-               //  Sirf is page ka FAQ fetch karo
-               const data = await fetch(`${API_URL}/pages/${slug}/faq`)
-                    .then(res => res.json())
-                    .catch(() => null);
+          loadFaq();
+          return () => { isMounted = false; };
+     }, [pathname, customSlug]);
 
-               faqCache.set(slug, data || null);
-               setFaqData(data || null);
-
-          } catch (error) {
-               console.error(error);
-          } finally {
-               setLoading(false);
-          }
-     };
-
-     loadFaq();
-}, [pathname]);
-
-return { faqData, loading };
+     return { faqData, loading };
 };
 
 export default useFaq;

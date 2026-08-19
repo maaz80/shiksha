@@ -12,12 +12,16 @@
 html {
   scrollbar-gutter: stable;
 }
+
+input[type="checkbox"] {
+  accent-color: #0071E5;
+}
 @theme {
   --color-primary-bg: #F0F7FF;
   --color-primary: #0071E5;
   --color-primary-hover: #024d9b;
   --color-secondary: #26394D;
-  --color-orange: #C2410C;
+  --color-orange: #FF660A;
   --color-orange-hover: #92390e;
   --color-dark-blue: #26394D;
 
@@ -161,4 +165,57 @@ html {
   .blog-content h3 {
     line-height: 30px;
   }
+}
+
+/* Global Standardized Styles for Enquire Now & Get Brochure Buttons */
+.btn-action-primary {
+  height: 2.75rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  background-color: var(--color-primary, #0071E5);
+  color: #ffffff;
+  border: 1px solid transparent;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.btn-action-primary:hover {
+  background-color: var(--color-primary-hover, #024d9b);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-action-white {
+  height: 2.75rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  background-color: #ffffff;
+  color: var(--color-primary, #0071E5);
+  border: 1px solid var(--color-primary, #0071E5);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.btn-action-white:hover {
+  background-color: var(--color-primary, #0071E5);
+  color: #ffffff;
+  border-color: #ffffff;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
 }

@@ -1,12 +1,8 @@
-import { API_URL } from "./api.js";
+import { fetchWithFallback } from "./api.js";
 
 let contactDataCache = null;
 let contactDataPromise = null;
 
-/**
- * Fetch contact page content data with local memory caching & deduplication of parallel queries.
- * @param {boolean} forceRefresh - If true, bypass cache and force a network reload.
- */
 export const getContactData = async (forceRefresh = false) => {
      if (!forceRefresh && contactDataCache) {
           return contactDataCache;
@@ -18,20 +14,18 @@ export const getContactData = async (forceRefresh = false) => {
 
      contactDataPromise = (async () => {
           try {
-               const res = await fetch(`${API_URL}/contact-data`);
-               if (!res.ok) {
-                    throw new Error(`HTTP Error: ${res.status} ${res.statusText}`);
+               const res = await fetchWithFallback("/contact-data");
+               if (res && res.ok) {
+                    const data = await res.json();
+                    contactDataCache = data;
+                    return data;
                }
-               const data = await res.json();
-               contactDataCache = data;
-               return data;
+               if (contactDataCache) return contactDataCache;
+               return null;
           } catch (err) {
                console.error("Failed to fetch contact data:", err);
-               // Fallback to stale cache if request fails
-               if (contactDataCache) {
-                    return contactDataCache;
-               }
-               throw err;
+               if (contactDataCache) return contactDataCache;
+               return null;
           } finally {
                contactDataPromise = null;
           }

@@ -1,12 +1,8 @@
-import { API_URL } from "./api.js";
+import { API_URL, fetchWithFallback } from "./api.js";
 
 let homeDataCache = null;
 let homeDataPromise = null;
 
-/**
- * Fetch home page content data with local memory caching & deduplication of parallel queries.
- * @param {boolean} forceRefresh - If true, bypass cache and force a network reload.
- */
 export const getHomeData = async (forceRefresh = false) => {
      if (!forceRefresh && homeDataCache) {
           return homeDataCache;
@@ -18,20 +14,18 @@ export const getHomeData = async (forceRefresh = false) => {
 
      homeDataPromise = (async () => {
           try {
-               const res = await fetch(`${API_URL}/home-data`);
-               if (!res.ok) {
-                    throw new Error(`HTTP Error: ${res.status} ${res.statusText}`);
+               const res = await fetchWithFallback("/home-data");
+               if (res && res.ok) {
+                    const data = await res.json();
+                    homeDataCache = data;
+                    return data;
                }
-               const data = await res.json();
-               homeDataCache = data;
-               return data;
+               if (homeDataCache) return homeDataCache;
+               return null;
           } catch (err) {
                console.error("Failed to fetch home data:", err);
-               // Fallback to stale cache if request fails
-               if (homeDataCache) {
-                    return homeDataCache;
-               }
-               throw err;
+               if (homeDataCache) return homeDataCache;
+               return null;
           } finally {
                homeDataPromise = null;
           }

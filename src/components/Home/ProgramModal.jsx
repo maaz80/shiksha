@@ -33,11 +33,17 @@ const ProgramModal = ({ isModal, setIsModal, onMouseEnter, onMouseLeave }) => {
                html.style.overflow = "";
                html.style.paddingRight = "";
           }
-
           return () => {
                html.style.overflow = "";
                html.style.paddingRight = "";
           };
+     }, [isModal]);
+
+     useEffect(() => {
+          if (!isModal) {
+               setActiveCategory(null);
+               setActiveMobileIndex(null);
+          }
      }, [isModal]);
 
      if (!isMounted) return null;
@@ -46,14 +52,14 @@ const ProgramModal = ({ isModal, setIsModal, onMouseEnter, onMouseLeave }) => {
           <div
                onClick={() => setIsModal(false)}
 
-               className={`w-full fixed z-99999 min-h-screen bg-black/20 backdrop-blur-lg ${isModal ? 'translate-y-0 opacity-100 pointer-events-auto' : '-translate-y-full opacity-0 pointer-events-none'} transition-all duration-700 ease-in-out`}
+               className={`w-full fixed z-[99999] min-h-screen bg-black/40 backdrop-blur-md ${isModal ? 'translate-y-0 opacity-100 pointer-events-auto' : '-translate-y-full opacity-0 pointer-events-none'} transition-all duration-700 ease-in-out`}
           >
 
                <div onMouseEnter={onMouseEnter}
-                    onMouseLeave={onMouseLeave} className='w-[98%] md:w-[80%] px-10 fixed bottom-0 left-1/2 -translate-x-1/2 h-screen bg-primary-bg overflow-y-scroll md:overflow-y-hidden'>
+                    onMouseLeave={onMouseLeave} className='w-[98%] md:w-[92%] lg:w-[90%] 2xl:w-[88%] max-w-[1550px] px-6 sm:px-10 fixed bottom-0 left-1/2 -translate-x-1/2 h-screen bg-primary-bg overflow-y-scroll md:overflow-y-hidden z-[99999]'>
                     {/* DESKTOP unchanged */}
-                    <div className="hidden md:flex mt-10 items-start justify-center">
-                         <div className='space-y-2 w-[34%] 2xl:w-[24%]'>
+                    <div className="hidden md:flex mt-10 items-start justify-center gap-6">
+                         <div className='space-y-2 w-[28%] 2xl:w-[22%] shrink-0'>
                               <ProgramsSidebar category="Categories" isHeading={true} />
                               {categories.map((cat) => (
                                    <ProgramsSidebar
@@ -68,7 +74,7 @@ const ProgramModal = ({ isModal, setIsModal, onMouseEnter, onMouseLeave }) => {
                               ))}
                          </div>
 
-                         <div onClick={(e) => e.stopPropagation()} className='flex items-center justify-between flex-wrap w-[65%] 2xl:w-[80%] space-y-2 max-h-[83vh] overflow-y-scroll hide-scrollbar'>
+                         <div onClick={(e) => e.stopPropagation()} className='flex items-center justify-between flex-wrap w-[70%] 2xl:w-[76%] space-y-2 max-h-[83vh] overflow-y-scroll hide-scrollbar'>
                               {filteredCourses.map((course) => (
                                    <CourseCard key={course._id} course={course} setIsModal={setIsModal} />
                               ))}

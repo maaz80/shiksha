@@ -2,6 +2,7 @@ import "./globals.css";
 import Providers from "../components/Providers";
 import LayoutShell from "../components/LayoutShell";
 import { Open_Sans, Plus_Jakarta_Sans, Poiret_One } from 'next/font/google';
+import { getLocations } from "../utils/locations";
 
 const openSans = Open_Sans({
   subsets: ['latin'],
@@ -30,12 +31,54 @@ export const metadata = {
   }
 };
 
-export default function RootLayout({ children }) {
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://shikshadesign.com').replace(/\/$/, '');
+
+const globalSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "EducationalOrganization",
+      "@id": `${SITE_URL}/#organization`,
+      "name": "Shiksha",
+      "url": SITE_URL,
+      "logo": `${SITE_URL}/images/shiksha-logo.webp`,
+      "image": `${SITE_URL}/images/shiksha-logo.webp`,
+      "description": "Master in-demand skills with industry-leading courses. Get certified, land your dream job, and join thousands of successful graduates."
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      "url": SITE_URL,
+      "name": "Shiksha",
+      "publisher": {
+        "@id": `${SITE_URL}/#organization`
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": `${SITE_URL}/search?q={search_term_string}`
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ]
+};
+
+export default async function RootLayout({ children }) {
+  const locations = await getLocations().catch(() => []);
+
   return (
     <html lang="en" className={`h-full antialiased ${openSans.variable} ${plusJakartaSans.variable} ${poiretOne.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(globalSchema) }}
+        />
+      </head>
       <body className="min-h-full flex flex-col open-sans">
         <Providers>
-          <LayoutShell>
+          <LayoutShell initialLocations={locations}>
             {children}
           </LayoutShell>
         </Providers>

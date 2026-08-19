@@ -3,13 +3,19 @@
 import React from "react";
 import { CourseProvider } from "../context/CourseContext";
 import { BlogProvider } from "../context/BlogContext";
+import { ChatProvider } from "../context/ChatContext";
+import { UserAuthProvider } from "../context/UserAuthContext";
 
 export default function Providers({ children }) {
   return (
-    <CourseProvider>
-      <BlogProvider>
-        {children}
-      </BlogProvider>
-    </CourseProvider>
+    <UserAuthProvider>
+      <CourseProvider>
+        <BlogProvider>
+          <ChatProvider>
+            {children}
+          </ChatProvider>
+        </BlogProvider>
+      </CourseProvider>
+    </UserAuthProvider>
   );
 }

@@ -37,6 +37,9 @@ const RESERVED_PAGE_PATHS = new Set([
      "careers",
      "about-us",
      "disclaimer",
+     "terms-and-conditions-enrolment",
+     "search",
+     "dashboard",
 ]);
 
 const STATIC_PAGE_SEO_IDS = new Set([
@@ -47,9 +50,12 @@ const STATIC_PAGE_SEO_IDS = new Set([
      "privacy-policy",
      "about-us",
      "disclaimer",
+     "terms-and-conditions-enrolment",
      "careers",
      "career-details",
      "not-found",
+     "search",
+     "dashboard",
 ]);
 
 // Helper: get or create a <meta> tag by attribute selector
@@ -70,13 +76,14 @@ export function usePageSEO() {
      useEffect(() => {
           let isActive = true;
 
-          const setSEO = (title, description, keywords) => {
+          const setSEO = (title, description, keywords, customSchema = "") => {
                if (!isActive) return;
 
                const finalTitle = title || DEFAULT_TITLE;
                const finalDescription = description || DEFAULT_DESCRIPTION;
-               const canonicalUrl = `https://shiksha.netlify.app${pathname}`;
-               const logoUrl = "https://shiksha.netlify.app/images/shiksha-logo.webp";
+               const siteUrl = typeof window !== 'undefined' ? window.location.origin : (process.env.NEXT_PUBLIC_SITE_URL || 'https://shikshadesign.com').replace(/\/$/, '');
+               const canonicalUrl = `${siteUrl}${pathname}`;
+               const logoUrl = `${siteUrl}/images/shiksha-logo.webp`;
 
                // ================= BASIC SEO =================
                document.title = finalTitle;
@@ -139,16 +146,51 @@ export function usePageSEO() {
 
                getOrCreateMeta("name", "twitter:image")
                     .setAttribute("content", logoUrl);
+
+               // ================= DYNAMIC WEBPAGE SCHEMA =================
+               let webPageScript = document.getElementById("dynamic-webpage-schema");
+               if (!webPageScript) {
+                    webPageScript = document.createElement("script");
+                    webPageScript.id = "dynamic-webpage-schema";
+                    webPageScript.type = "application/ld+json";
+                    document.head.appendChild(webPageScript);
+               }
+               webPageScript.textContent = JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "WebPage",
+                    "name": finalTitle,
+                    "description": finalDescription,
+                    "url": canonicalUrl
+               });
+
+               // ================= ADMIN CUSTOM PAGE SCHEMA =================
+               let pageCustomSchemaScript = document.getElementById("admin-custom-page-schema");
+               if (customSchema && typeof customSchema === "string" && customSchema.trim()) {
+                    if (!pageCustomSchemaScript) {
+                         pageCustomSchemaScript = document.createElement("script");
+                         pageCustomSchemaScript.id = "admin-custom-page-schema";
+                         pageCustomSchemaScript.type = "application/ld+json";
+                         document.head.appendChild(pageCustomSchemaScript);
+                    }
+                    const cleanSchema = customSchema.replace(/<\/?script[^>]*>/gi, '').trim();
+                    pageCustomSchemaScript.textContent = cleanSchema;
+               } else if (pageCustomSchemaScript) {
+                    pageCustomSchemaScript.remove();
+               }
           };
 
           const fetchJson = async (url) => {
-               const res = await fetch(url);
+               try {
+                    const res = await fetch(url);
 
-               if (!res.ok) {
-                    throw new Error(`SEO API failed: ${res.status} ${res.statusText}`);
+                    if (!res.ok) {
+                         return null;
+                    }
+
+                    return await res.json();
+               } catch {
+                    return null;
                }
-
-               return res.json();
           };
 
           const resolveItemSlugSeo = async (slug) => {
@@ -201,20 +243,20 @@ export function usePageSEO() {
                     const cache = seoCache.current;
                     const isMultiSegmentPath = segments.length > 1;
 
-                    // For Location, Course, and Blog (Single-segment dynamic routes)
-                    if (segments.length === 1 && segments[0] && !RESERVED_PAGE_PATHS.has(segments[0])) {
-                         const slug = segments[0];
+                    // For Location, Course, and Blog dynamic routes (/blog/:slug, /courses/:slug, /location/:slug)
+                    if (segments.length === 2 && ["blog", "courses", "location"].includes(segments[0])) {
+                         const slug = segments[1];
                          const cacheKey = `item:${slug}`;
 
                          if (cache.has(cacheKey)) {
                               const itemSeo = cache.get(cacheKey);
-                              setSEO(itemSeo.title || DEFAULT_TITLE, itemSeo.description || DEFAULT_DESCRIPTION, itemSeo.keywords || "");
+                              setSEO(itemSeo.title || DEFAULT_TITLE, itemSeo.description || DEFAULT_DESCRIPTION, itemSeo.keywords || "", itemSeo.schema || "");
 
                               // Silent background revalidation
                               resolveItemSlugSeo(slug).then((updatedSeo) => {
                                    if (updatedSeo && isActive) {
                                         cache.set(cacheKey, updatedSeo);
-                                        setSEO(updatedSeo.title || DEFAULT_TITLE, updatedSeo.description || DEFAULT_DESCRIPTION, updatedSeo.keywords || "");
+                                        setSEO(updatedSeo.title || DEFAULT_TITLE, updatedSeo.description || DEFAULT_DESCRIPTION, updatedSeo.keywords || "", updatedSeo.schema || "");
                                    }
                               }).catch(() => { });
                               return;
@@ -223,7 +265,7 @@ export function usePageSEO() {
                          const itemSeo = await resolveItemSlugSeo(slug);
                          if (itemSeo) {
                               cache.set(cacheKey, itemSeo);
-                              setSEO(itemSeo.title || DEFAULT_TITLE, itemSeo.description || DEFAULT_DESCRIPTION, itemSeo.keywords || "");
+                              setSEO(itemSeo.title || DEFAULT_TITLE, itemSeo.description || DEFAULT_DESCRIPTION, itemSeo.keywords || "", itemSeo.schema || "");
                               return;
                          }
 
@@ -232,7 +274,8 @@ export function usePageSEO() {
                          setSEO(
                               notFoundSeo.title || DEFAULT_TITLE,
                               notFoundSeo.description || DEFAULT_DESCRIPTION,
-                              notFoundSeo.keywords || ""
+                              notFoundSeo.keywords || "",
+                              notFoundSeo?.schema || ""
                          );
                          return;
                     }
@@ -240,7 +283,7 @@ export function usePageSEO() {
                     // Handle Static Pages
                     const path = !segments.length
                          ? "home"
-                         : segments[0] === "category" && segments[1] === "blogs"
+                         : (segments[0] === "blog" && !segments[1]) || (segments[0] === "category" && segments[1] === "blogs")
                               ? "blogs"
                               : isMultiSegmentPath || !STATIC_PAGE_SEO_IDS.has(segments[0])
                                    ? "not-found"
@@ -249,13 +292,13 @@ export function usePageSEO() {
 
                     if (cache.has(cacheKey)) {
                          const seo = cache.get(cacheKey);
-                         setSEO(seo.title || DEFAULT_TITLE, seo.description || DEFAULT_DESCRIPTION, seo.keywords || "");
+                         setSEO(seo.title || DEFAULT_TITLE, seo.description || DEFAULT_DESCRIPTION, seo.keywords || "", seo?.schema || "");
                          return;
                     }
 
                     const seo = await fetchJson(`${API_URL}/pages/${path}/seo`);
                     cache.set(cacheKey, seo);
-                    setSEO(seo.title || DEFAULT_TITLE, seo.description || DEFAULT_DESCRIPTION, seo.keywords || "");
+                    setSEO(seo.title || DEFAULT_TITLE, seo.description || DEFAULT_DESCRIPTION, seo.keywords || "", seo?.schema || "");
                } catch (error) {
                     console.error("SEO error:", error);
                }

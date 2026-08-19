@@ -185,7 +185,7 @@ const ContactForm = () => {
 
             if (response.ok) {
                 setStatus("success");
-                setSuccessMessage("✅ Booking submitted successfully! We'll contact you soon.");
+                setSuccessMessage("Booking submitted successfully! We'll contact you soon.");
                 setFormData({ fullName: "", phone: "", email: "", message: "", otp: "" });
                 setOtpStep(false);
                 setErrors({});
@@ -229,7 +229,7 @@ const ContactForm = () => {
                                     <div key={field.name} className="flex flex-col gap-1">
                                         <label htmlFor={fieldId} className="text-sm text-white">
                                             {field.label}
-                                            {field.name === "phone" && <span className="text-cust-orange ml-1">*</span>}
+                                            {field.name === "phone" && <span className="text-cust-primary ml-1">*</span>}
                                         </label>
                                         <input
                                             id={fieldId}
@@ -263,7 +263,7 @@ const ContactForm = () => {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className={`${loading ? "cursor-not-allowed opacity-60" : "cursor-pointer hover:text-white"} flex h-12 md:h-14 justify-center w-full rounded-md bg-orange text-white text-[14px] md:text-[16px] items-center gap-2 shadow-sm hover:bg-orange-hover cursor-pointer transition-all duration-300 ease-in-out  mt-2`}
+                                className={`${loading ? "cursor-not-allowed opacity-60" : "cursor-pointer hover:text-primary"} flex h-12 md:h-14 justify-center w-full rounded-md bg-white text-primary text-[14px] md:text-[16px] items-center gap-2 shadow-sm hover:bg-white/90 cursor-pointer transition-all duration-300 ease-in-out  mt-2`}
                             >
                                 {loading ? (
                                     <>
@@ -274,24 +274,24 @@ const ContactForm = () => {
                                     <>
                                         {/* <span className="relative z-10">Book a Call</span>
                                             <GoArrowUpRight size={24} className={`relative z-10 text-heading transition-all duration-300 ${!loading && 'group-hover:text-white'}`} /> */}
-                                            <Grip />
-                                            Explore Program
+                                            {/* <Grip /> */}
+                                            Enquire Now
                                     </>
                                 )}
                             </button>
                         </>
                     ) : (
                         <>
-                            <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
-                                <p className="text-sm text-black mb-1 font-medium">
-                                    ✓ OTP sent to <span className="text-cust-orange">{formData.email}</span>
+                            <div className="bg-primary-50 p-4 rounded-lg border border-primary-200">
+                                <p className="text-sm text-white mb-1 font-medium">
+                                    ✓ OTP sent to <span className="text-cust-primary">{formData.email}</span>
                                 </p>
-                                <p className="text-xs text-gray-600">Enter the 6-digit verification code sent to your email</p>
+                                <p className="text-xs text-white">Enter the 6-digit verification code sent to your email</p>
                             </div>
 
                             <div className="flex flex-col gap-1">
                                 <label htmlFor="location-otp-input" className="text-sm text-white">
-                                    OTP Code <span className="text-cust-orange">*</span>
+                                    OTP Code <span className="text-cust-primary">*</span>
                                 </label>
                                 <input
                                     id="location-otp-input"
@@ -311,7 +311,7 @@ const ContactForm = () => {
                                     type="button"
                                     onClick={handleResendOTP}
                                     disabled={resendTimer > 0 || loading}
-                                    className={`text-sm ${resendTimer > 0 || loading ? "text-white/50 cursor-not-allowed" : "text-cust-orange hover:underline cursor-pointer"}`}
+                                    className={`text-sm ${resendTimer > 0 || loading ? "text-white/50 cursor-not-allowed" : "text-cust-primary hover:underline cursor-pointer"}`}
                                 >
                                     {resendTimer > 0 ? `Resend OTP in ${resendTimer}s` : "Resend OTP"}
                                 </button>
@@ -324,7 +324,7 @@ const ContactForm = () => {
                                         setStatus("idle");
                                         if (timerRef.current) clearInterval(timerRef.current);
                                     }}
-                                    className="text-sm text-white/80 hover:text-cust-orange cursor-pointer"
+                                    className="text-sm text-white/90 hover:text-cust-primary cursor-pointer"
                                 >
                                     ← Edit Details
                                 </button>
@@ -333,13 +333,13 @@ const ContactForm = () => {
                             <button
                                 type="submit"
                                 disabled={status === "loading"}
-                                    className={`${status === "loading" ? "cursor-not-allowed opacity-60" : "cursor-pointer"} flex h-12 md:h-14 justify-center w-full rounded-md bg-orange text-white text-[14px] md:text-[16px] items-center gap-2 shadow-sm hover:bg-orange-hover cursor-pointer transition-all duration-300 ease-in-out  ${status === "loading"
-                                    ? "text-white bg-orange"
+                                    className={`${status === "loading" ? "cursor-not-allowed opacity-60" : "cursor-pointer"} flex h-12 md:h-14 justify-center w-full rounded-md bg-white text-primary text-[14px] md:text-[16px] items-center gap-2 shadow-sm hover:bg-white/90 cursor-pointer transition-all duration-300 ease-in-out  ${status === "loading"
+                                        ? "bg-white text-primary"
                                     : status === "success"
                                         ? "text-green-600 bg-white border-green-500 border"
                                         : status === "error" || status === "timeout"
-                                            ? "text-white bg-orange"
-                                            : "text-primary bg-orange hover:text-white"
+                                                ? "bg-white text-primary"
+                                            : "bg-white text-primary hover:text-primary"
                                     }`}
                             >
                                 {status === "idle" && (

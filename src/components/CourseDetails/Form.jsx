@@ -204,22 +204,22 @@ export default function Form() {
      };
 
      return (
-          <div className="min-h-screen flex items-center justify-center text-secondary w-full">
+          <div className=" flex items-start justify-center text-secondary w-full">
 
-               <div className="hidden md:block xl:hidden w-[50%] h-133">
+               {/* <div className="hidden md:block xl:hidden w-[50%] h-133">
                     <img src={Template} alt="Template Image" loading="lazy" decoding="async" className="rounded-l-2xl mt-[5.5px] shadow-md object-cover h-130" />
-               </div>
+               </div> */}
                {/* Card */}
                <div className="w-full md:w-[50%] xl:w-full max-w-md bg-gray-50 rounded-2xl md:rounded-r-2xl xl:rounded-2xl shadow-md p-6 md:p-4">
 
                     {/* Heading */}
                     <h2 className="text-[20px] md:text-[22px] font-semibold text-gray-800 text-center">
-                         Admissions Close On 7th Oct
+                         Send Us Your Training Requirement
                     </h2>
 
                     {/* Description */}
                     <p className="text-[13px] md:text-[14px] text-center mt-2 leading-6">
-                         Still not sure? Talk with our advisor and get your doubts sorted before you miss the chance to enroll into the course
+                         Not sure yet? Before you pass up the opportunity to sign up for the course, speak with our counselor and get your questions answered.
                     </p>
 
                     {/* Form */}
@@ -244,7 +244,7 @@ export default function Form() {
                                                   name="fullName"
                                                   value={formData.fullName}
                                                   onChange={handleChange}
-                                                  placeholder="John Doe"
+                                                  placeholder="Enter your full name"
                                                   className="w-full outline-none text-sm placeholder-gray-400 font-sans"
                                              />
                                         </div>
@@ -263,7 +263,7 @@ export default function Form() {
                                                   name="email"
                                                   value={formData.email}
                                                   onChange={handleChange}
-                                                  placeholder="example@email.com"
+                                                  placeholder="Enter your email address"
                                                   className="w-full outline-none text-sm placeholder-gray-400 font-sans"
                                              />
                                         </div>
@@ -305,11 +305,14 @@ export default function Form() {
                                                   }}
                                                   className="mt-1 accent-primary"
                                              />
-                                             <label htmlFor="terms-agree" className="text-[12px] leading-4">
-                                                  By providing your contact details, you agree to our{" "}
-                                                  <span className="text-primary cursor-pointer">Terms of Use</span>
+                                             <label htmlFor="terms-checkbox" className="text-[12px] text-gray-600 leading-4">
+                                                  You accept our {" "}
+                                                  <span className="text-[#0050B3] cursor-pointer">Terms & Condition</span>
+                                                  ,{" "}
+                                                  <span className="text-[#0050B3] cursor-pointer">Disclaimer</span>
                                                   {" "}&{" "}
-                                                  <span className="text-primary cursor-pointer">Privacy Policy</span>
+                                                  <span className="text-[#0050B3] cursor-pointer">Privacy Policy</span>
+                                                  {" "}by entering your contact information.
                                              </label>
                                         </div>
                                         {errors.terms && <p className="text-red-500 text-xs mt-1">{errors.terms}</p>}
@@ -324,7 +327,7 @@ export default function Form() {
                                         {loading ? (
                                              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                                         ) : (
-                                             "Start Now"
+                                             "Enquire Now"
                                         )}
                                    </button>
                               </>

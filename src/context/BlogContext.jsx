@@ -1,40 +1,47 @@
 "use client";
 
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { usePathname } from 'next/navigation';
 import { getBlogs } from "../utils/blogService";
 
-const BlogContext = createContext();
+const BlogContext = createContext({ blogs: [], loading: false, getBlogBySlug: () => null });
+
+let preloadedBlogs = [];
+try {
+     const initialData = await getBlogs();
+     if (Array.isArray(initialData) && initialData.length > 0) {
+          preloadedBlogs = initialData;
+     }
+} catch (e) {
+     // Preload fallback if offline during build
+}
 
 export const BlogProvider = ({ children }) => {
-     const [blogs, setBlogs] = useState([]);
-     const [loading, setLoading] = useState(true);
-     const pathname = usePathname();
+     const [blogs, setBlogs] = useState(preloadedBlogs);
+     const [loading, setLoading] = useState(preloadedBlogs.length === 0);
 
      useEffect(() => {
-          const isIgnoredPage = pathname === "/disclaimer" || pathname === "/privacy-policy";
-          if (isIgnoredPage) return;
-          if (blogs.length > 0 || !loading) return;
-
+          let isMounted = true;
           const fetchBlogs = async () => {
                try {
                     const data = await getBlogs();
-                    if (Array.isArray(data)) {
+                    if (isMounted && Array.isArray(data) && data.length > 0) {
                          setBlogs(data);
-                         setLoading(false);
                     }
                } catch (err) {
                     console.error("Blog fetch error:", err);
+               } finally {
+                    if (isMounted) setLoading(false);
                }
           };
 
           fetchBlogs();
-     }, [pathname, loading, blogs.length]);
+          return () => { isMounted = false; };
+     }, []);
 
      const value = useMemo(() => ({
-          blogs,
+          blogs: Array.isArray(blogs) ? blogs : [],
           loading,
-          getBlogBySlug: (slug) => blogs.find((blog) => blog.slug === slug) || null,
+          getBlogBySlug: (slug) => (Array.isArray(blogs) ? blogs.find((blog) => blog?.slug === slug) : null) || null,
      }), [blogs, loading]);
 
      return (

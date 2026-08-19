@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:ror="http://rorweb.com/0.1/" version="2.0">
+<channel>
+  <title>ROR Sitemap for https://shikshadesign.com/</title>
+  <link>https://shikshadesign.com/</link>
+  <item>
+    <link>https://shikshadesign.com/</link>
+    <title>Shiksha Design Page</title>
+    <ror:sortOrder>0</ror:sortOrder>
+    <ror:resourceOf>sitemap</ror:resourceOf>
+  </item>
+  <item>
+    <link>https://shikshadesign.com/about-us</link>
+    <title>Shiksha Design Page</title>
+    <ror:sortOrder>1</ror:sortOrder>
+    <ror:resourceOf>sitemap</ror:resourceOf>
+  </item>
+  <item>
+    <link>https://shikshadesign.com/blog</link>
+    <title>Shiksha Design Page</title>
+    <ror:sortOrder>2</ror:sortOrder>
+    <ror:resourceOf>sitemap</ror:resourceOf>
+  </item>
+  <item>
+    <link>https://shikshadesign.com/courses</link>
+    <title>Shiksha Design Page</title>
+    <ror:sortOrder>3</ror:sortOrder>
+    <ror:resourceOf>sitemap</ror:resourceOf>
+  </item>
+  <item>
+    <link>https://shikshadesign.com/contact-us</link>
+    <title>Shiksha Design Page</title>
+    <ror:sortOrder>4</ror:sortOrder>
+    <ror:resourceOf>sitemap</ror:resourceOf>
+  </item>
+  <item>
+    <link>https://shikshadesign.com/dashboard</link>
+    <title>Shiksha Design Page</title>
+    <ror:sortOrder>5</ror:sortOrder>
+    <ror:resourceOf>sitemap</ror:resourceOf>
+  </item>
+  <item>
+    <link>https://shikshadesign.com/disclaimer</link>
+    <title>Shiksha Design Page</title>
+    <ror:sortOrder>6</ror:sortOrder>
+    <ror:resourceOf>sitemap</ror:resourceOf>
+  </item>
+  <item>
+    <link>https://shikshadesign.com/privacy-policy</link>
+    <title>Shiksha Design Page</title>
+    <ror:sortOrder>7</ror:sortOrder>
+    <ror:resourceOf>sitemap</ror:resourceOf>
+  </item>
+  <item>
+    <link>https://shikshadesign.com/terms-and-conditions-enrolment</link>
+    <title>Shiksha Design Page</title>
+    <ror:sortOrder>8</ror:sortOrder>
+    <ror:resourceOf>sitemap</ror:resourceOf>
+  </item>
+  <item>
+    <link>https://shikshadesign.com/search</link>
+    <title>Shiksha Design Page</title>
+    <ror:sortOrder>9</ror:sortOrder>
+    <ror:resourceOf>sitemap</ror:resourceOf>
+  </item>
+  <item>
+    <link>https://shikshadesign.com/blog/what-is-the-difference-between-ui-and-ux</link>
+    <title>Shiksha Design Page</title>
+    <ror:sortOrder>10</ror:sortOrder>
+    <ror:resourceOf>sitemap</ror:resourceOf>
+  </item>
+  <item>
+    <link>https://shikshadesign.com/blog/hey-there</link>
+    <title>Shiksha Design Page</title>
+    <ror:sortOrder>11</ror:sortOrder>
+    <ror:resourceOf>sitemap</ror:resourceOf>
+  </item>
+  <item>
+    <link>https://shikshadesign.com/courses/web-development-course-in-delhi</link>
+    <title>Shiksha Design Page</title>
+    <ror:sortOrder>12</ror:sortOrder>
+    <ror:resourceOf>sitemap</ror:resourceOf>
+  </item>
+  <item>
+    <link>https://shikshadesign.com/courses/figma-professional-training</link>
+    <title>Shiksha Design Page</title>
+    <ror:sortOrder>13</ror:sortOrder>
+    <ror:resourceOf>sitemap</ror:resourceOf>
+  </item>
+  <item>
+    <link>https://shikshadesign.com/location/full-stack-development-courses-shiksha</link>
+    <title>Shiksha Design Page</title>
+    <ror:sortOrder>14</ror:sortOrder>
+    <ror:resourceOf>sitemap</ror:resourceOf>
+  </item>
+</channel>
+</rss>

@@ -1,11 +1,31 @@
-# Shiksha - Master In-Demand Skills & Get Certified
+# Shiksha Design
 
-Master in-demand skills with industry-leading courses. Get certified, land your dream job, and join thousands of successful graduates.
+> Shiksha Design is an industry-leading education and skill training platform offering certified courses in UI/UX Design, Web Development, Graphic Design, and AI tools.
 
-## Quick Links
+## Main Pages
 
-- [Home Page](https://shikksha.netlify.app/)
-- [Courses Catalog](https://shikksha.netlify.app/courses)
-- [Latest Blogs](https://shikksha.netlify.app/category/blogs)
-- [About Us](https://shikksha.netlify.app/about-us)
-- [Contact Us](https://shikksha.netlify.app/contact-us)
+- [Home Page](https://shikshadesign.com/): Official Homepage of Shiksha Design
+- [Courses](https://shikshadesign.com/courses): Browse all certified skill development courses
+- [About Us](https://shikshadesign.com/about-us): Learn about Shiksha Design, our mission, and faculty
+- [Contact Us](https://shikshadesign.com/contact-us): Get in touch for course admissions and inquiries
+- [Blog](https://shikshadesign.com/blog): Articles and insights on design, tech, and career growth
+- [Privacy Policy](https://shikshadesign.com/privacy-policy): Shiksha Design privacy policy guidelines
+- [Disclaimer](https://shikshadesign.com/disclaimer): Website disclaimer and liability terms
+- [Terms & Conditions Enrolment](https://shikshadesign.com/terms-and-conditions-enrolment): Official enrolment rules and student terms
+
+## Featured Courses
+
+- [Web Development Course in Delhi](https://shikshadesign.com/courses/web-development-course-in-delhi): Join Weekend UX's Best Web Development Course and save up to 75% OFF. Learn HTML, CSS, JavaScript, React, Node.js & build job-ready projects.
+- [Figma Professional Training ](https://shikshadesign.com/courses/figma-professional-training): Learn UI/UX design with the Figma Professional Training | Weekend UX upto 90% OFF . Join online classes and build industry-ready Figma skills.
+
+## Latest Blog Posts
+
+- [Title What is the difference between UI and UX?](https://shikshadesign.com/blog/what-is-the-difference-between-ui-and-ux): Learn the difference between UI and UX with Weekend UX. Explore key concepts, design roles, and how UI and UX work together to create better digital experiences.
+- [This is the first test blog for testing purpose only](https://shikshadesign.com/blog/hey-there): qberbqeb
+
+## Sitemaps & Resources
+
+- [XML Sitemap](https://shikshadesign.com/sitemap.xml): Standard XML Sitemap for search engine indexers
+- [ROR Sitemap](https://shikshadesign.com/ror.xml): RSS-based ROR sitemap
+- [URL List](https://shikshadesign.com/urllist.txt): Plain text list of all URLs
+

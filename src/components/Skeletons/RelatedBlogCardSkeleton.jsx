@@ -1,6 +1,6 @@
-const RelatedBlogCardSkeleton = () => {
+const RelatedBlogCardSkeleton = ({ className = "" }) => {
      return (
-          <div className="w-86 md:w-100 h-103 bg-white rounded-xl border border-gray-200 shadow-sm p-3 animate-pulse">
+          <div className={`${className ? className : "w-86 md:w-100"} h-103 bg-white rounded-xl border border-gray-200 shadow-sm p-3 animate-pulse`}>
 
                {/* IMAGE */}
                <div className="w-full h-52.25 bg-gray-200 rounded-lg" />

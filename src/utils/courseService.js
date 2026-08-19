@@ -1,39 +1,40 @@
-import { API_URL } from "./api.js";
-
-const API = API_URL;
+import { fetchWithFallback } from "./api.js";
 
 export const getCourses = async () => {
      try {
-          const res = await fetch(`${API}/courses`);
-          return await res.json();
+          const res = await fetchWithFallback("/courses");
+          if (res && res.ok) {
+               return await res.json();
+          }
+          return [];
      } catch (err) {
-          console.error(err);
+          console.error("Failed to fetch courses:", err);
           return [];
      }
 };
 
 export const getCourseBySlug = async (slug) => {
      try {
-          const res = await fetch(`${API}/courses/${slug}`);
-          if (!res.ok) {
-               throw new Error("Course not found");
+          const res = await fetchWithFallback(`/courses/${slug}`);
+          if (res && res.ok) {
+               return await res.json();
           }
-          return await res.json();
+          return null;
      } catch (err) {
-          console.error(err);
+          console.error("Failed to fetch course by slug:", err);
           return null;
      }
 };
 
 export const getAllReviews = async () => {
      try {
-          const res = await fetch(`${API}/reviews/all`);
-          if (res.ok) {
+          const res = await fetchWithFallback("/reviews/all");
+          if (res && res.ok) {
                return await res.json();
           }
           return [];
      } catch (err) {
-          console.error(err);
+          console.error("Failed to fetch reviews:", err);
           return [];
      }
 };

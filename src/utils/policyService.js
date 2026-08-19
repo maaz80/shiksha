@@ -1,12 +1,8 @@
-import { API_URL } from "./api.js";
+import { fetchWithFallback } from "./api.js";
 
 let policyDataCache = null;
 let policyDataPromise = null;
 
-/**
- * Fetch policy data (Disclaimer & Privacy Policy) with local caching & deduplication.
- * @param {boolean} forceRefresh - If true, bypass cache and force a network reload.
- */
 export const getPolicyData = async (forceRefresh = false) => {
      if (!forceRefresh && policyDataCache) {
           return policyDataCache;
@@ -18,19 +14,18 @@ export const getPolicyData = async (forceRefresh = false) => {
 
      policyDataPromise = (async () => {
           try {
-               const res = await fetch(`${API_URL}/policy-data`);
-               if (!res.ok) {
-                    throw new Error(`HTTP Error: ${res.status} ${res.statusText}`);
+               const res = await fetchWithFallback("/policy-data");
+               if (res && res.ok) {
+                    const data = await res.json();
+                    policyDataCache = data;
+                    return data;
                }
-               const data = await res.json();
-               policyDataCache = data;
-               return data;
+               if (policyDataCache) return policyDataCache;
+               return null;
           } catch (err) {
                console.error("Failed to fetch policy data:", err);
-               if (policyDataCache) {
-                    return policyDataCache;
-               }
-               throw err;
+               if (policyDataCache) return policyDataCache;
+               return null;
           } finally {
                policyDataPromise = null;
           }

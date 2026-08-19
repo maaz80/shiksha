@@ -17,8 +17,8 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
           email: "",
           phone: "",
           otp: "",
-          agreeTerms: false,
-          keepSigned: false,
+          agreeTerms: true,
+          keepSigned: true,
      });
 
      useEffect(() => {
@@ -41,8 +41,8 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
                     email: "",
                     phone: "",
                     otp: "",
-                    agreeTerms: false,
-                    keepSigned: false,
+                    agreeTerms: true,
+                    keepSigned: true,
                });
           }
 
@@ -178,6 +178,9 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
                }
 
                // Success
+               if (typeof window !== "undefined") {
+                    window.dispatchEvent(new CustomEvent("userAuthStateChanged"));
+               }
                onClose();
                onAuthSuccess?.();
           } catch (err) {
@@ -188,14 +191,14 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
      };
 
      return (
-          <div className={`fixed open-sans inset-0 z-99999 flex items-center justify-center bg-secondary/30 backdrop-blur-sm ${isOpen ? 'translate-y-10 opacity-100 pointer-events-auto' : '-translate-y-full opacity-0 pointer-events-none'} transition-all duration-700 ease-in-out`} role="dialog" aria-labelledby="auth-modal-title" aria-modal="true">
+          <div className={`fixed open-sans inset-0 z-9999999 flex items-center justify-center bg-secondary/60 backdrop-blur-md ${isOpen ? 'translate-y-0 opacity-100 pointer-events-auto' : '-translate-y-full opacity-0 pointer-events-none'} transition-all duration-500 ease-in-out`} role="dialog" aria-labelledby="auth-modal-title" aria-modal="true">
                <h2 id="auth-modal-title" className="sr-only hidden">
                     {authMode === "signup" ? "Sign Up" : "Sign In"}
                </h2>
                {/* Modal */}
-               <div className="w-87.5 md:w-261.5 bg-primary-bg rounded-md shadow-xl relative overflow-hidden p-3 md:p-10">
+               <div className="w-84.5 md:w-261.5 bg-primary-bg rounded-md shadow-xl relative overflow-hidden p-3 md:p-10">
 
-                    <div className="flex h-135">
+                    <div className="flex min-h-100 max-h-135">
 
                          {/* LEFT PANEL */}
                          <div className="w-1/2 hidden md:flex flex-col justify-center px-10 relative">
@@ -213,25 +216,30 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
                          <div className="hidden md:block w-px bg-gray-300"></div>
 
                          {/* RIGHT PANEL */}
-                         <div className="w-full md:w-1/2 flex flex-col justify-center px-8 md:px-12">
-
+                         <div className="w-full md:w-1/2 flex flex-col justify-center px-3 md:px-12">
                               {/* Google Button */}
-                              <button className="flex items-center gap-2 border border-[#000000]/12 rounded-md px-4 h-10 md:h-13 text-[12px] md:text-[16px] bg-white hover:bg-gray-50">
-                                   <span className="bg-[#E32729] text-white text-[12px] md:text-[16px] px-1 md:px-3 py-0.5 md:py-2 rounded font-bold">
-                                        G+
-                                   </span>
-                                   Login with google
-                              </button>
-
+                              {authMode === "login" && (
+                                   <button className="flex items-center gap-2 border border-[#000000]/12 rounded-md px-4 h-10 md:h-13 text-[12px] md:text-[16px] bg-white hover:bg-gray-50">
+                                        <span className="bg-[#E32729] text-white text-[12px] md:text-[16px] px-1 md:px-3 py-0.5 md:py-2 rounded font-bold">
+                                             G+
+                                        </span>
+                                        Login with google
+                                   </button>
+                              )}
                               {/* Divider */}
-                              <div className="flex items-center gap-3 mt-5 mb-3">
-                                   <div className="flex-1 h-px bg-secondary"></div>
-                                   <span className="text-[10px] md:text-[14px] text-secondary">
-                                        Or login with your email
-                                   </span>
-                                   <div className="flex-1 h-px bg-secondary"></div>
-                              </div>
+                              {authMode === "login" && (
+                                   <div className="flex items-center gap-3 mt-5 mb-3">
+                                        <div className="flex-1 h-px bg-secondary"></div>
+                                        <span className="text-[10px] md:text-[14px] text-secondary">
+                                             Or login with your email
+                                        </span>
+                                        <div className="flex-1 h-px bg-secondary"></div>
+                                   </div>
+                              )}
 
+                              {authMode === "signup" && (
+                                   <div className="text-xl font-semibold text-secondary mb-5">Create Account</div>
+                              )}
                               {/* FORM */}
                               <form className="space-y-1 md:space-y-2" onSubmit={handleSubmit}>
 
@@ -240,14 +248,14 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
                                         <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded-md text-[12px] md:text-[14px]">
                                              {error}
                                         </div>
-                                    )}
+                                   )}
 
                                    {/* Success Message */}
                                    {successMessage && (
                                         <div className="bg-green-50 border border-green-200 text-green-700 px-3 py-2 rounded-md text-[12px] md:text-[14px]">
                                              {successMessage}
                                         </div>
-                                    )}
+                                   )}
 
                                    {/* Signup only */}
                                    {authMode === "signup" && (
@@ -260,13 +268,13 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
                                                        disabled={otpSent}
                                                        value={formData.name}
                                                        onChange={handleChange}
-                                                       placeholder="John Doe"
+                                                       placeholder="Enter your full name"
                                                        className="w-full mt-0 md:mt-1 px-10 h-10 md:h-13 border border-[#000000]/12 rounded-md text-[12px] md:text-[16px] outline-none focus:ring-2 focus:ring-blue-500 bg-white hover:bg-gray-50 disabled:bg-gray-100 disabled:cursor-not-allowed"
                                                   />
                                                   <User className="absolute top-9 left-3 z-20 text-secondary md:hidden" size={16} />
                                                   <User className="absolute top-11 left-3 z-20 text-secondary hidden md:block" size={20} />
                                              </div>
-                                             
+
                                              <div className="relative">
                                                   <label className="text-[12px] md:text-[16px] text-secondary">Phone Number</label>
                                                   <input
@@ -275,7 +283,7 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
                                                        disabled={otpSent}
                                                        value={formData.phone}
                                                        onChange={handleChange}
-                                                       placeholder="9876543210"
+                                                       placeholder="Enter your phone number"
                                                        maxLength={10}
                                                        className="w-full mt-0 md:mt-1 px-10 h-10 md:h-13 border border-[#000000]/12 rounded-md text-[12px] md:text-[16px] outline-none focus:ring-2 focus:ring-blue-500 bg-white hover:bg-gray-50 disabled:bg-gray-100 disabled:cursor-not-allowed"
                                                   />
@@ -293,7 +301,7 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
                                              disabled={otpSent}
                                              value={formData.email}
                                              onChange={handleChange}
-                                             placeholder="example@email.com"
+                                             placeholder="Enter your email address"
                                              className="w-full mt-0 md:mt-1 px-10 h-10 md:h-13 border border-[#000000]/12 rounded-md text-[12px] md:text-[16px] outline-none focus:ring-2 focus:ring-blue-500 bg-white hover:bg-gray-50 disabled:bg-gray-100 disabled:cursor-not-allowed"
                                         />
                                         <Mail className="absolute top-9 left-3 z-20 text-secondary md:hidden" size={16} />
@@ -319,19 +327,33 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
 
                                    {authMode === "signup" && otpSent && (
                                         <div className="flex items-center justify-between text-[10px] md:text-[14px] text-secondary py-1">
-                                             <label className="flex items-center gap-2">
+                                             <label className="flex items-center gap-2 cursor-pointer">
                                                   <input
                                                        type="checkbox"
                                                        name="agreeTerms"
                                                        checked={formData.agreeTerms}
                                                        onChange={handleChange}
-                                                       className="accent-primary"
+                                                       className="accent-[#0071E5] w-4 h-4 cursor-pointer"
                                                   />
                                                   I agreed to the Terms & Conditions
                                              </label>
                                         </div>
                                    )}
-
+                                   {/* Bottom Row */}
+                                   {/* {authMode === "login" || authMode === "signup" && ( */}
+                                        <div className="flex items-start justify-start text-[10px] md:text-[12px] text-secondary bg-transparent pt-2">
+                                             <label className="flex items-center gap-2 bg-transparent cursor-pointer">
+                                                  <input
+                                                       type="checkbox"
+                                                       name="keepSigned"
+                                                       checked={formData.keepSigned}
+                                                       onChange={handleChange}
+                                                       className="accent-[#0071E5] w-4 h-4 cursor-pointer"
+                                                  />
+                                                  You accept our Terms & Condition, Disclaimer & Privacy Policy by entering your contact information.
+                                             </label>
+                                        </div>
+                                   {/* )} */}
                                    {/* Button */}
                                    {!otpSent ? (
                                         <button
@@ -352,21 +374,7 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
                                         </button>
                                    )}
 
-                                   {/* Bottom Row */}
-                                   {authMode === "login" && (
-                                        <div className="flex items-center justify-between text-[10px] md:text-[14px] text-secondary bg-transparent pt-2">
-                                             <label className="flex items-center gap-2 bg-transparent">
-                                                  <input
-                                                       type="checkbox"
-                                                       name="keepSigned"
-                                                       checked={formData.keepSigned}
-                                                       onChange={handleChange}
-                                                       className="accent-transparent bg-transparent"
-                                                  />
-                                                  keep me signed in
-                                             </label>
-                                        </div>
-                                   )}
+
                               </form>
 
                               {/* Toggle */}
@@ -379,7 +387,7 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
                                         >
                                              Sign up
                                         </span>
-                                    )}
+                                   )}
                                    {authMode === "signup" && (
                                         <span
                                              onClick={() => { setAuthMode("login"); setOtpSent(false); setError(""); setSuccessMessage(""); }}
@@ -387,7 +395,7 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
                                         >
                                              Login
                                         </span>
-                                    )}
+                                   )}
                               </p>
 
                               {/* Warning Message at the bottom */}

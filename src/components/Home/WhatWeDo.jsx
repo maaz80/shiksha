@@ -13,7 +13,7 @@ const WhatWeDo = ({ data }) => {
      const pointsToRender = data?.point && data.point.length > 0 ? data.point : defaultPoints;
 
      return (
-          <div className='min-h-63.75 md:min-h-60.25 2xl:min-h-75.75 relative flex flex-col md:flex-row items-center justify-center gap-10 2xl:gap-25 mt-10'>
+          <div className='min-h-63.75 md:min-h-60.25 2xl:min-h-75.75 relative flex flex-col md:flex-row items-center justify-center gap-10 2xl:gap-25 mt-10 z-10'>
                <picture className='absolute inset-0 w-full h-full z-5'>
                     <source media="(max-width: 767px)" srcSet="/images/whatwedobg-tab.webp" />
                     <img

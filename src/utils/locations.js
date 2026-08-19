@@ -1,19 +1,14 @@
-import { API_URL } from "./api.js";
-
-const API = API_URL;
+import { fetchWithFallback } from "./api.js";
 
 export const getLocations = async () => {
-
      try {
-
-          const res = await fetch(`${API}/locations`);
-          return await res.json();
-
-     } catch (err) {
-
-          console.error(err);
+          const res = await fetchWithFallback("/locations");
+          if (res && res.ok) {
+               return await res.json();
+          }
           return [];
-
+     } catch (err) {
+          console.error("Failed to fetch locations:", err);
+          return [];
      }
-
 };

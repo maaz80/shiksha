@@ -233,7 +233,7 @@ export default function ContactForm() {
                                                   name="fullName"
                                                   value={formData.fullName}
                                                   onChange={handleChange}
-                                                  placeholder="John Doe"
+                                                  placeholder="Enter your full name"
                                                   className="w-full text-sm outline-none placeholder-gray-400"
                                              />
                                         </div>
@@ -254,7 +254,7 @@ export default function ContactForm() {
                                                        name="email"
                                                        value={formData.email}
                                                        onChange={handleChange}
-                                                       placeholder="abc@example.com"
+                                                       placeholder="Enter your email address"
                                                        className="w-full text-sm outline-none placeholder-gray-400"
                                                   />
                                              </div>
@@ -275,7 +275,7 @@ export default function ContactForm() {
                                                        name="phone"
                                                        value={formData.phone}
                                                        onChange={handleChange}
-                                                       placeholder="Enter 10 digit number"
+                                                       placeholder="Enter 10 digit mobile number"
                                                        className="w-full text-sm outline-none placeholder-gray-400"
                                                   />
                                              </div>
@@ -316,10 +316,13 @@ export default function ContactForm() {
                                                        className="mt-1 accent-primary"
                                                   />
                                                   <label htmlFor="terms-checkbox" className="text-[12px] text-gray-600 leading-4">
-                                                       By providing your contact details, you agree to our{" "}
-                                                       <span className="text-[#0050B3] cursor-pointer">Terms of Use</span>
+                                                       You accept our {" "}
+                                                       <span className="text-[#0050B3] cursor-pointer">Terms & Condition</span>
+                                                       ,{" "}
+                                                       <span className="text-[#0050B3] cursor-pointer">Disclaimer</span>
                                                        {" "}&{" "}
                                                        <span className="text-[#0050B3] cursor-pointer">Privacy Policy</span>
+                                                       {" "}by entering your contact information.
                                                   </label>
                                              </div>
                                              {errors.terms && <p className="text-red-500 text-xs mt-1">{errors.terms}</p>}
@@ -328,12 +331,12 @@ export default function ContactForm() {
                                         <button
                                              type="submit"
                                              disabled={loading}
-                                             className="h-9 w-27.5 px-6 rounded-md bg-primary text-white text-sm font-medium hover:bg-primary-hover transition-all duration-500 ease-in-out cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-1.5"
+                                             className="btn-action-primary disabled:bg-gray-400 disabled:cursor-not-allowed"
                                         >
                                              {loading ? (
                                                   <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                                              ) : (
-                                                  "Send"
+                                                  "Enquire Now"
                                              )}
                                         </button>
                                    </div>
@@ -394,7 +397,7 @@ export default function ContactForm() {
                                    <button
                                         type="submit"
                                         disabled={status === "loading"}
-                                        className="h-10 w-full rounded-md bg-primary text-white text-sm font-medium hover:bg-primary-hover transition-all duration-500 ease-in-out flex items-center justify-center gap-2 cursor-pointer disabled:bg-gray-450 disabled:cursor-not-allowed"
+                                        className="btn-action-primary w-full disabled:bg-gray-450 disabled:cursor-not-allowed"
                                    >
                                         {status === "loading" ? (
                                              <>

@@ -1,35 +1,46 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import CompanyIcon from '../../assets/company-template.webp';
 import { getCompanies } from '../../utils/companyService';
 
-const Companies = () => {
-     const [startTitle, setStartTitle] = useState("Companies");
-     const [endTitle, setEndTitle] = useState("That Our Students Work At");
-     const [description, setDescription] = useState("Our students have gone on to build successful careers...");
-     const [companiesList, setCompaniesList] = useState([]);
+const buildPaddedList = (data) => {
+     const logos = data?.images || [];
+     const padded = [...logos];
+     while (padded.length < 21) {
+          padded.push({
+               _id: `fallback-${padded.length}`,
+               image: CompanyIcon?.src || CompanyIcon,
+               title: "Company Logo"
+          });
+     }
+     return padded;
+};
+
+const Companies = ({ initialCompanies = null }) => {
+     const [startTitle, setStartTitle] = useState(initialCompanies?.startTitle || "Companies");
+     const [endTitle, setEndTitle] = useState(initialCompanies?.endTitle || "That Our Students Work At");
+     const [description, setDescription] = useState(initialCompanies?.description || "Our students have gone on to build successful careers with leading organizations across diverse industries.");
+     const [companiesList, setCompaniesList] = useState(buildPaddedList(initialCompanies));
 
      useEffect(() => {
+          let isMounted = true;
           const fetchLogos = async () => {
-               const data = await getCompanies();
-               if (data) {
-                    if (data.startTitle) setStartTitle(data.startTitle);
-                    if (data.endTitle) setEndTitle(data.endTitle);
-                    if (data.description) setDescription(data.description);
-                    const logos = data.images || [];
-                    const padded = [...logos];
-                    while (padded.length < 21) {
-                         padded.push({
-                              _id: `fallback-${padded.length}`,
-                              image: CompanyIcon?.src || CompanyIcon,
-                              title: "Company Logo"
-                         });
+               try {
+                    const data = await getCompanies();
+                    if (isMounted && data) {
+                         if (data.startTitle) setStartTitle(data.startTitle);
+                         if (data.endTitle) setEndTitle(data.endTitle);
+                         if (data.description) setDescription(data.description);
+                         setCompaniesList(buildPaddedList(data));
                     }
-                    setCompaniesList(padded);
+               } catch (e) {
+                    console.error("Failed to load company logos:", e);
                }
           };
           fetchLogos();
+          return () => { isMounted = false; };
      }, []);
 
      // Pyramid rows: 8 + 7 + 6
@@ -83,16 +94,14 @@ const Companies = () => {
                               {row.map((company) => (
                                    <div
                                         key={company._id}
-                                        className="w-9 md:w-10 h-9 md:h-10 2xl:w-16 2xl:h-16 rounded-full overflow-hidden shrink-0"
+                                        className="w-9 md:w-10 h-9 md:h-10 2xl:w-16 2xl:h-16 rounded-full overflow-hidden shrink-0 relative"
                                    >
-                                        <img
+                                        <Image
                                              src={company.image?.src || company.image || CompanyIcon?.src || CompanyIcon}
                                              alt={company.title || "Company Logo"}
-                                             onError={(e) => {
-                                                  e.target.src = CompanyIcon?.src || CompanyIcon;
-                                             }}
-                                             loading="lazy"
-                                             decoding="async"
+                                             width={64}
+                                             height={64}
+                                             unoptimized
                                              className="w-full h-full object-contain"
                                         />
                                    </div>

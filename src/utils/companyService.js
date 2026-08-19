@@ -1,9 +1,9 @@
-import { API_URL } from "./api.js";
+import { fetchWithFallback } from "./api.js";
 
 export const getCompanies = async () => {
      try {
-          const res = await fetch(`${API_URL}/images`);
-          if (res.ok) {
+          const res = await fetchWithFallback("/images");
+          if (res && res.ok) {
                return await res.json();
           }
           return [];

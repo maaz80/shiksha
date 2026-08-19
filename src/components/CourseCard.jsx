@@ -1,52 +1,101 @@
 "use client";
 
-import { ChevronRight } from 'lucide-react';
+import Link from 'next/link';
+import { ChevronRight, Lock, Unlock, Calendar } from 'lucide-react';
 import CloudinaryImage from './CloudinaryImage';
 import CourseImage from '../assets/course-card.webp';
-import PurdueUniversity from '../assets/purdue.webp';
-import { useRouter } from 'next/navigation';
+import { useUserAuth } from '../context/UserAuthContext';
 
-export default function CourseCard({ course, setIsModal = false }) {
-     const router = useRouter();
+export default function CourseCard({ course, setIsModal = false, className = "" }) {
+     if (!course) return null;
+
+     const { isLoggedIn, isCourseUnlocked } = useUserAuth();
+     const isUnlocked = isLoggedIn ? isCourseUnlocked(course) : false;
+
+     // Flow Logic:
+     // If logged in & unlocked -> navigate to /dashboard?course=slug
+     // If logged in & locked OR not logged in -> navigate to normal course details page /courses/slug
+     const courseHref = (isLoggedIn && isUnlocked)
+          ? `/dashboard?course=${course.slug || course._id}`
+          : `/courses/${course.slug || course._id}`;
+
      const handleClick = () => {
-          if (setIsModal) setIsModal(false)
-          router.push(`/${course.slug || course._id}`);
+          if (setIsModal) setIsModal(false);
      };
 
      return (
-          <div className="w-70 md:w-51 2xl:w-70 rounded-xl shadow-[0_0px_8px_0px] shadow-[#000000]/7 bg-white p-1.5">
-               {/* Image section */}
-               <div className="relative rounded-lg overflow-hidden h-27 w-full">
-                    <CloudinaryImage
-                         src={course?.image || CourseImage}
-                         sizes="(max-width: 768px) 100vw, 280px"
-                         alt={course?.alt || course?.title || "Course Cover Image"}
-                         className="w-full h-full object-cover"
-                    />
+          <Link
+               href={courseHref}
+               onClick={handleClick}
+               className={`block ${className ? className : "w-70 md:w-51 2xl:w-70"} rounded-xl shadow-[0_0px_8px_0px] shadow-[#000000]/7 bg-white p-2 cursor-pointer group hover:shadow-md transition-all duration-300 relative flex flex-col justify-between`}
+          >
+               <div>
+                    {/* Image section */}
+                    <div className="relative rounded-lg overflow-hidden h-28 w-full">
+                         <CloudinaryImage
+                              src={course?.image || CourseImage}
+                              sizes="(max-width: 768px) 100vw, 280px"
+                              alt={course?.alt || course?.title || "Course Cover Image"}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                         />
+
+                         {/* Category Badge */}
+                         {course?.category && (
+                              <div className="absolute top-2 left-2 z-10">
+                                   <span className="bg-slate-900/80 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-xs">
+                                        {course.category}
+                                   </span>
+                              </div>
+                         )}
+
+                         {/* Logged in Badge */}
+                         {isLoggedIn && (
+                              <div className="absolute top-2 right-2 z-10">
+                                   {isUnlocked ? (
+                                        <span className="bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-xs flex items-center gap-1">
+                                             <Unlock size={11} />
+                                             Unlocked
+                                        </span>
+                                   ) : (
+                                        <span className="bg-amber-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-xs flex items-center gap-1">
+                                             <Lock size={11} />
+                                             Locked
+                                        </span>
+                                   )}
+                              </div>
+                         )}
+                    </div>
+
+                    {/* Content */}
+                    <div className="pt-3 px-1 text-left">
+                         {/* Title */}
+                         <h3 className="text-[15px] 2xl:text-[17px] leading-snug text-secondary font-bold group-hover:text-primary transition-colors line-clamp-1">
+                              {course?.title}
+                         </h3>
+
+                         {/* Description */}
+                         <p className="text-xs text-slate-600 line-clamp-2 mt-1.5 leading-relaxed font-normal">
+                              {course?.overview || course?.description || "Master in-demand skills with expert live sessions, hands-on projects, and mentorship."}
+                         </p>
+                    </div>
                </div>
 
-               {/* Content */}
-               <div className="pt-3 px-1">
-                    {/* Title */}
-                    <h3 className="text-[16px] 2xl:text-[18px] leading-7 text-secondary">
-                         {course?.title}
-                    </h3>
-
-                    {/* University logo */}
-                    <img src={PurdueUniversity?.src || PurdueUniversity} alt="Purdue University" loading="lazy" decoding="async" width="124" height="46" className="h-11.5 w-31 object-contain mt-3 mb-4 -ml-3  " />
-
-                    {/* Metadata */}
-                    <div className="space-y-1 text-[14px] 2xl:text-[16px] text-secondary mb-5">
-                         <p>Starts: {course?.deadline}</p>
-                         <p>Duration: {course?.courseLength}</p>
+               {/* Bottom Section */}
+               <div className="pt-2 px-1 text-left">
+                    {/* Start Intake Metadata */}
+                    <div className="flex items-center justify-between text-xs text-slate-500 font-medium mb-3 pt-2.5 border-t border-slate-100">
+                         <span className="flex items-center gap-1.5">
+                              <Calendar size={13} className="text-primary shrink-0" />
+                              <span>Starts: <strong className="text-slate-800 font-semibold">{course?.deadline || "Upcoming Intake"}</strong></span>
+                         </span>
                     </div>
 
                     {/* CTA button */}
-                    <button onClick={handleClick} className="w-full h-12 rounded-lg text-secondary text-[14px] 2xl:text-[16px] flex items-center justify-center gap-2 border border-[#E1EAF5] cursor-pointer hover:bg-primary hover:text-white transition-all duration-300 ease-in-out">
-                         Learn More
-                         <ChevronRight />
-                    </button>
+                    <div className="w-full h-10.5 rounded-lg text-secondary text-[13px] 2xl:text-[15px] flex items-center justify-center gap-1.5 border border-[#E1EAF5] cursor-pointer group-hover:bg-primary group-hover:text-white transition-all duration-300 ease-in-out font-semibold">
+                         {isLoggedIn && isUnlocked ? "Open Dashboard" : "Learn More"}
+                         <ChevronRight size={16} />
+                    </div>
                </div>
-          </div>
+          </Link>
      );
 }

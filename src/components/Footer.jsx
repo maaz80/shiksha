@@ -2,180 +2,178 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import logo from '../assets/shiksha-logo.webp';
 import { getLocations } from '../utils/locations';
-import { API_URL } from '../utils/api.js';
+import { API_URL, fetchWithFallback } from '../utils/api';
 import {
-  FaFacebookF,
-  FaFacebook,
-  FaFacebookMessenger,
-  FaInstagram,
-  FaLinkedinIn,
-  FaLinkedin,
-  FaTwitter,
-  FaTwitterSquare,
-  FaYoutube,
-  FaYoutubeSquare,
-  FaGithub,
-  FaGithubSquare,
-  FaPinterest,
-  FaPinterestP,
-  FaPinterestSquare,
-  FaTiktok,
-  FaWhatsapp,
-  FaWhatsappSquare,
-  FaTelegram,
-  FaTelegramPlane,
-  FaSnapchat,
-  FaSnapchatGhost,
-  FaSnapchatSquare,
-  FaReddit,
-  FaRedditSquare,
-  FaMedium,
-  FaMediumM,
-  FaDiscord,
-  FaGlobe,
-  FaEnvelope,
-  FaPhone
+     FaFacebookF,
+     FaFacebook,
+     FaFacebookMessenger,
+     FaInstagram,
+     FaLinkedinIn,
+     FaLinkedin,
+     FaTwitter,
+     FaTwitterSquare,
+     FaYoutube,
+     FaYoutubeSquare,
+     FaGithub,
+     FaGithubSquare,
+     FaPinterest,
+     FaPinterestP,
+     FaPinterestSquare,
+     FaTiktok,
+     FaWhatsapp,
+     FaWhatsappSquare,
+     FaTelegram,
+     FaTelegramPlane,
+     FaSnapchat,
+     FaSnapchatGhost,
+     FaSnapchatSquare,
+     FaReddit,
+     FaRedditSquare,
+     FaMedium,
+     FaMediumM,
+     FaDiscord,
+     FaGlobe,
+     FaEnvelope,
+     FaPhone
 } from "react-icons/fa";
 import {
-  RiTwitterXLine,
-  RiTwitterXFill,
-  RiTwitterFill,
-  RiTwitterLine,
-  RiFacebookFill,
-  RiFacebookLine,
-  RiFacebookCircleFill,
-  RiFacebookCircleLine,
-  RiInstagramFill,
-  RiInstagramLine,
-  RiLinkedinFill,
-  RiLinkedinLine,
-  RiYoutubeFill,
-  RiYoutubeLine,
-  RiGithubFill,
-  RiGithubLine,
-  RiPinterestFill,
-  RiPinterestLine,
-  RiTiktokFill,
-  RiTiktokLine,
-  RiWhatsappFill,
-  RiWhatsappLine,
-  RiTelegramFill,
-  RiTelegramLine,
-  RiSnapchatFill,
-  RiSnapchatLine,
-  RiRedditFill,
-  RiRedditLine,
-  RiDiscordFill,
-  RiDiscordLine,
-  RiGlobalFill,
-  RiGlobalLine,
-  RiMailFill,
-  RiMailLine,
-  RiPhoneFill,
-  RiPhoneLine
+     RiTwitterXLine,
+     RiTwitterXFill,
+     RiTwitterFill,
+     RiTwitterLine,
+     RiFacebookFill,
+     RiFacebookLine,
+     RiFacebookCircleFill,
+     RiFacebookCircleLine,
+     RiInstagramFill,
+     RiInstagramLine,
+     RiLinkedinFill,
+     RiLinkedinLine,
+     RiYoutubeFill,
+     RiYoutubeLine,
+     RiGithubFill,
+     RiGithubLine,
+     RiPinterestFill,
+     RiPinterestLine,
+     RiTiktokFill,
+     RiTiktokLine,
+     RiWhatsappFill,
+     RiWhatsappLine,
+     RiTelegramFill,
+     RiTelegramLine,
+     RiSnapchatFill,
+     RiSnapchatLine,
+     RiRedditFill,
+     RiRedditLine,
+     RiDiscordFill,
+     RiDiscordLine,
+     RiGlobalFill,
+     RiGlobalLine,
+     RiMailFill,
+     RiMailLine,
+     RiPhoneFill,
+     RiPhoneLine
 } from "react-icons/ri";
 import {
-  CiYoutube,
-  CiFacebook,
-  CiInstagram,
-  CiLinkedin,
-  CiTwitter,
-  CiMail,
-  CiGlobe,
-  CiPhone
+     CiYoutube,
+     CiFacebook,
+     CiInstagram,
+     CiLinkedin,
+     CiTwitter,
+     CiMail,
+     CiGlobe,
+     CiPhone
 } from "react-icons/ci";
 
 const iconMap = {
-  // FontAwesome
-  FaFacebookF,
-  FaFacebook,
-  FaFacebookMessenger,
-  FaInstagram,
-  FaLinkedinIn,
-  FaLinkedin,
-  FaTwitter,
-  FaTwitterSquare,
-  FaYoutube,
-  FaYoutubeSquare,
-  FaGithub,
-  FaGithubSquare,
-  FaPinterest,
-  FaPinterestP,
-  FaPinterestSquare,
-  FaTiktok,
-  FaWhatsapp,
-  FaWhatsappSquare,
-  FaTelegram,
-  FaTelegramPlane,
-  FaSnapchat,
-  FaSnapchatGhost,
-  FaSnapchatSquare,
-  FaReddit,
-  FaRedditSquare,
-  FaMedium,
-  FaMediumM,
-  FaDiscord,
-  FaGlobe,
-  FaEnvelope,
-  FaPhone,
+     FaFacebookF,
+     FaFacebook,
+     FaFacebookMessenger,
+     FaInstagram,
+     FaLinkedinIn,
+     FaLinkedin,
+     FaTwitter,
+     FaTwitterSquare,
+     FaYoutube,
+     FaYoutubeSquare,
+     FaGithub,
+     FaGithubSquare,
+     FaPinterest,
+     FaPinterestP,
+     FaPinterestSquare,
+     FaTiktok,
+     FaWhatsapp,
+     FaWhatsappSquare,
+     FaTelegram,
+     FaTelegramPlane,
+     FaSnapchat,
+     FaSnapchatGhost,
+     FaSnapchatSquare,
+     FaReddit,
+     FaRedditSquare,
+     FaMedium,
+     FaMediumM,
+     FaDiscord,
+     FaGlobe,
+     FaEnvelope,
+     FaPhone,
 
-  // Remix Icons
-  RiTwitterXLine,
-  RiTwitterXFill,
-  RiTwitterFill,
-  RiTwitterLine,
-  RiFacebookFill,
-  RiFacebookLine,
-  RiFacebookCircleFill,
-  RiFacebookCircleLine,
-  RiInstagramFill,
-  RiInstagramLine,
-  RiLinkedinFill,
-  RiLinkedinLine,
-  RiYoutubeFill,
-  RiYoutubeLine,
-  RiGithubFill,
-  RiGithubLine,
-  RiPinterestFill,
-  RiPinterestLine,
-  RiTiktokFill,
-  RiTiktokLine,
-  RiWhatsappFill,
-  RiWhatsappLine,
-  RiTelegramFill,
-  RiTelegramLine,
-  RiSnapchatFill,
-  RiSnapchatLine,
-  RiRedditFill,
-  RiRedditLine,
-  RiDiscordFill,
-  RiDiscordLine,
-  RiGlobalFill,
-  RiGlobalLine,
-  RiMailFill,
-  RiMailLine,
-  RiPhoneFill,
-  RiPhoneLine,
+     RiTwitterXLine,
+     RiTwitterXFill,
+     RiTwitterFill,
+     RiTwitterLine,
+     RiFacebookFill,
+     RiFacebookLine,
+     RiFacebookCircleFill,
+     RiFacebookCircleLine,
+     RiInstagramFill,
+     RiInstagramLine,
+     RiLinkedinFill,
+     RiLinkedinLine,
+     RiYoutubeFill,
+     RiYoutubeLine,
+     RiGithubFill,
+     RiGithubLine,
+     RiPinterestFill,
+     RiPinterestLine,
+     RiTiktokFill,
+     RiTiktokLine,
+     RiWhatsappFill,
+     RiWhatsappLine,
+     RiTelegramFill,
+     RiTelegramLine,
+     RiSnapchatFill,
+     RiSnapchatLine,
+     RiRedditFill,
+     RiRedditLine,
+     RiDiscordFill,
+     RiDiscordLine,
+     RiGlobalFill,
+     RiGlobalLine,
+     RiMailFill,
+     RiMailLine,
+     RiPhoneFill,
+     RiPhoneLine,
 
-  // Cosmo Icons
-  CiYoutube,
-  CiFacebook,
-  CiInstagram,
-  CiLinkedin,
-  CiTwitter,
-  CiMail,
-  CiGlobe,
-  CiPhone
+     CiYoutube,
+     CiFacebook,
+     CiInstagram,
+     CiLinkedin,
+     CiTwitter,
+     CiMail,
+     CiGlobe,
+     CiPhone
 };
 
 function getIconComponent(iconName) {
-  if (!iconName) return null;
-  return iconMap[iconName] || null;
+     if (!iconName) return null;
+     return iconMap[iconName] || null;
 }
 
-export default function Footer() {
-     const [locations, setLocations] = useState([]);
+export default function Footer({ initialLocations = [] }) {
+     const [locations, setLocations] = useState(initialLocations);
      const defaultColumns = [
           {
                title: "Company",
@@ -185,7 +183,7 @@ export default function Footer() {
                     { label: "Disclaimer", path: "/disclaimer" },
                     { label: "Privacy Policy", path: "/privacy-policy" },
                     { label: "Contact us", path: "/contact-us" },
-                    { label: "Blogs", path: "/category/blogs" },
+                    { label: "Blogs", path: "/blog" },
                ]
           },
           {
@@ -215,17 +213,22 @@ export default function Footer() {
      const [settings, setSettings] = useState(null);
 
      useEffect(() => {
+          let isMounted = true;
           const fetchLocations = async () => {
-               const data = await getLocations();
-               setLocations(data);
+               try {
+                    const data = await getLocations();
+                    if (isMounted && Array.isArray(data) && data.length > 0) setLocations(data);
+               } catch (e) {
+                    console.error("Failed to fetch locations in Footer", e);
+               }
           };
 
           const fetchFooterColumns = async () => {
                try {
-                     const res = await fetch(`${API_URL}/footer-columns`);
-                    if (res.ok) {
+                    const res = await fetchWithFallback("/footer-columns");
+                    if (res && res.ok) {
                          const data = await res.json();
-                         if (data && data.length > 0) {
+                         if (isMounted && Array.isArray(data) && data.length > 0) {
                               setFooterColumns(data);
                          }
                     }
@@ -236,10 +239,10 @@ export default function Footer() {
 
           const fetchFooterSettings = async () => {
                try {
-                     const res = await fetch(`${API_URL}/footer-columns/global`);
-                    if (res.ok) {
+                    const res = await fetchWithFallback("/footer-columns/global");
+                    if (res && res.ok) {
                          const data = await res.json();
-                         setSettings(data);
+                         if (isMounted) setSettings(data);
                     }
                } catch (err) {
                     console.error("Failed to fetch global footer settings", err);
@@ -249,10 +252,12 @@ export default function Footer() {
           fetchLocations();
           fetchFooterColumns();
           fetchFooterSettings();
+
+          return () => { isMounted = false; };
      }, []);
 
      return (
-          <footer className="bg-dark-blue text-white w-full mt-20">
+          <footer className="bg-dark-blue text-white w-full">
                <div className="mx-auto max-w-330 px-6 md:px-9 2xl:px-10 pt-12 md:pt-14 2xl:pt-16 pb-5">
 
                     {/* TOP GRID */}
@@ -263,51 +268,54 @@ export default function Footer() {
           2xl:grid-cols-5
         ">
 
-                         {/* Follow us */}
-                         <div className="order-1 md:order-3 2xl:order-1">
-                              <h2 className="text-[20px] mb-5">{settings?.buttontitle || "Follow us!"}</h2>
-
-                              {(settings?.buttonname || !settings) && (
-                                   <button className="w-43 h-11 border border-white/70 rounded-lg text-[12px] text-white/80 mb-5 hover:bg-white/5 transition">
-                                        {settings?.buttonname || "Refer & Earn"}
-                                   </button>
-                              )}
+                         {/* Logo & Social Links */}
+                         <div className="order-1 md:order-3 2xl:order-1 h-card vcard">
+                              <Link href="/" className="inline-block mb-6 cursor-pointer p-name fn u-url url" aria-label="Shiksha Home">
+                                   <img
+                                        src={logo?.src || logo || '/images/shiksha-logo.webp'}
+                                        alt="Shiksha Logo"
+                                        width="140"
+                                        height="40"
+                                        className="h-10 w-auto object-contain brightness-0 invert u-logo logo"
+                                   />
+                              </Link>
+                              <span className="p-org org hidden">Shiksha Design</span>
 
                               <div className="flex gap-3">
-                                    {settings && settings.socials && settings.socials.length > 0 ? (
-                                         settings.socials.map((social, i) => {
-                                              const IconComponent = getIconComponent(social.icon);
-                                              if (!IconComponent) return null;
+                                   {settings && settings.socials && settings.socials.length > 0 ? (
+                                        settings.socials.map((social, i) => {
+                                             const IconComponent = getIconComponent(social.icon);
+                                             if (!IconComponent) return null;
 
-                                              const getSocialLabel = (iconName) => {
-                                                   if (!iconName) return "Social Link";
-                                                   const name = iconName.replace(/^(Fa|Ri|Ci|Bs|Io|Hi|Go|Fi|Lu)/, '');
-                                                   if (name.includes("Facebook")) return "Facebook";
-                                                   if (name.includes("Twitter") || name.includes("TwitterX")) return "Twitter";
-                                                   if (name.includes("Instagram")) return "Instagram";
-                                                   if (name.includes("Linkedin")) return "LinkedIn";
-                                                   if (name.includes("Youtube")) return "YouTube";
-                                                   if (name.includes("Github")) return "GitHub";
-                                                   if (name.includes("Pinterest")) return "Pinterest";
-                                                   if (name.includes("Tiktok")) return "TikTok";
-                                                   if (name.includes("Whatsapp")) return "WhatsApp";
-                                                   if (name.includes("Telegram")) return "Telegram";
-                                                   return name + " Link";
-                                              };
+                                             const getSocialLabel = (iconName) => {
+                                                  if (!iconName) return "Social Link";
+                                                  const name = iconName.replace(/^(Fa|Ri|Ci|Bs|Io|Hi|Go|Fi|Lu)/, '');
+                                                  if (name.includes("Facebook")) return "Facebook";
+                                                  if (name.includes("Twitter") || name.includes("TwitterX")) return "Twitter";
+                                                  if (name.includes("Instagram")) return "Instagram";
+                                                  if (name.includes("Linkedin")) return "LinkedIn";
+                                                  if (name.includes("Youtube")) return "YouTube";
+                                                  if (name.includes("Github")) return "GitHub";
+                                                  if (name.includes("Pinterest")) return "Pinterest";
+                                                  if (name.includes("Tiktok")) return "TikTok";
+                                                  if (name.includes("Whatsapp")) return "WhatsApp";
+                                                  if (name.includes("Telegram")) return "Telegram";
+                                                  return name + " Link";
+                                             };
 
-                                              return (
-                                                   <a
-                                                        href={social.path}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        key={i}
-                                                        className="min-w-9 h-9 rounded-full bg-[#1877F2] flex items-center justify-center cursor-pointer text-white"
-                                                        aria-label={getSocialLabel(social.icon)}
-                                                   >
-                                                        <IconComponent size={18} />
-                                                   </a>
-                                              );
-                                         })
+                                             return (
+                                                  <a
+                                                       href={social.path}
+                                                       target="_blank"
+                                                       rel="noopener noreferrer"
+                                                       key={i}
+                                                       className="min-w-9 h-9 rounded-full bg-[#1877F2] flex items-center justify-center cursor-pointer text-white"
+                                                       aria-label={getSocialLabel(social.icon)}
+                                                  >
+                                                       <IconComponent size={18} />
+                                                  </a>
+                                             );
+                                        })
                                    ) : (
                                         [FaFacebookF, RiTwitterXLine, FaInstagram, FaLinkedinIn, CiYoutube].map((Icon, i) => (
                                              <div
@@ -334,21 +342,12 @@ export default function Footer() {
                                    <div key={col._id || idx} className={orderClass}>
                                         <FooterColumn
                                              title={col.title}
-                                             links={col.links.map(link => ({ key: link.path, value: link.label }))}
+                                             links={col.links ? col.links.map(link => ({ key: link.path, value: link.label })) : []}
                                         />
                                    </div>
                               );
                          })}
 
-                         {/* App Buttons */}
-                         {/* <div className="order-2 md:order-6 2xl:order-6">
-                              <h3 className="text-[20px] mb-5">Learn On the Go!</h3>
-
-                              <div className="space-y-3">
-                                   <AppButton icon="android" text="Get Android App" />
-                                   <AppButton icon="apple" text="Get ios App" />
-                              </div>
-                         </div> */}
                     </div>
 
                     {/* Divider */}
@@ -358,7 +357,7 @@ export default function Footer() {
                          {locations?.length > 0 &&
                               locations.map((block) => (
                                    <FooterTextBlock
-                                        key={location / block.slug}
+                                        key={block.slug || block._id}
                                         title={block.title}
                                         slug={block.slug}
                                         items={block.items}
@@ -377,13 +376,14 @@ export default function Footer() {
                                         ? settings.navigation.map(nav => ({ title: nav.itemname, to: nav.itempath }))
                                         : [
                                              { title: "Home", to: "/" },
-                                             { title: "Blogs", to: "/category/blogs" },
+                                             { title: "Blogs", to: "/blog" },
                                              { title: "Courses", to: "/courses" },
                                              { to: '/about-us', title: 'About us' },
                                              { to: '/disclaimer', title: 'Disclaimer' },
+                                             { to: '/terms-and-conditions-enrolment', title: 'Terms & Conditions' },
                                              { to: '/privacy-policy', title: 'Privacy Policy' },
                                              { to: '/contact-us', title: 'Contact us' }
-                                          ]
+                                        ]
                               }
                          />
 
@@ -401,27 +401,12 @@ function FooterColumn({ title, links }) {
                <h2 className="text-[20px] mb-5">{title}</h2>
                <div className="space-y-3 text-[14px] text-white/70 leading-none flex flex-col">
                     {links.map((link, index) => (
-                         <Link href={link.key} key={index} className="hover:text-white/80 transition cursor-pointer">
+                         <Link href={link.key || "/"} key={index} className="hover:text-white/80 transition cursor-pointer">
                               {link.value}
                          </Link>
                     ))}
                </div>
           </div>
-     );
-}
-
-function AppButton({ icon, text }) {
-     return (
-          <button className="w-45 h-11 border border-white/70 rounded-lg flex items-center px-5 gap-3 text-white/70 text-[13px] hover:bg-white/5 transition">
-               {icon === 'android' ? (
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                         <path d="M17.6 9.48l1.43-2.49-.83-.48-1.46 2.54A7.93 7.93 0 0012 7.5c-1.68 0-3.24.52-4.53 1.41L6 6.37l-.83.48 1.43 2.49A7.92 7.92 0 004 15v5h2v-5h1v5h2v-5h6v5h2v-5h1v5h2v-5c0-2.25-.94-4.28-2.4-5.52zM8.5 13A1.5 1.5 0 1110 11.5 1.5 1.5 0 018.5 13zm7 0a1.5 1.5 0 111.5-1.5A1.5 1.5 0 0115.5 13z" />
-                    </svg>
-               ) : (
-                    <AirVent size={18} fill="currentColor" />
-               )}
-               {text}
-          </button>
      );
 }
 
@@ -437,18 +422,18 @@ function FooterTextBlock({ title, slug, items }) {
 
                     {items?.map((item, index) => (
                          <div
-                              key={item.slug || item._id}
+                              key={item.slug || item._id || index}
                               className="flex items-center gap-2"
                          >
 
-                              <Link href={item?.hero?.title && `/${item.slug || item._id}`}
+                              <Link href={item?.hero?.title ? `/location/${item.slug || item._id}` : "/"}
                                    className="text-[13px] text-white/70 leading-8 hover:text-white transition-colors"
                               >
                                    {item.title}
                               </Link>
 
                               {index !== items.length - 1 && (
-                                   <span className="text-white/45">|</span>
+                                   <span className="text-white/70">|</span>
                               )}
 
                          </div>
@@ -464,10 +449,10 @@ function FooterNav({ title, items }) {
      return (
           <div className="mb-6">
 
-               <div className="flex justify-start items-center gap-3 text-[14px] text-white/70 flex-wrap">
+               <div className="flex justify-center items-center gap-3 text-[14px] text-white/70 flex-wrap">
                     {items?.map((item, index) => (
                          <div key={index} className="flex items-center gap-3">
-                              <Link href={item.to} className="hover:text-white transition-all duration-300 ease-in-out">
+                              <Link href={item.to || "/"} className="hover:text-white transition-all duration-300 ease-in-out">
                                    {item.title}
                               </Link>
                               {index !== items.length - 1 && (

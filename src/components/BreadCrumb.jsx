@@ -15,8 +15,33 @@ const Breadcrumb = () => {
           }))
           .filter((item) => item.name.toLowerCase() !== "category");
 
+     const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://shikshadesign.com').replace(/\/$/, '');
+
+     const breadcrumbSchema = {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+               {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": siteUrl
+               },
+               ...breadcrumbs.map((item, index) => ({
+                    "@type": "ListItem",
+                    "position": index + 2,
+                    "name": item.name.replace(/[-_]/g, " ").replace(/\b\w/g, (l) => l.toUpperCase()),
+                    "item": `${siteUrl}${item.routeTo}`
+               }))
+          ]
+     };
+
      return (
           <div className="w-full bg-white/60 backdrop-blur-2xl z-999 border-b border-gray-100/80 ">
+               <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+               />
                <div className="mx-auto max-w-340 w-full flex items-center gap-2 flex-nowrap overflow-hidden h-7 md:h-9 px-4 md:px-8 text-[10px] md:text-[12px] lg:text-[14px] plus-jakarta-sans text-gray-500">
                     {/* Home */}
                     <Link href="/" className="flex items-center gap-1 hover:text-black text-gray-500">

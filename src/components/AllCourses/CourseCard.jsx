@@ -1,19 +1,28 @@
 "use client";
 
-import { Clock, Users, BarChart3, FileText } from "lucide-react";
+import Link from "next/link";
+import { Clock, Users, BarChart3, FileText, Lock, Unlock } from "lucide-react";
 import CloudinaryImage from '../CloudinaryImage';
-import { useRouter } from 'next/navigation';
+import { useUserAuth } from '../../context/UserAuthContext';
 
 const CourseCard = ({ course }) => {
-     const router = useRouter();
-
      if (!course) return null;
 
-     const handleViewMore = () => {
-          router.push(`/${course.slug || course._id}`);
-     };
+     const { isLoggedIn, isCourseUnlocked } = useUserAuth();
+     const isUnlocked = isLoggedIn ? isCourseUnlocked(course) : false;
+
+     // Flow Logic:
+     // If logged in & unlocked -> navigate to /dashboard?course=slug
+     // If logged in & locked OR not logged in -> navigate to normal course details page /courses/slug
+     const courseHref = (isLoggedIn && isUnlocked)
+          ? `/dashboard?course=${course.slug || course._id}`
+          : `/courses/${course.slug || course._id}`;
+
      return (
-          <div className="max-w-full w-full min-h-40 bg-white rounded-[20px] shadow-md border border-gray-100 flex flex-col sm:flex-row overflow-hidden open-sans">
+          <Link
+               href={courseHref}
+               className="max-w-full w-full min-h-40 bg-white rounded-[20px] shadow-md border border-gray-100 flex flex-col sm:flex-row overflow-hidden open-sans cursor-pointer group hover:shadow-lg transition-shadow duration-300 block relative"
+          >
 
                {/* LEFT IMAGE SECTION */}
                <div className="relative w-full sm:w-[50%] md:w-[39%] xl:w-[25%] aspect-video">
@@ -21,6 +30,23 @@ const CourseCard = ({ course }) => {
                     <span className="absolute top-4 left-4 bg-orange text-white text-xs font-medium px-3 py-1 rounded-md z-10">
                          {course.category || "Development"}
                     </span>
+
+                    {/* Logged in Badge */}
+                    {isLoggedIn && (
+                         <div className="absolute top-4 right-4 z-10">
+                              {isUnlocked ? (
+                                   <span className="bg-emerald-600 text-white text-xs font-bold px-2.5 py-1 rounded-md shadow-xs flex items-center gap-1">
+                                        <Unlock size={12} />
+                                        Unlocked
+                                   </span>
+                              ) : (
+                                   <span className="bg-amber-600 text-white text-xs font-bold px-2.5 py-1 rounded-md shadow-xs flex items-center gap-1">
+                                        <Lock size={12} />
+                                        Locked
+                                   </span>
+                              )}
+                         </div>
+                    )}
 
                     <CloudinaryImage
                          src={course.image}
@@ -33,22 +59,22 @@ const CourseCard = ({ course }) => {
                </div>
 
                {/* RIGHT CONTENT */}
-               <div className="flex-1 p-2 xl:p-6 flex flex-col justify-between w-full sm:w-[50%] md:w-[75%] text-secondary">
+               <div className="flex-1 p-4 xl:p-6 flex flex-col justify-between w-full sm:w-[50%] md:w-[75%] text-secondary">
 
                     <div className="space-y-1.5 xl:space-y-3">
                          <p className="text-sm">
-                              by {course.name || "Unknown"}
+                              by {course.name || "Instructor"}
                          </p>
 
-                         <h2 className="text-xl font-bold">
+                         <h2 className="text-xl font-bold group-hover:text-orange transition-colors duration-300">
                               {course.title}
                          </h2>
 
-                         <div className="grid grid-cols-2 xl:grid-cols-4 items-center gap-2 xl:gap-6 text-sm">
-                              <div className="flex items-center gap-1">
-                                   <Clock size={16} className="text-orange" />
-                                   <span>{course.courseLength || "--"}</span>
-                              </div>
+                         <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed font-normal">
+                              {course.overview || course.description || "Master in-demand skills with expert live sessions, hands-on projects, and mentorship."}
+                         </p>
+
+                         <div className="grid grid-cols-2 xl:grid-cols-3 items-center gap-2 xl:gap-6 text-sm pt-1">
                               <div className="flex items-center gap-1">
                                    <Users size={16} className="text-orange" />
                                    <span>{course.students || 0} Students</span>
@@ -68,20 +94,18 @@ const CourseCard = ({ course }) => {
 
                     <div className="flex items-center justify-between text-[20px] font-bold">
                          <div className="flex items-center gap-2">
-                              <span className="text-gray-600 line-through">$29.0</span>
-                              <span className="text-orange">Free</span>
+                              <span className="text-gray-600 line-through">₹15,000</span>
+                              <span className="text-orange">₹{course.fees || '10,000'}</span>
                          </div>
 
-                         <button
-                              onClick={handleViewMore}
-                              aria-label="View more about this course"
-                              className="text-[16px] hover:text-orange transition-all duration-300 ease-in-out cursor-pointer"
+                         <span
+                              className="text-[16px] group-hover:text-orange transition-all duration-300 ease-in-out cursor-pointer font-semibold"
                          >
-                              View more
-                         </button>
+                              {isLoggedIn && isUnlocked ? "Open Dashboard →" : "View Details →"}
+                         </span>
                     </div>
                </div>
-          </div>
+          </Link>
      );
 };
 

@@ -1,38 +1,23 @@
 "use client";
 
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation';
-import Career from '../assets/shiksha-template-image.webp'
-
-// ✅ Top pe hain — lazy nahi
 import Hero from '../components/CourseDetails/Hero'
-import Navigator from '../components/CourseDetails/Navigator'
-import Overview from '../components/CourseDetails/Overview'
+import Details from '../components/CourseDetails/Details'
 import { getCourseBySlug } from '../utils/courseService'
 import Breadcrumb from '../components/BreadCrumb'
 import useFaq from '../hooks/useFaq'
+import FAQ from '../components/FAQ'
+import Testimonials from '../components/Home/Testimonials'
+import RelatedBlogs from '../components/RelatedBlogs'
 
-// ✅ Below fold — lazy
-const Accordion = lazy(() => import('../components/CourseDetails/Accordion'))
-const Form = lazy(() => import('../components/CourseDetails/Form'))
-const Review = lazy(() => import('../components/CourseDetails/Review'))
-const FAQ = lazy(() => import('../components/FAQ'))
-const RelatedBlogs = lazy(() => import('../components/RelatedBlogs'))
-
-const SectionSkeleton = () => (
-  <div className="w-full animate-pulse bg-gray-100 rounded-md h-48 my-4" />
-)
-
-const CourseDetails = ({ isLogin, setIsLogin, course: propCourse, slug: propSlug }) => {
+const CourseDetails = ({ isLogin, setIsLogin, course: propCourse, slug: propSlug, initialTestimonials = [] }) => {
   const { slug: routeSlug } = useParams();
   const slug = propSlug || routeSlug;
   const [course, setCourse] = useState(propCourse || null);
   const [loading, setLoading] = useState(!propCourse);
   const [error, setError] = useState(null);
   const { faqData } = useFaq('course-details');
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [])
 
   useEffect(() => {
     if (propCourse) {
@@ -59,9 +44,11 @@ const CourseDetails = ({ isLogin, setIsLogin, course: propCourse, slug: propSlug
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
+
+  const courseFaqs = course?.faq && course.faq.length > 0 ? course.faq : faqData;
+
   return (
     <main>
-
       {loading ? (
         <div className="min-h-screen flex items-center justify-center">
           <div className="animate-pulse text-primary text-lg font-semibold">Loading course...</div>
@@ -72,58 +59,75 @@ const CourseDetails = ({ isLogin, setIsLogin, course: propCourse, slug: propSlug
         </div>
       ) : course ? (
         <>
+          {Array.isArray(course?.schemas) && course.schemas.length > 0 ? (
+            course.schemas.map((schemaStr, idx) => {
+              if (!schemaStr || typeof schemaStr !== 'string' || !schemaStr.trim()) return null;
+              return (
+                <script
+                  key={idx}
+                  type="application/ld+json"
+                  dangerouslySetInnerHTML={{ __html: schemaStr }}
+                />
+              );
+            })
+          ) : (
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "Course",
+                  "name": course.seoTitle || course.title || course.name || "Skill Certification Course",
+                  "description": course.seoDescription || course.overview || course.description || "Industry leading certification course at Shiksha.",
+                  "provider": {
+                    "@type": "EducationalOrganization",
+                    "name": "Shiksha",
+                    "sameAs": (process.env.NEXT_PUBLIC_SITE_URL || 'https://shikshadesign.com').replace(/\/$/, '')
+                  },
+                  "hasCourseInstance": {
+                    "@type": "CourseInstance",
+                    "courseMode": "Online / Classroom",
+                    "duration": course.courseLength || "Flexible"
+                  },
+                  ...(course.fees ? {
+                    "offers": {
+                      "@type": "Offer",
+                      "category": course.category || "Skill Development",
+                      "price": String(course.fees).replace(/[^0-9.]/g, '') || "0",
+                      "priceCurrency": "INR"
+                    }
+                  } : {})
+                })
+              }}
+            />
+          )}
           <Hero course={course} courseId={course._id} setIsLogin={setIsLogin} />
           <Breadcrumb />
-          <div className='px-3 sm:px-15 xl:px-30 py-6 flex items-start justify-center w-full gap-34'>
-            <div className='w-full xl:w-[70%] space-y-10'>
-              <Navigator />
+          <Details data={course} />
 
-              <Overview overview={course.overview} />
-
-              <Suspense fallback={<SectionSkeleton />}>
-                <Accordion sections={course.sections} courseId={course._id} />
-              </Suspense>
-
-              <div className='xl:hidden'>
-                <Suspense fallback={<SectionSkeleton />}>
-                  <Form />
-                </Suspense>
-              </div>
-
-              <Suspense fallback={<SectionSkeleton />}>
-                <FAQ faqData={course?.faq && course.faq.length > 0 ? { faq: course.faq } : faqData} />
-              </Suspense>
-
-              <Suspense fallback={<SectionSkeleton />}>
-                <Review reviews={course.reviews} />
-              </Suspense>
-            </div>
-
-            <div className='hidden xl:block w-[30%] pt-15'>
-              <img
-                src={course.image || Career}
-                alt={course.alt || course.title}
-                loading="lazy"
-                decoding="async"
-                width="420"
-                height="532"
-                className='w-full h-133 rounded-xl object-cover'
-              />
-              <Suspense fallback={<SectionSkeleton />}>
-                <Form />
-              </Suspense>
-            </div>
+          <div className="relative">
+            <Testimonials initialTestimonials={initialTestimonials} />
           </div>
 
-          <div id='blogs' className='max-w-94 md:max-w-220 xl:max-w-330 mx-auto'>
-            <Suspense fallback={<SectionSkeleton />}>
-              <RelatedBlogs />
-            </Suspense>
+          <div id='blogs' className='max-w-330 mx-auto space-y-10 my-10 px-4 sm:px-6'>
+            <RelatedBlogs />
+
+            <FAQ faqData={courseFaqs} />
           </div>
+
         </>
-      ) : null}
+      ) : (
+        <div className="min-h-screen flex flex-col items-center justify-center bg-primary-bg text-secondary px-4 text-center">
+          <h1 className="text-6xl font-bold text-primary mb-4">404</h1>
+          <p className="text-xl mb-3 font-semibold">Course Not Found</p>
+          <p className="text-gray-600 mb-6 max-w-md">The course you are looking for does not exist or its URL has been updated.</p>
+          <a href="/courses" className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-hover transition-colors font-medium">
+            Browse All Courses
+          </a>
+        </div>
+      )}
     </main>
   )
 }
 
-export default CourseDetails
+export default CourseDetails;

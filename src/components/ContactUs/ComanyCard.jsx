@@ -37,12 +37,12 @@ export default function CompanyCard({ data }) {
 
                     <div className="flex items-center gap-2 text-[14px] truncate">
                          <Mail size={14} className="shrink-0" />
-                         <span>{data?.email || "companyname@domain.com"}</span>
+                         <span>{data?.email || "info@shikshadesign.com"}</span>
                     </div>
 
                     <div className="flex items-center gap-2 text-[14px] truncate">
                          <Phone size={14} className="shrink-0" />
-                         <span>{data?.phone || "+91 99999 99999"}</span>
+                         <span>{data?.phone || "+91 93115 00424"}</span>
                     </div>
 
                     <div className="border-t border-gray-200" />

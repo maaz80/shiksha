@@ -1,27 +1,39 @@
-"use client";
-
+import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import { useRouter } from 'next/navigation';
 import Template from '../../assets/shiksha-template-image.webp';
 import CloudinaryImage from '../CloudinaryImage';
 
-const RelatedBlogCard = ({ blog }) => {
-     const router = useRouter();
-
+const RelatedBlogCard = ({ blog, className = "" }) => {
      if (!blog) return null;
 
-     const handleReadMore = () => {
-          window.scrollTo({ top: 0, behavior: "auto" });
-          router.push(`/${blog.slug}`);
+     const blogHref = `/blog/${blog.slug}`;
+
+     const handleCardClick = () => {
+          if (typeof window !== "undefined") {
+               window.scrollTo({ top: 0, behavior: "auto" });
+          }
      };
 
-     // Format date
+     // Format date safely and deterministically across SSR and Client
      const formatDate = (dateString) => {
+          if (!dateString) return "01/15/2026";
           const date = new Date(dateString);
-          return date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+          if (isNaN(date.getTime())) return "01/15/2026";
+          const year = date.getUTCFullYear();
+          const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+          const day = String(date.getUTCDate()).padStart(2, '0');
+          return `${month}/${day}/${year}`;
      };
+
+     const displayDate = blog.date || blog.updatedAt || blog.createdAt;
+
      return (
-          <div className="w-86 md:w-100 h-103 bg-white rounded-xl border border-gray-200 shadow-sm p-3 text-secondary">
+          <Link
+               href={blogHref}
+               onClick={handleCardClick}
+               suppressHydrationWarning
+               className={`block ${className ? className : "w-full"} h-103 bg-white rounded-xl border border-gray-200 shadow-sm p-3 text-secondary cursor-pointer group hover:shadow-md transition-all duration-300`}
+          >
 
                {/* IMAGE */}
                <div className="relative rounded-lg overflow-hidden">
@@ -38,7 +50,7 @@ const RelatedBlogCard = ({ blog }) => {
 
                     {/* BADGE */}
                     <span className="absolute top-3 left-3 bg-white text-gray-700 text-xs px-3 py-1 rounded-md shadow-sm">
-                         {blog.category}
+                         {blog.category || "Blog"}
                     </span>
                </div>
 
@@ -52,19 +64,18 @@ const RelatedBlogCard = ({ blog }) => {
 
                     {/* META */}
                     <p className="text-[14px] mb-6">
-                         By {blog.author} <span className="mx-2">|</span> Updated: {formatDate(blog.date)}
+                         By {blog.author || "Shiksha Team"} <span className="mx-2">|</span> Updated: {formatDate(displayDate)}
                     </p>
 
                     {/* BUTTON */}
-                    <button
-                         onClick={handleReadMore}
-                         className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2.5 text-[16px] hover:bg-gray-100 transition-all duration-500 ease-in-out cursor-pointer">
+                    <div
+                         className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2.5 text-[16px] group-hover:bg-gray-100 transition-all duration-500 ease-in-out cursor-pointer">
                          Read More
                          <ChevronRight size={20} />
-                    </button>
+                    </div>
 
                </div>
-          </div>
+          </Link>
      );
 };
 

@@ -6,14 +6,15 @@ import CourseCard from '../CourseCard'
 import { useCourses } from '../../context/CourseContext'
 
 const OurPrograms = ({ data }) => {
-     const [activeMobileIndex, setActiveMobileIndex] = useState(null)
-     const { courses } = useCourses();
-     const categories = [...new Set(courses.map(c => c.category))];
+     const [activeMobileIndex, setActiveMobileIndex] = useState(null);
+     const context = useCourses() || {};
+     const courses = Array.isArray(context.courses) ? context.courses.filter(Boolean) : [];
+     const categories = [...new Set(courses.map(c => c?.category).filter(Boolean))];
      const [activeCategory, setActiveCategory] = useState(null);
      const filteredCourses =
           !activeCategory
                ? courses
-               : courses.filter(c => c.category === activeCategory);
+               : courses.filter(c => c?.category === activeCategory);
 
      return (
           <div id='courses' className='mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10 pt-18 lg:pt-16'>
@@ -39,7 +40,7 @@ const OurPrograms = ({ data }) => {
                     </span>
                </h2>
 
-               {/* DESKTOP unchanged */}
+               {/* DESKTOP */}
                <div className="hidden md:flex mt-10 items-start justify-center">
                     <div className='space-y-2 w-[34%] 2xl:w-[24%]'>
 
@@ -57,7 +58,7 @@ const OurPrograms = ({ data }) => {
 
                     <div className='flex items-center justify-between flex-wrap w-[65%] 2xl:w-[80%] space-y-2 max-h-[72vh] overflow-y-scroll hide-scrollbar'>
                          {filteredCourses.map((course) => (
-                              <CourseCard key={course._id} course={course} setIsModal={false} />
+                              <CourseCard key={course._id || course.slug} course={course} setIsModal={false} />
                          ))}
                     </div>
                </div>
@@ -68,7 +69,7 @@ const OurPrograms = ({ data }) => {
                     {categories.map((cat, index) => {
                          const isOpen = activeMobileIndex === index;
 
-                         const categoryCourses = courses.filter((c) => c.category === cat);
+                         const categoryCourses = courses.filter((c) => c?.category === cat);
 
                          return (
                               <div key={cat} className="overflow-hidden">
@@ -86,7 +87,7 @@ const OurPrograms = ({ data }) => {
                                         />
                                    </div>
 
-                                   {/* Same animation block */}
+                                   {/* Animation block */}
                                    <div
                                         className={`
                   overflow-hidden transition-all duration-500 ease-in-out
@@ -102,7 +103,7 @@ const OurPrograms = ({ data }) => {
                                         >
                                              {categoryCourses.map((course) => (
                                                   <div
-                                                       key={course._id}
+                                                       key={course._id || course.slug}
                                                        className="min-w-62.5 shrink-0"
                                                   >
                                                        <CourseCard course={course} />

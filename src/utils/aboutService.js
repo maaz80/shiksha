@@ -1,12 +1,8 @@
-import { API_URL } from "./api.js";
+import { fetchWithFallback } from "./api.js";
 
 let aboutDataCache = null;
 let aboutDataPromise = null;
 
-/**
- * Fetch about page content data with local memory caching & deduplication of parallel queries.
- * @param {boolean} forceRefresh - If true, bypass cache and force a network reload.
- */
 export const getAboutData = async (forceRefresh = false) => {
      if (!forceRefresh && aboutDataCache) {
           return aboutDataCache;
@@ -18,20 +14,18 @@ export const getAboutData = async (forceRefresh = false) => {
 
      aboutDataPromise = (async () => {
           try {
-               const res = await fetch(`${API_URL}/about-data`);
-               if (!res.ok) {
-                    throw new Error(`HTTP Error: ${res.status} ${res.statusText}`);
+               const res = await fetchWithFallback("/about-data");
+               if (res && res.ok) {
+                    const data = await res.json();
+                    aboutDataCache = data;
+                    return data;
                }
-               const data = await res.json();
-               aboutDataCache = data;
-               return data;
+               if (aboutDataCache) return aboutDataCache;
+               return null;
           } catch (err) {
                console.error("Failed to fetch about data:", err);
-               // Fallback to stale cache if request fails
-               if (aboutDataCache) {
-                    return aboutDataCache;
-               }
-               throw err;
+               if (aboutDataCache) return aboutDataCache;
+               return null;
           } finally {
                aboutDataPromise = null;
           }

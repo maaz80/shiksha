@@ -6,7 +6,7 @@ import comma from '../../assets/comma.webp';
 import testiImage from '../../assets/testi-img.webp';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-import { getAllReviews } from '../../utils/courseService';
+import { getTestimonials } from '../../utils/testimonialService';
 
 const DEFAULT_TESTIMONIALS = [
      {
@@ -41,7 +41,17 @@ const DEFAULT_TESTIMONIALS = [
      }
 ];
 
-const Testimonials = ({ data }) => {
+let preloadedTestimonials = [];
+try {
+     const initialData = await getTestimonials();
+     if (Array.isArray(initialData) && initialData.length > 0) {
+          preloadedTestimonials = initialData;
+     }
+} catch (e) {
+     // Preload fallback if offline during build
+}
+
+const Testimonials = ({ data, initialTestimonials = [] }) => {
      const getInitials = (name) => {
           if (!name) return "";
           const parts = name.trim().split(/\s+/);
@@ -49,76 +59,90 @@ const Testimonials = ({ data }) => {
           return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
      };
 
+     const rawInitial = (Array.isArray(initialTestimonials) && initialTestimonials.length > 0)
+          ? initialTestimonials
+          : preloadedTestimonials;
+
+     const formattedInitial = (Array.isArray(rawInitial) && rawInitial.length > 0)
+          ? rawInitial.map((item) => ({
+               name: item.name,
+               role: item.role || item.courseName || "Student",
+               text: item.quote || item.text
+          }))
+          : [];
+
      const sliderRef = useRef();
      const [currentIndex, setCurrentIndex] = useState(0);
      const [maxIndex, setMaxIndex] = useState(0);
-     const [testimonialsList, setTestimonialsList] = useState([]);
+     const [testimonialsList, setTestimonialsList] = useState(
+          formattedInitial.length > 0 ? formattedInitial : DEFAULT_TESTIMONIALS
+     );
      const pathname = usePathname();
 
-     const isLocation = pathname.startsWith("/location");
-     // ✅ Card width
-     const cardWidthRef = useRef(0);
+     const isLocation = pathname ? pathname.startsWith("/location") : false;
+     const cardWidthRef = useRef(320);
 
      const calculateCardWidth = () => {
           const slider = sliderRef.current;
-          const card = slider?.children[0];
+          const card = slider?.children?.[0];
 
           if (!slider || !card) return;
 
-          const gap = window.innerWidth >= 768 ? 44 : 20;
-
-          // ✅ ONE TIME READ
-          cardWidthRef.current = card.getBoundingClientRect().width + gap;
+          const gap = (typeof window !== "undefined" && window.innerWidth >= 768) ? 44 : 20;
+          const rectWidth = card.getBoundingClientRect().width;
+          if (rectWidth > 0) {
+               cardWidthRef.current = rectWidth + gap;
+          }
      };
 
-     // ✅ Visible cards
      const visibleCardsRef = useRef(1);
 
      const calculateVisibleCards = () => {
           const slider = sliderRef.current;
-          if (!slider || !cardWidthRef.current) return;
+          const cardW = cardWidthRef.current || 320;
+          if (!slider || !cardW) return;
 
-          visibleCardsRef.current = Math.floor(
-               slider.offsetWidth / cardWidthRef.current
-          );
+          visibleCardsRef.current = Math.max(1, Math.floor(slider.offsetWidth / cardW));
      };
 
-     // ✅ Fetch all reviews dynamically
      useEffect(() => {
-          const fetchReviews = async () => {
-               const data = await getAllReviews();
-               if (data && data.length > 0) {
-                    const formatted = data.map((review) => ({
-                         name: review.name,
-                         role: review.role || review.courseName || "Student",
-                         image: review.image || testiImage?.src || testiImage,
-                         text: review.text
-                    }));
-                    setTestimonialsList(formatted);
-               } else {
-                    setTestimonialsList(DEFAULT_TESTIMONIALS);
+          let isMounted = true;
+          const fetchTestimonialsData = async () => {
+               try {
+                    const resData = await getTestimonials();
+                    if (isMounted && Array.isArray(resData) && resData.length > 0) {
+                         const formatted = resData.map((item) => ({
+                              name: item.name,
+                              role: item.role || item.courseName || "Student",
+                              text: item.quote || item.text
+                         }));
+                         setTestimonialsList(formatted);
+                    }
+               } catch (e) {
+                    console.error("Failed to load testimonials:", e);
                }
           };
-          fetchReviews();
+          fetchTestimonialsData();
+          return () => { isMounted = false; };
      }, []);
 
-     // ✅ Calculate maxIndex (responsive safe)
      useEffect(() => {
           const calculateAll = () => {
                calculateCardWidth();
                calculateVisibleCards();
-               setMaxIndex(
-                    Math.max(testimonialsList.length - visibleCardsRef.current, 0)
-               );
+               const total = testimonialsList.length;
+               const visible = visibleCardsRef.current || 1;
+               setMaxIndex(Math.max(0, total - visible));
           };
 
           calculateAll();
 
-          window.addEventListener("resize", calculateAll);
-          return () => window.removeEventListener("resize", calculateAll);
+          if (typeof window !== "undefined") {
+               window.addEventListener("resize", calculateAll);
+               return () => window.removeEventListener("resize", calculateAll);
+          }
      }, [testimonialsList]);
 
-     // ✅ Arrow scroll
      const scroll = (direction) => {
           let newIndex =
                direction === "left"
@@ -127,24 +151,25 @@ const Testimonials = ({ data }) => {
 
           setCurrentIndex(newIndex);
 
-          sliderRef.current.scrollTo({
-               left: newIndex * cardWidthRef.current,
-               behavior: "auto",
-          });
+          if (sliderRef.current) {
+               sliderRef.current.scrollTo({
+                    left: newIndex * (cardWidthRef.current || 320),
+                    behavior: "auto",
+               });
+          }
      };
 
-     // ✅ Sync scroll → dots
      useEffect(() => {
           const slider = sliderRef.current;
-
           let ticking = false;
 
           const handleScroll = () => {
                if (!ticking) {
                     requestAnimationFrame(() => {
                          if (sliderRef.current) {
+                              const cardW = cardWidthRef.current || 320;
                               const index = Math.round(
-                                   sliderRef.current.scrollLeft / cardWidthRef.current
+                                   sliderRef.current.scrollLeft / cardW
                               );
                               setCurrentIndex(index);
                          }
@@ -164,8 +189,8 @@ const Testimonials = ({ data }) => {
      }, []);
 
      return (
-          <div className='min-h-screen mx-auto w-full px-4 sm:px-6 lg:px-10 pt-18 lg:pt-16 text-secondary bg-primary-bg relative'>
-               <img src={Map?.src || Map} alt="Testimonial Map Bg" fetchPriority='high' decoding="async" className='absolute top-0 inset-0 w-full h-[179vh] z-10 object-cover' />
+          <div className='min-h-[80vh] md:min-h-screen mx-auto w-full px-3 sm:px-6 lg:px-10 pt-10 lg:pt-16 text-secondary bg-primary-bg relative'>
+               <img src={Map?.src || Map} alt="Testimonial Map Bg" fetchPriority='high' decoding="async" className='absolute top-0 inset-0 w-full h-full z-0 object-cover pointer-events-none' />
 
                {/* Heading */}
                {isLocation ? (
@@ -196,7 +221,7 @@ const Testimonials = ({ data }) => {
                )}
 
                {/* Description */}
-               <p className={`text-[14px] 2xl:text-[16px] leading-6 md:leading-7 text-center ${isLocation ? 'max-w-3xl':'max-w-7xl'}  mx-auto mt-6 z-20 relative`}>
+               <p className={`text-[14px] 2xl:text-[16px] leading-6 md:leading-7 text-center ${isLocation ? 'max-w-3xl':'max-w-7xl'} mx-auto mt-6 z-20 relative`}>
                     {isLocation ? "Our students have gone on to build successful careers with leading organizations across diverse industries, showcasing the skills, knowledge, and confidence they gained through our programs." : (data?.description || "Our students have gone on to build successful careers with leading organizations across diverse industries, showcasing the skills, knowledge, and confidence they gained through our programs.") }
                </p>
 
@@ -239,10 +264,12 @@ const Testimonials = ({ data }) => {
                                         key={i}
                                         onClick={() => {
                                              setCurrentIndex(i);
-                                             sliderRef.current.scrollTo({
-                                                  left: i * cardWidthRef.current,
-                                                  behavior: "auto",
-                                             });
+                                             if (sliderRef.current) {
+                                                  sliderRef.current.scrollTo({
+                                                       left: i * (cardWidthRef.current || 320),
+                                                       behavior: "auto",
+                                                  });
+                                             }
                                         }}
                                         aria-label={`Go to slide ${i + 1}`}
                                         aria-current={currentIndex === i ? "true" : undefined}

@@ -1,0 +1,183 @@
+# ==============================================================================
+# SEO, PERFORMANCE & HARDENED SECURITY CONFIGURATION FOR WEEKEND UX (HOSTINGER)
+# ==============================================================================
+
+# 1. DISABLE DIRECTORY LISTING & SERVER SIGNATURES
+Options -Indexes
+ServerSignature Off
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+
+# Prevent Hostinger Apache from auto-redirecting folders to trailing slashes
+DirectorySlash Off
+
+# 2. ENABLE REWRITE ENGINE
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # 3. REDIRECT HTTP TO HTTPS (Hostinger CDN & Reverse Proxy safe)
+    # Hostinger CDN (cdn.hstgr.net) terminates SSL at edge and passes X-Forwarded-Proto: https
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteCond %{HTTPS} off
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # 4. CANONICAL HOST REDIRECT (Force www.shikshdesign.com)
+    RewriteCond %{HTTP_HOST} ^shikshdesign\.com$ [NC,OR]
+    RewriteCond %{HTTP_HOST} ^shikshadesign\.com$ [NC,OR]
+    RewriteCond %{HTTP_HOST} ^www\.shikshadesign\.com$ [NC]
+    RewriteRule ^ https://www.shikshdesign.com%{REQUEST_URI} [R=301,L]
+
+    # 5. BLOCK BAD BOTS & EMPTY USER AGENTS
+    RewriteCond %{HTTP_USER_AGENT} (curl|wget|python|nikto|sqlmap|masscan|zgrab|nmap|dirbuster|gobuster|wfuzz|hydra|metasploit) [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} ^-?$ [NC]
+    RewriteRule .* - [F,L]
+
+    # 6. BLOCK MALICIOUS REQUEST METHODS
+    RewriteCond %{REQUEST_METHOD} ^(TRACE|TRACK|DELETE|PATCH|PUT|CONNECT) [NC]
+    RewriteRule .* - [F,L]
+
+    # 7. BLOCK SQL INJECTION & XSS IN URL
+    RewriteCond %{QUERY_STRING} (\<|%3C).*script.*(\>|%3E) [NC,OR]
+    RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+    RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2}) [OR]
+    RewriteCond %{QUERY_STRING} (union|select|insert|drop|delete|update|cast|create|char|convert|alter|declare|order|exec|set\+name) [NC,OR]
+    RewriteCond %{QUERY_STRING} (\.\./|\.\.%2F|%2E%2E%2F) [NC]
+    RewriteRule .* - [F,L]
+
+    # 8. HANDLE CLEAN URLS FOR NEXT.JS STATIC EXPORTS (PREVENT INFINITE LOOPS)
+    # A. If request is a real file (e.g. CSS, JS, image), serve directly
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^ - [L]
+
+    # B. Strip trailing slashes with 301 redirect ONLY if target .html or folder index.html exists (excluding root)
+    RewriteCond %{REQUEST_URI} !^/$
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteCond %{REQUEST_FILENAME}/index.html -f
+    RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+    RewriteCond %{REQUEST_URI} !^/$
+    RewriteCond %{REQUEST_FILENAME}.html -f
+    RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+    # C. Serve index.html for root /
+    RewriteRule ^$? /index.html [L]
+
+    # D. Internal rewrite: serve /about-us from /about-us.html
+    RewriteCond %{REQUEST_FILENAME}.html -f
+    RewriteRule ^(.+)$ /$1.html [L]
+
+    # E. Internal rewrite: serve subfolder index.html (e.g. /blog -> /blog/index.html)
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteCond %{REQUEST_FILENAME}/index.html -f
+    RewriteRule ^(.+)$ /$1/index.html [L]
+
+    # F. Fallback non-existent requests to custom 404 page
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ /404.html [L]
+</IfModule>
+
+# 9. PROTECT SENSITIVE SYSTEM FILES
+<FilesMatch "(^\.|\.(env|git|svn|htpasswd|htaccess|log|bak|backup|sql|db|sqlite)|package(-lock)?\.json$|vite\.config\.js$|eslint\.config\.js$|postcss\.config\.js$|tailwind\.config\.js$|README\.md$)">
+    Require all denied
+</FilesMatch>
+
+# Block server-side script execution (prevent upload exploits)
+<FilesMatch "\.(php[345]?|phtml|pl|py|jsp|asp|aspx|sh|cgi|rb)$">
+    Require all denied
+</FilesMatch>
+
+# 10. LITESPEED CACHE ENGINE CONFIGURATION (HOSTINGER)
+# NOTE: HTML pages must NOT be cached — admin changes must reflect immediately after rebuild.
+<IfModule LiteSpeed>
+    CacheLookup on
+    # Do NOT cache HTML at edge — static site rebuilds change HTML content
+    RewriteRule .* - [E=cache-control:no-store,no-cache]
+</IfModule>
+
+# 11. BROWSER CACHING (EXPIRES HEADERS)
+<IfModule mod_mime.c>
+    AddType image/x-icon .ico
+    AddType font/ttf .ttf
+    AddType font/otf .otf
+    AddType font/woff .woff
+    AddType font/woff2 .woff2
+</IfModule>
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 month"
+
+    # Next.js hashed assets (cache for 1 year, immutable)
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType text/javascript "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType application/x-javascript "access plus 1 year"
+
+    # Images & Media
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+
+    # Web Fonts
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+
+    # HTML — NO cache. Must always be fresh after a static site rebuild+deploy.
+    ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+# Cache-Control headers set explicitly
+<IfModule mod_headers.c>
+    <FilesMatch "\.(css|js|woff|woff2|ttf|otf)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+        Header always set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    
+    <FilesMatch "\.(gif|jpe?g|png|ico|webp|svg)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+        Header always set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    
+    # HTML/HTM: completely prevent browser AND edge/CDN caching.
+    # After GitHub Actions rebuilds & redeploys, users see new content on first refresh.
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+        Header always set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+    # JSON/XML: also no-cache
+    <FilesMatch "\.(json|xml)$">
+        Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+        Header always set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+    </FilesMatch>
+
+    # 12. HARDENED SECURITY HEADERS
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" env=HTTPS
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-XSS-Protection "0"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    
+    # 13. REMOVE SERVER INFO HEADERS
+    Header unset X-Powered-By
+    Header unset Server
+    Header always unset X-Powered-By
+</IfModule>
+
+# 14. TEXT COMPRESSION (BROTLI + GZIP FALLBACK)
+<IfModule mod_brotli.c>
+    AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/plain text/xml application/javascript application/json application/xml image/svg+xml font/woff font/ttf application/x-font-ttf
+</IfModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/javascript application/json application/xml image/svg+xml font/woff font/ttf application/x-font-ttf
+    SetEnvIfNoCase Request_URI \.(gif|jpg|jpeg|png|webp|ico|mp4|woff2)$ no-gzip
+</IfModule>

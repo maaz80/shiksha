@@ -1,22 +1,14 @@
 "use client";
 
-import { lazy, Suspense, useEffect, useState } from 'react'
-
-// ✅ Top pe hai — lazy nahi
+import { useEffect, useState } from 'react'
 import Hero from '../components/ContactUs/Hero'
 import Breadcrumb from '../components/BreadCrumb'
 import useFaq from '../hooks/useFaq'
 import { getContactData } from '../utils/contactService'
-
-// ✅ Below fold — lazy
-const FAQ = lazy(() => import('../components/FAQ'))
-const ContactForm = lazy(() => import('../components/ContactUs/ContactForm'))
-const CompanyCard = lazy(() => import('../components/ContactUs/ComanyCard'))
-const Enquiries = lazy(() => import('../components/ContactUs/Enquiries'))
-
-const SectionSkeleton = () => (
-  <div className="w-full animate-pulse bg-gray-100 rounded-md h-48 my-4" />
-)
+import FAQ from '../components/FAQ'
+import ContactForm from '../components/ContactUs/ContactForm'
+import CompanyCard from '../components/ContactUs/ComanyCard'
+import Enquiries from '../components/ContactUs/Enquiries'
 
 const ContactUs = () => {
   const { faqData } = useFaq();
@@ -42,30 +34,22 @@ const ContactUs = () => {
       <Breadcrumb />
       <Hero data={contactData?.hero} />
 
-      <div className="flex flex-col lg:flex-row items-center justify-between max-w-350 mx-auto py-20 gap-10">
+      <div className="flex flex-col lg:flex-row items-center justify-between max-w-337 mx-auto py-20 gap-10">
         <div className='w-full lg:w-[70%]'>
-          <Suspense fallback={<SectionSkeleton />}>
-            <ContactForm />
-          </Suspense>
+          <ContactForm />
         </div>
         <div className='w-full lg:w-[30%]'>
-          <Suspense fallback={<SectionSkeleton />}>
-            <CompanyCard data={contactData?.card} />
-          </Suspense>
+          <CompanyCard data={contactData?.card} />
         </div>
       </div>
 
-      <Suspense fallback={<SectionSkeleton />}>
-        <Enquiries data={contactData?.enquiry} />
-      </Suspense>
+      <Enquiries data={contactData?.enquiry} />
 
-      <Suspense fallback={<SectionSkeleton />}>
       <div className='max-w-330 mx-auto py-20'>
         <FAQ faqData={faqData} />
       </div>
-      </Suspense>
     </main>
   )
 }
 
-export default ContactUs
+export default ContactUs;

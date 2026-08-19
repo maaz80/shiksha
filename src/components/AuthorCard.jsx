@@ -1,58 +1,94 @@
-import { Meh } from "lucide-react";
+import React from "react";
+import { FaTwitter } from "react-icons/fa";
 import authorLogo from '../assets/author-logo.webp';
-import { FaFacebook } from "react-icons/fa";
-import { BsInstagram, BsTwitter, BsYoutube } from "react-icons/bs";
-const AuthorCard = () => {
-     return (
-          <div className="w-full rounded-2xl border border-[#D6DEE6] px-6 py-6 md:px-10 md:py-8 text-secondary mt-5 ">
 
-               {/* TITLE */}
-               <h2 className="text-[22px] md:text-[32px] font-bold mb-6">
-                    Author
-               </h2>
+export default function AuthorCard({ author, blog }) {
+  const blogData = blog || {};
 
-               {/* CONTENT */}
-               <div className="flex flex-col md:flex-row items-start gap-6">
+  let name = "";
+  let designation = "";
+  let avatar = "";
+  let bio = "";
+  let twitter = "";
 
-                    {/* AVATAR */}
-                    <div className="w-45 h-45 rounded-xl overflow-hidden ">
-                         <img src={authorLogo} alt="Author Logo" loading="lazy" decoding="async" className="w-full h-auto" />
-                    </div>
+  if (typeof author === "object" && author !== null) {
+    name = author.name || blogData.author || "Author";
+    designation = author.designation || blogData.authorDesignation || "";
+    avatar = author.avatar || blogData.authorImage || "";
+    bio = author.bio || blogData.authorBio || "";
+    const social = author.socialLinks || author.social || blogData.authorSocial || {};
+    twitter = social.twitter || blogData.authorTwitter || "";
+  } else {
+    name = author || blogData.author || "Author Name";
+    designation = blogData.authorDesignation || "";
+    avatar = blogData.authorImage || "";
+    bio = blogData.authorBio || "";
+    const social = blogData.authorSocial || {};
+    twitter = social.twitter || blogData.authorTwitter || (typeof social === "string" ? social : "");
+  }
 
-                    {/* TEXT CONTENT */}
-                    <div className="flex-1">
+  return (
+    <div className="w-full rounded-2xl border border-[#D6DEE6] px-6 py-6 md:px-10 md:py-8 text-secondary my-8 bg-white shadow-xs">
+      {/* TITLE */}
+      <h2 className="text-[22px] md:text-[32px] font-bold mb-6 text-secondary">
+        Author
+      </h2>
 
-                         {/* NAME */}
-                         <h3 className="text-[18px] font-bold mb-2">
-                              Name of author{" "}
-                              <span className="text-[18px]">
-                                   (Designation)
-                              </span>
-                         </h3>
+      {/* CONTENT */}
+      <div className="flex flex-col md:flex-row items-start gap-6">
+        {/* AVATAR */}
+        <div className="w-36 h-36 md:w-44 md:h-44 rounded-xl overflow-hidden shrink-0 border border-gray-100 bg-gray-50">
+          <img
+            src={avatar || authorLogo.src || authorLogo}
+            alt={name}
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = authorLogo.src || authorLogo;
+            }}
+          />
+        </div>
 
-                         {/* DESCRIPTION */}
-                         <p className="text-[16px] leading-7 mb-4">
-                              LearnPress is a comprehensive WordPress LMS Plugin for WordPress.
-                              This is one of the best WordPress LMS Plugins which can be used to
-                              easily create & sell courses online. LearnPress is a comprehensive
-                              WordPress LMS Plugin for WordPress. This is one of the best
-                              WordPress LMS Plugins which can be used to easily create & sell
-                              courses online.
-                         </p>
+        {/* TEXT CONTENT */}
+        <div className="flex-1">
+          {/* NAME & DESIGNATION */}
+          <h3 className="text-[18px] md:text-[20px] font-bold mb-2 text-secondary">
+            {name}{" "}
+            {designation && (
+              <span className="text-[16px] md:text-[18px] text-gray-500 font-medium">
+                ({designation})
+              </span>
+            )}
+          </h3>
 
-                         {/* SOCIAL */}
-                         <div className="flex items-center gap-3">
-                              <span className="text-[14px] text-[#5B6B7C]">Follow:</span>
+          {/* DESCRIPTION / BIO */}
+          <p className="text-[15px] md:text-[16px] leading-7 mb-5 text-gray-600">
+            {bio || "Comprehensive knowledge sharing and educational guides."}
+          </p>
 
-                              <FaFacebook size={16} className="cursor-pointer" />
-                              <BsTwitter size={16} className="cursor-pointer" />
-                              <BsInstagram size={16} className="cursor-pointer" />
-                              <BsYoutube size={16} className="cursor-pointer" />
-                         </div>
-                    </div>
-               </div>
+          {/* SOCIAL LINKS (TWITTER ONLY) */}
+          <div className="flex items-center gap-3">
+            <span className="text-[14px] text-[#5B6B7C] font-semibold">Follow:</span>
+
+            {twitter ? (
+              <a
+                href={twitter.startsWith("http") ? twitter : `https://${twitter}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-500 hover:text-primary transition-colors flex items-center gap-1.5"
+              >
+                <FaTwitter size={18} />
+              </a>
+            ) : (
+              <span className="text-gray-400">
+                <FaTwitter size={18} />
+              </span>
+            )}
           </div>
-     );
-};
-
-export default AuthorCard;
+        </div>
+      </div>
+    </div>
+  );
+}

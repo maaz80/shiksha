@@ -1,136 +1,120 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import RelatedBlogCard from "./Blogs/RelatedBlogCard";
 import { useBlogs } from "../context/BlogContext";
-import RelatedBlogCardSkeleton from "./Skeletons/RelatedBlogCardSkeleton";
 
-const RelatedBlogs = ({ title }) => {
+const DEFAULT_RELATED_BLOGS = [
+     {
+          _id: "default-rel-1",
+          title: "The Future of AI in Design & Development",
+          description: "Discover how AI design tools and modern workflows are revolutionizing product design and user experience.",
+          author: "Shiksha Team",
+          date: "2026-01-15T00:00:00.000Z",
+          category: "Design & AI",
+          slug: "future-of-ai-design"
+     },
+     {
+          _id: "default-rel-2",
+          title: "Mastering Full Stack Development in 2026",
+          description: "Step-by-step roadmap to becoming a highly paid full stack developer with practical projects.",
+          author: "Shiksha Team",
+          date: "2026-01-20T00:00:00.000Z",
+          category: "Development",
+          slug: "full-stack-roadmap"
+     },
+     {
+          _id: "default-rel-3",
+          title: "UI/UX Best Practices for High Conversion",
+          description: "Learn proven UX principles and interface strategies to double user engagement and conversions.",
+          author: "Shiksha Team",
+          date: "2026-01-25T00:00:00.000Z",
+          category: "UI/UX",
+          slug: "ui-ux-best-practices"
+     }
+];
+
+const RelatedBlogs = ({ title, initialBlogs = [] }) => {
      const [currentIndex, setCurrentIndex] = useState(0);
-     const [itemsPerView, setItemsPerView] = useState(3);
-     const { blogs, loading } = useBlogs();
+     const [visibleCards, setVisibleCards] = useState(3);
+     const context = useBlogs() || {};
+     const contextBlogs = Array.isArray(context.blogs) ? context.blogs.filter(Boolean) : [];
+     const rawBlogs = (initialBlogs && initialBlogs.length > 0) ? initialBlogs : (contextBlogs.length > 0 ? contextBlogs : []);
 
-     // Calculate itemsPerView synchronously on mount to prevent 120ms layout shifts
+     const blogs = useMemo(() => {
+          if (rawBlogs.length === 0) return DEFAULT_RELATED_BLOGS;
+          return rawBlogs;
+     }, [rawBlogs]);
+
      useEffect(() => {
-          const getVal = () => {
-               const w = window.innerWidth;
-               return w < 768 ? 1 : w < 1024 ? 2 : 3;
-          };
-          setItemsPerView(getVal());
-
-          let timeout;
           const handleResize = () => {
-               clearTimeout(timeout);
-               timeout = setTimeout(() => {
-                    setItemsPerView(getVal());
-               }, 120);
+               if (window.innerWidth < 640) {
+                    setVisibleCards(1);
+               } else if (window.innerWidth < 1024) {
+                    setVisibleCards(2);
+               } else {
+                    setVisibleCards(3);
+               }
           };
+          handleResize();
           window.addEventListener("resize", handleResize);
-          return () => {
-               clearTimeout(timeout);
-               window.removeEventListener("resize", handleResize);
-          };
+          return () => window.removeEventListener("resize", handleResize);
      }, []);
 
-     const maxIndex = useMemo(
-          () => Math.max(0, blogs.length - itemsPerView),
-          [blogs.length, itemsPerView]
-     );
-
-     // Clamp currentIndex to maxIndex when itemsPerView or blogs length changes
-     useEffect(() => {
-          setCurrentIndex((prev) => Math.min(prev, maxIndex));
-     }, [maxIndex]);
-
-     const visibleItems = useMemo(
-          () => (loading ? Array.from({ length: itemsPerView }) : blogs),
-          [loading, blogs, itemsPerView]
-     );
-
-     const prev = useCallback(() => {
-          setCurrentIndex((p) => Math.max(0, p - 1));
-     }, []);
-
-     const next = useCallback(() => {
-          setCurrentIndex((p) => Math.min(maxIndex, p + 1));
-     }, [maxIndex]);
-
-     const cardWidthPercent = 100 / itemsPerView;
+     const handlePrev = () => {
+          setCurrentIndex(prev => (prev === 0 ? Math.max(0, blogs.length - visibleCards) : prev - 1));
+     };
+     const handleNext = () => {
+          setCurrentIndex(prev => (prev >= blogs.length - visibleCards ? 0 : prev + 1));
+     };
 
      return (
-          <div className="relative w-full open-sans z-9999">
+          <div className="relative w-full open-sans z-10 my-8 overflow-hidden px-0 md:px-3">
+               {/* Heading */}
+               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+                    <h2 className="text-2xl md:text-3xl font-bold text-primary">
+                         {title || "Related Blogs"}
+                    </h2>
+               </div>
 
-               <h2 className="text-2xl md:text-3xl font-bold text-primary mb-6 px-4 md:px-0">
-                    {title || "Related Blogs"}
-               </h2>
-
-               <div className="relative">
-
-                    {/* LEFT BUTTON */}
-                    <button
-                         onClick={prev}
-                         aria-label="Previous Blog"
-                         disabled={currentIndex === 0}
-                         className="absolute left-2 md:-left-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9 bg-white rounded-full shadow-md flex items-center justify-center disabled:opacity-40 border border-gray-100 cursor-pointer"
+               {/* Carousel Track */}
+               <div className="overflow-hidden relative w-full">
+                    <div
+                         className="flex transition-transform duration-500 ease-in-out"
+                         style={{ transform: `translateX(-${currentIndex * (100 / visibleCards)}%)` }}
                     >
-                         <ChevronLeft size={18} />
-                     </button>
-
-                    {/* RIGHT BUTTON */}
-                    <button
-                         onClick={next}
-                         aria-label="Next Blog"
-                         disabled={currentIndex >= maxIndex}
-                         className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9 bg-white rounded-full shadow-md flex items-center justify-center disabled:opacity-40 border border-gray-100 cursor-pointer"
-                    >
-                         <ChevronRight size={18} />
-                    </button>
-
-                    {/* VIEWPORT */}
-                    <div className="overflow-hidden px-3 md:px-0">
-                         <div
-                              className="flex transition-transform duration-300 ease-out will-change-transform "
-                              style={{
-                                   transform: `translateX(-${currentIndex * cardWidthPercent}%)`,
-                              }}
-                         >
-                              {visibleItems.map((blog, index) => (
-                                   <div
-                                        key={blog?._id || index}
-                                        className="shrink-0 px-2"
-                                        style={{ width: `${cardWidthPercent}%` }}
-                                   >
-                                        {blog ? (
-                                             <RelatedBlogCard blog={blog} />
-                                        ) : (
-                                             <RelatedBlogCardSkeleton />
-                                        )}
-                                   </div>
-                              ))}
-                         </div>
+                         {blogs.map((blog, index) => (
+                              <div
+                                   key={blog?._id || blog?.slug || index}
+                                   className="shrink-0 px-0 md:px-3"
+                                   style={{ width: `${100 / visibleCards}%` }}
+                              >
+                                   <RelatedBlogCard blog={blog} className="w-full" />
+                              </div>
+                         ))}
                     </div>
                </div>
 
-               {/* DOTS */}
-               <div className="flex justify-center mt-6 gap-0">
-                    {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+               {/* Navigation Controls (Identical fine design to Case Studies Carousel) */}
+               {blogs.length > visibleCards && (
+                    <div className="flex items-center justify-center gap-4 mt-8">
                          <button
-                              key={i}
-                              onClick={() => setCurrentIndex(i)}
-                              aria-label={`Go to slide ${i + 1}`}
-                              className="p-2 md:p-3"
+                              onClick={handlePrev}
+                              className="w-10 h-10 rounded-full border border-gray-300 hover:border-primary text-secondary hover:text-primary flex items-center justify-center transition cursor-pointer bg-white shadow-xs"
+                              aria-label="Previous Blog"
                          >
-                              <span
-                                   className={`block rounded-full transition-all duration-300 ${currentIndex === i
-                                             ? "w-6 h-2 bg-blue-600"
-                                             : "w-2 h-2 bg-gray-300"
-                                        }`}
-                              />
+                              <ChevronLeft size={20} />
                          </button>
-                    ))}
-               </div>
-
+                         <button
+                              onClick={handleNext}
+                              className="w-10 h-10 rounded-full border border-gray-300 hover:border-primary text-secondary hover:text-primary flex items-center justify-center transition cursor-pointer bg-white shadow-xs"
+                              aria-label="Next Blog"
+                         >
+                              <ChevronRight size={20} />
+                         </button>
+                    </div>
+               )}
           </div>
      );
 };

@@ -41,7 +41,17 @@ const DEFAULT_TESTIMONIALS = [
      }
 ];
 
-const Testimonials = () => {
+let preloadedTestimonials = [];
+try {
+     const initialData = await getAllReviews();
+     if (Array.isArray(initialData) && initialData.length > 0) {
+          preloadedTestimonials = initialData;
+     }
+} catch (e) {
+     // Preload fallback if offline during build
+}
+
+const Testimonials = ({ initialTestimonials = [] }) => {
      const getInitials = (name) => {
           if (!name) return "";
           const parts = name.trim().split(/\s+/);
@@ -49,10 +59,25 @@ const Testimonials = () => {
           return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
      };
 
+     const rawInitial = (Array.isArray(initialTestimonials) && initialTestimonials.length > 0)
+          ? initialTestimonials
+          : preloadedTestimonials;
+
+     const formattedInitial = (Array.isArray(rawInitial) && rawInitial.length > 0)
+          ? rawInitial.map((review) => ({
+               name: review.name,
+               role: review.role || review.courseName || "Student",
+               image: review.image || testiImage?.src || testiImage,
+               text: review.text
+          }))
+          : [];
+
      const sliderRef = useRef();
      const [currentIndex, setCurrentIndex] = useState(0);
      const [maxIndex, setMaxIndex] = useState(0);
-     const [testimonialsList, setTestimonialsList] = useState([]);
+     const [testimonialsList, setTestimonialsList] = useState(
+          formattedInitial.length > 0 ? formattedInitial : DEFAULT_TESTIMONIALS
+     );
      const pathname = usePathname();
 
      const isLocation = pathname.startsWith("/location");
@@ -170,7 +195,7 @@ const Testimonials = () => {
 
      return (
           <div className='min-h-screen mx-auto w-full px-4 sm:px-6 lg:px-10 pt-18 lg:pt-16 text-secondary bg-primary-bg relative'>
-               <img src={Map?.src || Map} alt="Testimonial Map Bg" fetchPriority='high' decoding="async" className='absolute top-0 inset-0 w-full h-[179vh] z-10 object-cover' />
+               <img src={Map?.src || Map} alt="Testimonial Map Bg" fetchPriority='high' decoding="async" className='absolute top-0 inset-0 w-full h-[179vh] z-0 object-cover pointer-events-none' />
 
                {/* Heading */}
                <h2 className="plus-jakarta-sans text-3xl md:text-5xl xl:text-[48px] font-bold leading-10 md:leading-15 max-w-140 text-primary text-center z-20 relative mx-auto">

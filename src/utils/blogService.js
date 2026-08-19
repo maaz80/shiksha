@@ -1,34 +1,27 @@
-import { API_URL } from "./api.js";
-
-const API = API_URL;
+import { fetchWithFallback } from "./api.js";
 
 export const getBlogs = async () => {
-
      try {
-
-          const res = await fetch(`${API}/blogs`);
-          return await res.json();
-
-     } catch (err) {
-
-          console.error(err);
+          const res = await fetchWithFallback("/blogs");
+          if (res && res.ok) {
+               return await res.json();
+          }
           return [];
-
+     } catch (err) {
+          console.error("Failed to fetch blogs:", err);
+          return [];
      }
-
 };
+
 export const getBlogBySlug = async (slug) => {
      try {
-          const res = await fetch(`${API}/blogs/${slug}`);
-
-          if (!res.ok) {
-               throw new Error("Blog not found");
+          const res = await fetchWithFallback(`/blogs/${slug}`);
+          if (res && res.ok) {
+               return await res.json();
           }
-
-          return await res.json();
-
+          return null;
      } catch (err) {
-          console.error(err);
+          console.error("Failed to fetch blog by slug:", err);
           return null;
      }
 };

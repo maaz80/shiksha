@@ -1,23 +1,19 @@
 "use client";
 
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Hero from '../components/About/Hero'
 import Breadcrumb from '../components/BreadCrumb'
 import useFaq from '../hooks/useFaq'
 import { getAboutData } from '../utils/aboutService'
 import { getHomeData } from '../utils/homeService'
 import Details from '../components/About/Details'
+import OurValues from '../components/About/OurValues'
+import TeamCarousel from '../components/About/TeamCarousel'
+import Testimonials from '../components/Home/Testimonials'
+import RelatedBlogs from '../components/RelatedBlogs'
+import FAQ from '../components/FAQ'
 
-const OurValues = lazy(() => import('../components/About/OurValues'))
-const TeamCarousel = lazy(() => import('../components/About/TeamCarousel'))
-const RelatedBlogs = lazy(() => import('../components/RelatedBlogs'))
-const FAQ = lazy(() => import('../components/FAQ'))
-
-const SectionSkeleton = () => (
-  <div className="w-full animate-pulse bg-gray-100 rounded-md h-48 my-4" />
-)
-
-const AboutUs = () => {
+const AboutUs = ({ initialTestimonials = [] }) => {
   const { faqData } = useFaq();
   const [aboutData, setAboutData] = useState(null);
   const [loadingAbout, setLoadingAbout] = useState(true);
@@ -58,25 +54,21 @@ const AboutUs = () => {
 
       <Details data={aboutData?.shikshadetails} />
 
-      <Suspense fallback={<SectionSkeleton />}>
-        <OurValues data={aboutData?.ourvalues} />
-      </Suspense>
+      <OurValues data={aboutData?.ourvalues} />
 
-      <Suspense fallback={<SectionSkeleton />}>
-        <TeamCarousel data={aboutData?.team} />
-      </Suspense>
+      <TeamCarousel data={aboutData?.team} />
+
+      <div className="relative">
+        <Testimonials data={homeData?.testimonialstitle} initialTestimonials={initialTestimonials} />
+      </div>
 
       <div className='max-w-330 mx-auto space-y-10'>
-        <Suspense fallback={<SectionSkeleton />}>
-          <RelatedBlogs title={homeData?.relatedblogstitle} />
-        </Suspense>
+        <RelatedBlogs title={homeData?.relatedblogstitle} />
 
-        <Suspense fallback={<SectionSkeleton />}>
-          <FAQ faqData={faqData} />
-        </Suspense>
+        <FAQ faqData={faqData} />
       </div>
     </main>
   )
 }
 
-export default AboutUs
+export default AboutUs;

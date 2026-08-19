@@ -40,7 +40,7 @@ const Terms = () => {
      return (
           <main className="w-full pb-24 text-secondary min-h-[90vh]">
                <Breadcrumb />
-               <div className="max-w-5xl pt-4 px-6 md:px-16 lg:px-24">
+               <div className="max-w-350 mx-auto w-full pt-6 md:pt-10 px-4 sm:px-6 md:px-10 lg:px-16">
                     {loading ? (
                          <div className="animate-pulse space-y-4">
                               <h1 className="text-[24px] md:text-[48px] 2xl:text-[72px] leading-8 md:leading-15 2xl:leading-20 font-bold text-start mx-auto z-20 relative mb-8 text-gray-200 select-none">
