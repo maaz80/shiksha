@@ -140,10 +140,40 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
           setOtpLoading(true);
           try {
                const res = await sendOTP(formData.email, authMode);
-               setOtpSent(true);
-               setSuccessMessage(res.message || "Verification OTP sent to your email!");
+               
+               if (res?.switchedToSignup) {
+                    setAuthMode("signup");
+                    setOtpSent(false);
+                    setSuccessMessage(res.message || "No account found with this email. Switched to Sign Up to create your account.");
+                    setError("");
+               } else if (res?.switchedToLogin) {
+                    setAuthMode("login");
+                    setOtpSent(true);
+                    setSuccessMessage(res.message || "Account already exists. Switched to Login and sent OTP to your email!");
+                    setError("");
+               } else {
+                    setOtpSent(true);
+                    setSuccessMessage(res.message || "Verification OTP sent to your email!");
+                    setError("");
+               }
           } catch (err) {
-               setError(err.message || "Failed to send OTP.");
+               const errText = (err.message || "").toLowerCase();
+               const isNotFound = err.data?.shouldSwitchToSignup || err.data?.notFound || errText.includes("no account found");
+               const isUserExists = err.data?.userExists || errText.includes("account already exists");
+
+               if (isNotFound) {
+                    setAuthMode("signup");
+                    setOtpSent(false);
+                    setSuccessMessage(err.message || "No account found with this email. Switched to Sign Up to create your account.");
+                    setError("");
+               } else if (isUserExists) {
+                    setAuthMode("login");
+                    setOtpSent(false);
+                    setSuccessMessage("Account already exists with this email. Switched to Login.");
+                    setError("");
+               } else {
+                    setError(err.message || "Failed to send OTP.");
+               }
           } finally {
                setOtpLoading(false);
           }

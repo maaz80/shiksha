@@ -54,26 +54,6 @@ export default function HorizontalCourseCard({ course, unlocked = false }) {
                          <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed">
                               {course.overview || course.description || "Master in-demand industry skills with expert live sessions and hands-on projects."}
                          </p>
-
-                         {/* Metadata Stats */}
-                         <div className="grid grid-cols-2 sm:grid-cols-4 items-center gap-3 pt-2 text-xs text-gray-600 font-medium">
-                              <div className="flex items-center gap-1.5">
-                                   <Clock size={14} className="text-primary" />
-                                   <span>{course.courseLength || "--"}</span>
-                              </div>
-                              <div className="flex items-center gap-1.5">
-                                   <Users size={14} className="text-primary" />
-                                   <span>{course.students || 0} Students</span>
-                              </div>
-                              <div className="flex items-center gap-1.5">
-                                   <BarChart3 size={14} className="text-primary" />
-                                   <span>{course.level || "All Levels"}</span>
-                              </div>
-                              <div className="flex items-center gap-1.5">
-                                   <FileText size={14} className="text-primary" />
-                                   <span>{course.totalLessons || 0} Lessons</span>
-                              </div>
-                         </div>
                     </div>
 
                     {/* Bottom Action Footer */}

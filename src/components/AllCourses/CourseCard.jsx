@@ -73,21 +73,6 @@ const CourseCard = ({ course }) => {
                          <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed font-normal">
                               {course.overview || course.description || "Master in-demand skills with expert live sessions, hands-on projects, and mentorship."}
                          </p>
-
-                         <div className="grid grid-cols-2 xl:grid-cols-3 items-center gap-2 xl:gap-6 text-sm pt-1">
-                              <div className="flex items-center gap-1">
-                                   <Users size={16} className="text-orange" />
-                                   <span>{course.students || 0} Students</span>
-                              </div>
-                              <div className="flex items-center gap-1">
-                                   <BarChart3 size={16} className="text-orange" />
-                                   <span>{course.level || "All levels"}</span>
-                              </div>
-                              <div className="flex items-center gap-1">
-                                   <FileText size={16} className="text-orange" />
-                                   <span>{course.totalLessons || 0} Lessons</span>
-                              </div>
-                         </div>
                     </div>
 
                     <div className="border-t border-gray-200 my-2 xl:my-4"></div>

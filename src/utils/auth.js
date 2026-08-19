@@ -277,7 +277,9 @@ export const sendOTP = async (email, type) => {
           const data = await res.json();
 
           if (!res.ok) {
-               throw new Error(data.error || "Failed to send OTP");
+               const err = new Error(data.error || "Failed to send OTP");
+               err.data = data;
+               throw err;
           }
 
           return data;

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Grip } from "lucide-react";
 import CardImgImported from "../../assets/shiksha-template-image.webp";
 const CardImg = CardImgImported?.src || CardImgImported;
@@ -90,31 +91,9 @@ const Services = ({ location }) => {
 
                     {/* CTA */}
                     <div className="mt-12 md:mt-16 flex justify-center">
-                         {/* <button
-                              onClick={handleClick}
-                              type="submit"
-                              className="service-btn group relative isolate overflow-hidden text-white bg-transparent text-[15px] md:text-[18px] w-44 md:w-60 h-12 lg:h-15 flex items-center justify-center gap-2 rounded-full font-medium transition-all duration-300 hover:text-blue border-white border cursor-pointer active:scale-99 text-center"
-                         >
-                              <span className="relative z-10">Get in Touch</span>
-
-                              <HiOutlineArrowLongRight
-                                   size={30}
-                                   className="hidden md:block relative z-10 text-white transition-all duration-300 group-hover:text-blue"
-                              />
-                              <HiOutlineArrowLongRight
-                                   size={24}
-                                   className=" md:hidden relative z-10 text-white transition-all duration-300 group-hover:text-blue"
-                              />
-                         </button> */}
-                         <button onClick={() => {
-                              handleClick
-                              document.getElementById('courses')?.scrollIntoView({
-                                   behavior: 'smooth',
-                              });
-                         }} className="flex h-12 md:h-14 justify-center w-50.25 md:w-60 rounded-md bg-primary text-white text-[14px] md:text-[16px] items-center gap-2 shadow-sm hover:bg-primary-hover cursor-pointer transition-all duration-300 ease-in-out ">
-                              {/* <Grip /> */}
-                              Explore Program
-                         </button>
+                         <Link href="/contact-us" className="flex h-12 md:h-14 justify-center w-50.25 md:w-60 rounded-md bg-primary text-white text-[14px] md:text-[16px] items-center gap-2 shadow-sm hover:bg-primary-hover cursor-pointer transition-all duration-300 ease-in-out font-semibold">
+                              Enquire Now
+                         </Link>
                     </div>
 
                </div>

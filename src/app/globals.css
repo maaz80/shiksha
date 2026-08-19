@@ -13,6 +13,12 @@ html {
   scrollbar-gutter: stable;
 }
 
+/* Below-the-fold render optimization without affecting layout or JS-off HTML */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 400px;
+}
+
 input[type="checkbox"] {
   accent-color: #0071E5;
 }

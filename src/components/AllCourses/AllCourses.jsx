@@ -24,14 +24,11 @@ const CourseCardSkeleton = () => {
                          {/* Title */}
                          <div className="h-6 bg-gray-200 rounded w-3/4" />
                          
-                         {/* Stats Grid */}
-                         <div className="grid grid-cols-2 xl:grid-cols-4 items-center gap-2 xl:gap-6 pt-2">
-                              <div className="h-4 bg-gray-200 rounded w-16" />
-                              <div className="h-4 bg-gray-200 rounded w-24" />
-                              <div className="h-4 bg-gray-200 rounded w-16" />
-                              <div className="h-4 bg-gray-200 rounded w-20" />
-                         </div>
-                    </div>
+                          {/* Stats Grid */}
+                          <div className="pt-2">
+                               <div className="h-4 bg-gray-200 rounded w-20" />
+                          </div>
+                     </div>
 
                     <div className="border-t border-gray-200 my-2 xl:my-4"></div>
 

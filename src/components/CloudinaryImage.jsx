@@ -69,6 +69,7 @@ export function CloudinaryImage({
                     alt={alt}
                     className={`${className}`}
                     loading={priority ? "eager" : "lazy"}
+                    decoding="async"
                     {...(fetchPriority ? { fetchPriority } : {})}
                />
           );
@@ -92,6 +93,7 @@ export function CloudinaryImage({
                alt={alt}
                className={`${className}`}
                loading={priority ? "eager" : "lazy"}
+               decoding="async"
                {...(fetchPriority ? { fetchPriority } : {})}
           />
      );

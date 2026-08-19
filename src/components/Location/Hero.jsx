@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import LocationHeroBG from "../../assets/location-hero-bg.webp";
 import { HiOutlineArrowLongRight } from "react-icons/hi2";
 import { IoCheckmarkSharp } from "react-icons/io5";
@@ -52,31 +53,10 @@ const Hero = ({ location }) => {
                               ))}
                          </div>
 
-                         {/* CTA */}
-                         {/* <button
-                              onClick={handleClick}
-                              type="submit"
-                              className="btn group relative isolate overflow-hidden text-cust-orange bg-white text-[15px] md:text-[18px] w-44 md:w-60 h-12 lg:h-15 flex items-center justify-center gap-2 rounded-full font-medium transition-all duration-300 hover:text-white border-none border cursor-pointer active:scale-99 "
-                         >
-                              <span className="relative z-10">Get in Touch</span>
 
-                              <HiOutlineArrowLongRight
-                                   size={30}
-                                   className="hidden md:block relative z-10 text-cust-orange transition-all duration-300 group-hover:text-white"
-                              />
-                              <HiOutlineArrowLongRight
-                                   size={24}
-                                   className=" md:hidden relative z-10 text-cust-orange transition-all duration-300 group-hover:text-white"
-                              />
-                         </button> */}
-                         <button onClick={() => {
-                              document.getElementById('courses')?.scrollIntoView({
-                                   behavior: 'smooth',
-                              });
-                         }} className="flex h-12 md:h-14 justify-center w-50.25 md:w-60 rounded-md bg-white text-primary text-[14px] md:text-[16px] items-center gap-2 shadow-sm hover:bg-white/90 cursor-pointer transition-all duration-300 ease-in-out ">
-                              {/* <Grip /> */}
+                         <Link href="/contact-us" className="flex h-12 md:h-14 justify-center w-50.25 md:w-60 rounded-md bg-white text-primary text-[14px] md:text-[16px] items-center gap-2 shadow-sm hover:bg-white/90 cursor-pointer transition-all duration-300 ease-in-out font-semibold">
                               Enquire Now
-                         </button>
+                         </Link>
                     </div>
 
                     {/* RIGHT FORM */}
