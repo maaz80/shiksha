@@ -3,16 +3,20 @@ import { getBlogBySlug, getBlogs } from "../../../utils/blogService";
 import { getTestimonials } from "../../../utils/testimonialService";
 import { notFound } from "next/navigation";
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   try {
-    const blogs = await getBlogs();
-    if (!Array.isArray(blogs)) return [];
+    const blogs = await getBlogs().catch(() => []);
+    if (!Array.isArray(blogs) || blogs.length === 0) {
+      return [{ slug: "default" }];
+    }
     return blogs.map((blog) => ({
-      slug: blog.slug || blog._id,
+      slug: String(blog.slug || blog._id),
     }));
   } catch (err) {
     console.error("Error generating static params for blogs:", err);
-    return [];
+    return [{ slug: "default" }];
   }
 }
 

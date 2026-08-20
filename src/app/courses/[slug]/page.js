@@ -3,16 +3,20 @@ import { getCourseBySlug, getCourses } from "../../../utils/courseService";
 import { getTestimonials } from "../../../utils/testimonialService";
 import { notFound } from "next/navigation";
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   try {
-    const courses = await getCourses();
-    if (!Array.isArray(courses)) return [];
+    const courses = await getCourses().catch(() => []);
+    if (!Array.isArray(courses) || courses.length === 0) {
+      return [{ slug: "default" }];
+    }
     return courses.map((course) => ({
-      slug: course.slug || course._id,
+      slug: String(course.slug || course._id),
     }));
   } catch (err) {
     console.error("Error generating static params for courses:", err);
-    return [];
+    return [{ slug: "default" }];
   }
 }
 

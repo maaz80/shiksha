@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "prebuild": "node generate_static_sitemaps.js",
-    "build": "node generate_static_sitemaps.js && node --max-old-space-size=4096 ./node_modules/next/dist/bin/next build && node post-build.js",
+    "build": "node build-with-retry.js",
     "start": "next start",
     "lint": "eslint"
   },

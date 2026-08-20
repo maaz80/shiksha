@@ -2,25 +2,30 @@ import Location from "../../../page-components/Location";
 import { getLocations } from "../../../utils/locations";
 import { getAllReviews } from "../../../utils/courseService";
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   try {
-    const locations = await getLocations();
+    const locations = await getLocations().catch(() => []);
     const params = [];
     if (Array.isArray(locations)) {
       for (const loc of locations) {
         if (Array.isArray(loc.items)) {
           for (const item of loc.items) {
             if (item.slug || item._id) {
-              params.push({ slug: item.slug || item._id });
+              params.push({ slug: String(item.slug || item._id) });
             }
           }
         }
       }
     }
+    if (params.length === 0) {
+      return [{ slug: "default" }];
+    }
     return params;
   } catch (err) {
     console.error("Error generating static params for locations:", err);
-    return [];
+    return [{ slug: "default" }];
   }
 }
 
