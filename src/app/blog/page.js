@@ -12,6 +12,7 @@ export async function generateMetadata() {
   };
 }
 
+
 export default async function Page() {
   const [blogs, testimonials] = await Promise.all([
     getBlogs().catch(() => []),
