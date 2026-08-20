@@ -7,6 +7,7 @@ const Hero = ({ data }) => {
                <div className=' flex items-start justify-between gap-1 md:gap-4'>
                     <div className='max-w-45 sm:max-w-78.5 md:max-w-90.25 2xl:max-w-190'>
                          <h1 className='text-[24px] md:text-[48px] 2xl:text-[72px] leading-8 md:leading-15 2xl:leading-21 font-bold text-secondary'>
+                              
                               {data?.startTitle || "We Transform Lives by "}{" "}
                               <span className="relative inline-block text-orange">
                                    {data?.midTitle || "Empowering"}
