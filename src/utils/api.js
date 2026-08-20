@@ -1,4 +1,4 @@
-const LIVE_API_URL = "https://shiksha-backend-jlmj.onrender.com/api";
+const LIVE_API_URL = "https://api.shikshadesign.com/api";
 
 const getApiUrl = () => {
      let baseUrl = (process.env.NEXT_PUBLIC_API_URL || process.env.VITE_API_URL || LIVE_API_URL).trim().replace(/\/$/, "");
