@@ -11,7 +11,7 @@ const BlogBigCard = ({ blog }) => {
 
      if (isLoading) {
           return (
-               <div className="w-full h-125 md:h-86.5 bg-white rounded-xl border border-gray-200 shadow-sm p-3 text-secondary flex flex-col md:flex-row items-start justify-between">
+               <div className="w-full h-125 md:h-86.5 bg-white rounded-[20px] border border-gray-200 shadow-sm p-3 text-secondary flex flex-col md:flex-row items-start justify-between">
                     <div className="relative rounded-lg overflow-hidden">
                          <CloudinaryImage
                               src={Template}
@@ -39,7 +39,7 @@ const BlogBigCard = ({ blog }) => {
      return (
           <Link
                href={blogHref}
-               className="w-full h-125 md:h-86.5 bg-white rounded-xl border border-gray-200 shadow-sm p-3 text-secondary flex flex-col md:flex-row items-start justify-between cursor-pointer group hover:shadow-md transition-all duration-300 block"
+               className="w-full h-125 md:h-86.5 bg-white rounded-[20px] border border-gray-200 shadow-sm p-3 text-secondary flex flex-col md:flex-row items-start justify-between cursor-pointer group hover:shadow-md transition-all duration-300 block"
           >
                {/* IMAGE */}
                <div className="relative rounded-lg overflow-hidden">

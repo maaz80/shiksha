@@ -12,7 +12,7 @@ const CourseCardSkeleton = () => {
      return (
           <div className="max-w-full w-full min-h-40 bg-white rounded-[20px] shadow-md border border-gray-100 flex flex-col sm:flex-row overflow-hidden open-sans animate-pulse">
                {/* LEFT IMAGE SECTION */}
-               <div className="relative w-full sm:w-[50%] md:w-[39%] xl:w-[25%] aspect-video sm:aspect-auto bg-gray-200 min-h-40 sm:min-h-0">
+               <div className="relative w-full h-48 sm:h-auto sm:w-[50%] md:w-[39%] xl:w-[25%] aspect-video shrink-0 overflow-hidden bg-gray-200">
                     <div className="absolute top-4 left-4 bg-gray-300 w-20 h-5 rounded-md" />
                </div>
 

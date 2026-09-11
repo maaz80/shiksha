@@ -70,7 +70,7 @@ const RelatedBlogs = ({ title, initialBlogs = [] }) => {
      };
 
      return (
-          <div className="relative w-full open-sans z-10 my-8 overflow-hidden px-0 md:px-3">
+          <div className="relative w-full open-sans z-10 mt-8 overflow-hidden px-0 md:px-3">
                {/* Heading */}
                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
                     <h2 className="text-2xl md:text-3xl font-bold text-primary">

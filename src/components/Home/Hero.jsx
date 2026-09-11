@@ -134,7 +134,7 @@ const Hero = ({ data }) => {
                     </div>
                </div>
 
-               <div className='flex md:hidden items-center md:items-start 2xl:items-center flex-row md:flex-col 2xl:flex-row gap-4 mt-20 md:mt-10 justify-start'>
+               <div className='flex md:hidden items-center md:items-start 2xl:items-center flex-row md:flex-col 2xl:flex-row gap-1 md:gap-4 mt-20 md:mt-10 justify-start'>
                     <button onClick={() => {
                          document.getElementById('courses')?.scrollIntoView({
                               behavior: 'smooth',

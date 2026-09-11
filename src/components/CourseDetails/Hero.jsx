@@ -71,7 +71,7 @@ const Hero = ({ course, courseId, setIsLogin }) => {
      };
 
      return (
-          <div className="relative w-full bg-primary pt-20 pb-8 md:pt-24 md:pb-0 px-4 sm:px-6 md:px-10 h-auto md:h-[47vh] flex flex-col justify-center">
+          <div className="relative w-full bg-primary pt-8 pb-8 md:pt-24 md:pb-0 px-4 sm:px-6 md:px-10 h-auto md:h-[47vh] flex flex-col justify-center">
 
                {/* CONTENT WRAPPER */}
                <div className="max-w-7xl mx-auto w-full flex flex-col md:flex-row items-start justify-between gap-6 md:gap-10">

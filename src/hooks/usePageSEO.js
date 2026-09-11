@@ -250,13 +250,13 @@ export function usePageSEO() {
 
                          if (cache.has(cacheKey)) {
                               const itemSeo = cache.get(cacheKey);
-                              setSEO(itemSeo.title || DEFAULT_TITLE, itemSeo.description || DEFAULT_DESCRIPTION, itemSeo.keywords || "", itemSeo.schema || "");
+                              setSEO(itemSeo?.title || DEFAULT_TITLE, itemSeo?.description || DEFAULT_DESCRIPTION, itemSeo?.keywords || "", itemSeo?.schema || "");
 
                               // Silent background revalidation
                               resolveItemSlugSeo(slug).then((updatedSeo) => {
                                    if (updatedSeo && isActive) {
                                         cache.set(cacheKey, updatedSeo);
-                                        setSEO(updatedSeo.title || DEFAULT_TITLE, updatedSeo.description || DEFAULT_DESCRIPTION, updatedSeo.keywords || "", updatedSeo.schema || "");
+                                        setSEO(updatedSeo?.title || DEFAULT_TITLE, updatedSeo?.description || DEFAULT_DESCRIPTION, updatedSeo?.keywords || "", updatedSeo?.schema || "");
                                    }
                               }).catch(() => { });
                               return;
@@ -265,16 +265,16 @@ export function usePageSEO() {
                          const itemSeo = await resolveItemSlugSeo(slug);
                          if (itemSeo) {
                               cache.set(cacheKey, itemSeo);
-                              setSEO(itemSeo.title || DEFAULT_TITLE, itemSeo.description || DEFAULT_DESCRIPTION, itemSeo.keywords || "", itemSeo.schema || "");
+                              setSEO(itemSeo?.title || DEFAULT_TITLE, itemSeo?.description || DEFAULT_DESCRIPTION, itemSeo?.keywords || "", itemSeo?.schema || "");
                               return;
                          }
 
                          const notFoundSeo = await fetchJson(`${API_URL}/pages/not-found/seo`);
-                         cache.set("page:not-found", notFoundSeo);
+                         if (notFoundSeo) cache.set("page:not-found", notFoundSeo);
                          setSEO(
-                              notFoundSeo.title || DEFAULT_TITLE,
-                              notFoundSeo.description || DEFAULT_DESCRIPTION,
-                              notFoundSeo.keywords || "",
+                              notFoundSeo?.title || DEFAULT_TITLE,
+                              notFoundSeo?.description || DEFAULT_DESCRIPTION,
+                              notFoundSeo?.keywords || "",
                               notFoundSeo?.schema || ""
                          );
                          return;
@@ -292,13 +292,13 @@ export function usePageSEO() {
 
                     if (cache.has(cacheKey)) {
                          const seo = cache.get(cacheKey);
-                         setSEO(seo.title || DEFAULT_TITLE, seo.description || DEFAULT_DESCRIPTION, seo.keywords || "", seo?.schema || "");
+                         setSEO(seo?.title || DEFAULT_TITLE, seo?.description || DEFAULT_DESCRIPTION, seo?.keywords || "", seo?.schema || "");
                          return;
                     }
 
                     const seo = await fetchJson(`${API_URL}/pages/${path}/seo`);
-                    cache.set(cacheKey, seo);
-                    setSEO(seo.title || DEFAULT_TITLE, seo.description || DEFAULT_DESCRIPTION, seo.keywords || "", seo?.schema || "");
+                    if (seo) cache.set(cacheKey, seo);
+                    setSEO(seo?.title || DEFAULT_TITLE, seo?.description || DEFAULT_DESCRIPTION, seo?.keywords || "", seo?.schema || "");
                } catch (error) {
                     console.error("SEO error:", error);
                }

@@ -35,7 +35,7 @@ export default function FAQ({ faqData, title }) {
      }, [faqData]);
 
      return (
-          <div id="faqs" className=" pt-10 pb-6 h-auto w-full">
+          <div id="faqs" className="px-3 pb-6 h-auto w-full">
                {/* Heading */}
                <h2 className="text-[24px] xl:text-[32px] font-bold text-primary mb-5">
                     {title || faqData?.title || "FAQ"}

@@ -4,8 +4,8 @@ import CloudinaryImage from '../CloudinaryImage';
 const Hero = ({ data }) => {
      return (
           <div className='mx-auto w-full max-w-350 px-4 sm:px-6 lg:px-10 pt-10 md:pt-15 '>
-               <div className=' flex items-start justify-between gap-1 md:gap-4'>
-                    <div className='max-w-45 sm:max-w-78.5 md:max-w-90.25 2xl:max-w-190'>
+               <div className=' flex flex-col-reverse md:flex-row items-start justify-between gap-1 md:gap-4'>
+                    <div className='max-w-full sm:max-w-78.5 md:max-w-90.25 2xl:max-w-190'>
                          <h1 className='text-[24px] md:text-[48px] 2xl:text-[72px] leading-8 md:leading-15 2xl:leading-21 font-bold text-secondary'>
                               
                               {data?.startTitle || "We Transform Lives by "}{" "}
@@ -46,12 +46,12 @@ const Hero = ({ data }) => {
                               {" "}{data?.endTitle || " People Via Digital Skills."}
                          </h1>
 
-                         <p className='text-[10px] md:text-[14px] xl:text-[16px] leading-5 md:leading-6 xl:leading-7 mt-5'>
+                         <p className='text-[12px] md:text-[14px] xl:text-[16px] leading-5 md:leading-6 xl:leading-7 mt-5'>
                               {data?.description || "We firmly believe in and embrace an open culture. Our teams comprise individuals from diverse backgrounds bringing about their own experiences Our experiences and processes are constantly evolving. We believe in innovative practices that continually push the boundaries of what’s possible for the industry."}
                          </p>
                     </div>
 
-                    <div className='w-45 sm:w-71 h-56.5 md:w-130.75 md:h-141.75 2xl:w-155 2xl:h-159.25 p-2 flex justify-center items-start'>
+                    <div className='w-full sm:w-71 h-50.5 md:w-130.75 md:h-141.75 2xl:w-155 2xl:h-159.25 p-0 md:p-2 flex justify-center items-start'>
                          <CloudinaryImage
                               src={data?.image || Template}
                               alt="Template Image"

@@ -38,7 +38,7 @@ const TermsAndConditionsEnrolment = () => {
      }, []);
 
      return (
-          <main className="w-full pb-24 text-secondary min-h-[90vh]">
+          <main className="w-full pb-5 md:pb-14 text-secondary min-h-[90vh]">
                <Breadcrumb />
                <div className="max-w-350 mx-auto w-full pt-6 md:pt-10 px-4 sm:px-6 md:px-10 lg:px-16">
                     {loading ? (
@@ -62,7 +62,7 @@ const TermsAndConditionsEnrolment = () => {
                                    {policy?.title || "Terms and Conditions - Enrolment"}
                               </h1>
                               {/* CONTENT */}
-                              <div 
+                              <div
                                    className="text-[14px] leading-6 my-8 blog-content"
                                    dangerouslySetInnerHTML={{ __html: policy?.content || "" }}
                               />

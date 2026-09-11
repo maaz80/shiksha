@@ -205,7 +205,7 @@ export default function ContactForm() {
 
      return (
           <div className="max-w-6xl mx-auto px-4 sm:px-6 text-secondary">
-               <div className="bg-[#E1EAF5] border border-gray-200 rounded-xl p-5 md:p-8">
+               <div className="bg-[#E1EAF5] border border-gray-200 rounded-[20px] p-5 md:p-8">
 
                     <h2 className="text-[20px] md:text-[32px] font-bold text-primary mb-6">
                          Have Queries? Reach out to us!

@@ -34,11 +34,11 @@ const ContactUs = () => {
       <Breadcrumb />
       <Hero data={contactData?.hero} />
 
-      <div className="flex flex-col lg:flex-row items-center justify-between max-w-337 mx-auto py-20 gap-10">
+      <div className="flex flex-col lg:flex-row items-center justify-between max-w-337 mx-auto py-10 md:py-20 gap-10">
         <div className='w-full lg:w-[70%]'>
           <ContactForm />
         </div>
-        <div className='w-full lg:w-[30%]'>
+        <div className='w-full lg:w-[30%] px-4 md:px-0'>
           <CompanyCard data={contactData?.card} />
         </div>
       </div>

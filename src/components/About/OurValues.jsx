@@ -52,7 +52,7 @@ export default function OurValues({ data }) {
                               return (
                                    <div
                                         key={index}
-                                        className="bg-white border border-gray-200 rounded-xl p-6 md:p-7 flex flex-col gap-3 transition hover:shadow-md w-90 md:w-97.25 h-73"
+                                        className="bg-white border border-gray-200 rounded-xl p-6 md:p-7 flex flex-col gap-3 transition hover:shadow-md w-80 md:w-97.25 h-73"
                                    >
 
                                         {/* Icon / Image */}

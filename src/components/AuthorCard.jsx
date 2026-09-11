@@ -28,7 +28,7 @@ export default function AuthorCard({ author, blog }) {
   }
 
   return (
-    <div className="w-full rounded-2xl border border-[#D6DEE6] px-6 py-6 md:px-10 md:py-8 text-secondary my-8 bg-white shadow-xs">
+    <div className="w-full rounded-[20px] border border-[#D6DEE6] px-6 py-6 md:px-10 md:py-8 text-secondary my-8 bg-white shadow-xs">
       {/* TITLE */}
       <h2 className="text-[22px] md:text-[32px] font-bold mb-6 text-secondary">
         Author

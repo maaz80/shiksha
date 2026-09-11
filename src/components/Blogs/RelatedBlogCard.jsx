@@ -32,7 +32,7 @@ const RelatedBlogCard = ({ blog, className = "" }) => {
                href={blogHref}
                onClick={handleCardClick}
                suppressHydrationWarning
-               className={`block ${className ? className : "w-full"} h-103 bg-white rounded-xl border border-gray-200 shadow-sm p-3 text-secondary cursor-pointer group hover:shadow-md transition-all duration-300`}
+               className={`block ${className ? className : "w-full"} h-103 bg-white rounded-[20px] border border-gray-200 shadow-sm p-3 text-secondary cursor-pointer group hover:shadow-md transition-all duration-300`}
           >
 
                {/* IMAGE */}

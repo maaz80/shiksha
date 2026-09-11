@@ -10,9 +10,9 @@ export default function HorizontalCourseCard({ course, unlocked = false }) {
      const courseHref = `/courses/${course.slug || course._id}`;
 
      return (
-          <div className="w-full bg-white rounded-2xl border border-gray-200/90 shadow-xs hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col sm:flex-row group">
+          <div className="w-full bg-white rounded-[20px] border border-gray-200/90 shadow-xs hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col sm:flex-row group">
                {/* Left Thumbnail Section */}
-               <div className="relative w-full sm:w-2/5 md:w-1/3 aspect-video sm:aspect-auto shrink-0 bg-gray-100 overflow-hidden">
+               <div className="relative w-full h-48 sm:h-auto sm:w-2/5 md:w-1/3 aspect-video shrink-0 bg-gray-100 overflow-hidden">
                     <CloudinaryImage
                          src={course.image}
                          alt={course.alt || course.title}

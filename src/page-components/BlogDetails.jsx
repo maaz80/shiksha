@@ -78,7 +78,7 @@ const BlogDetails = ({ blog: propBlog, slug: propSlug, initialTestimonials = [] 
           const processed = htmlContent.replace(/<h[23]\b([^>]*)>(.*?)<\/h[23]>/gi, (match, attrs, content) => {
                const id = `blog-heading-${headingIndex}`;
                headingIndex++;
-               
+
                const text = content.replace(/<[^>]*>/g, "").trim();
                if (text) {
                     headings.push({
@@ -210,7 +210,7 @@ const BlogDetails = ({ blog: propBlog, slug: propSlug, initialTestimonials = [] 
 
                          {/* ================= LEFT SIDEBAR ================= */}
                          <aside className='w-full md:w-[32%] lg:w-[28%] order-2 md:order-1 flex flex-col gap-6 self-stretch px-2 md:px-0'>
-                              
+
                               {/* Related Course */}
                               <div className='w-full flex flex-col gap-4'>
                                    <h2 className="text-[22px] md:text-[28px] leading-8 font-bold text-start z-20 relative text-primary">
@@ -223,31 +223,31 @@ const BlogDetails = ({ blog: propBlog, slug: propSlug, initialTestimonials = [] 
                                    ) : null}
                               </div>
 
-                               {/* Table of Contents - Desktop View */}
-                               {headingsList.length > 0 && (
-                                    <div className="hidden md:block w-full bg-white border border-gray-200 rounded-2xl p-5 shadow-sm md:sticky md:top-31 z-10">
-                                         <h3 className="font-bold text-[18px] text-primary uppercase tracking-wide border-b border-gray-100 pb-3 mb-3">
-                                              Table Of Contents
-                                         </h3>
-                                         <div className="space-y-1.5 max-h-96 overflow-y-auto hide-scrollbar">
-                                              {headingsList.map((item) => {
-                                                   const isActive = item.id === activeId;
-                                                   return (
-                                                        <button
-                                                             key={item.id}
-                                                             onClick={() => handleScrollToHeading(item.id)}
-                                                             className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all cursor-pointer leading-normal line-clamp-2 ${isActive
-                                                                  ? "bg-primary text-white font-semibold shadow-sm"
-                                                                  : "text-secondary hover:bg-gray-100 hover:text-primary font-medium"
-                                                             }`}
-                                                        >
-                                                             {item.text}
-                                                        </button>
-                                                   );
-                                              })}
-                                         </div>
-                                    </div>
-                               )}
+                              {/* Table of Contents - Desktop View */}
+                              {headingsList.length > 0 && (
+                                   <div className="hidden md:block w-full bg-white border border-gray-200 rounded-2xl p-5 shadow-sm md:sticky md:top-31 z-10">
+                                        <h3 className="font-bold text-[18px] text-primary uppercase tracking-wide border-b border-gray-100 pb-3 mb-3">
+                                             Table Of Contents
+                                        </h3>
+                                        <div className="space-y-1.5 max-h-96 overflow-y-auto hide-scrollbar">
+                                             {headingsList.map((item) => {
+                                                  const isActive = item.id === activeId;
+                                                  return (
+                                                       <button
+                                                            key={item.id}
+                                                            onClick={() => handleScrollToHeading(item.id)}
+                                                            className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all cursor-pointer leading-normal line-clamp-2 ${isActive
+                                                                 ? "bg-primary text-white font-semibold shadow-sm"
+                                                                 : "text-secondary hover:bg-gray-100 hover:text-primary font-medium"
+                                                                 }`}
+                                                       >
+                                                            {item.text}
+                                                       </button>
+                                                  );
+                                             })}
+                                        </div>
+                                   </div>
+                              )}
                          </aside>
 
                          {/* ================= RIGHT MAIN CONTENT ================= */}
@@ -261,31 +261,31 @@ const BlogDetails = ({ blog: propBlog, slug: propSlug, initialTestimonials = [] 
                                         {/* Author Written By Card at Start */}
                                         <AuthorWrittenBy author={blog?.authorRef || blog?.author} blog={blog} />
 
-                                         {/* Table of Contents - Mobile View (Above image & content) */}
-                                         {headingsList.length > 0 && (
-                                              <div className="block md:hidden w-full bg-white border border-gray-200 rounded-xl p-4 shadow-xs mb-6">
-                                                   <h3 className="font-bold text-sm text-primary uppercase tracking-wide border-b border-gray-100 pb-2 mb-2">
-                                                        Table Of Contents
-                                                   </h3>
-                                                   <div className="space-y-1 max-h-56 overflow-y-auto hide-scrollbar">
-                                                        {headingsList.map((item) => {
-                                                             const isActive = item.id === activeId;
-                                                             return (
-                                                                  <button
-                                                                       key={item.id}
-                                                                       onClick={() => handleScrollToHeading(item.id)}
-                                                                       className={`w-full text-left px-2.5 py-1.5 rounded-md text-xs sm:text-sm transition-all cursor-pointer leading-normal line-clamp-2 ${isActive
-                                                                            ? "bg-primary text-white font-semibold shadow-xs"
-                                                                            : "text-secondary hover:bg-gray-100 hover:text-primary font-medium"
-                                                                       }`}
-                                                                  >
-                                                                       {item.text}
-                                                                  </button>
-                                                             );
-                                                        })}
-                                                   </div>
-                                              </div>
-                                         )}
+                                        {/* Table of Contents - Mobile View (Above image & content) */}
+                                        {headingsList.length > 0 && (
+                                             <div className="block md:hidden w-full bg-white border border-gray-200 rounded-xl p-4 shadow-xs mb-6">
+                                                  <h3 className="font-bold text-sm text-primary uppercase tracking-wide border-b border-gray-100 pb-2 mb-2">
+                                                       Table Of Contents
+                                                  </h3>
+                                                  <div className="space-y-1 max-h-56 overflow-y-auto hide-scrollbar">
+                                                       {headingsList.map((item) => {
+                                                            const isActive = item.id === activeId;
+                                                            return (
+                                                                 <button
+                                                                      key={item.id}
+                                                                      onClick={() => handleScrollToHeading(item.id)}
+                                                                      className={`w-full text-left px-2.5 py-1.5 rounded-md text-xs sm:text-sm transition-all cursor-pointer leading-normal line-clamp-2 ${isActive
+                                                                           ? "bg-primary text-white font-semibold shadow-xs"
+                                                                           : "text-secondary hover:bg-gray-100 hover:text-primary font-medium"
+                                                                           }`}
+                                                                 >
+                                                                      {item.text}
+                                                                 </button>
+                                                            );
+                                                       })}
+                                                  </div>
+                                             </div>
+                                        )}
 
                                         <div className="mb-8 relative w-full h-72 md:h-114.5">
                                              <Image

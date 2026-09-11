@@ -5,6 +5,16 @@ import Link from "next/link";
 import { CheckCircle2, ChevronLeft, ChevronRight, Download, Share2, PhoneCall } from "lucide-react";
 import Form from "./Form";
 import CallCard from "./CallCard";
+import SkillsYouWillLearn from "./SkillsYouWillLearn";
+import WhoShouldEnroll from "./WhoShouldEnroll";
+import TrustedByLearners from "./TrustedByLearners";
+import MeetTheTrainer from "./MeetTheTrainer";
+import DemoClass from "./DemoClass";
+import CourseCertification from "./CourseCertification";
+import CourseBenefits from "./CourseBenefits";
+import JobRoles from "./JobRoles";
+import HiringPartners from "./HiringPartners";
+import ChooseYourLearning from "./ChooseYourLearning";
 
 export default function Details({ data }) {
      const [sliderIndex, setSliderIndex] = useState(0);
@@ -282,7 +292,7 @@ export default function Details({ data }) {
                {/* SECTION 1: Promo Content, Benefits, Social Share & Admission Form */}
                <section className="bg-primary-bg/50 py-12 lg:py-16 w-full border-b border-gray-100">
                     <div className="max-w-7xl mx-auto px-4 sm:px-4 lg:px-0">
-                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-14 items-start">
+                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-14 items-start">
 
                               {/* LEFT COLUMN: Content */}
                               <div className="space-y-8 lg:col-span-2">
@@ -429,6 +439,36 @@ export default function Details({ data }) {
                          </div>
                     </div>
                </section>
+
+               {/* 5.3: Skills You Will Learn */}
+               <SkillsYouWillLearn data={data} />
+
+               {/* 5.4: Who Should Enroll */}
+               <WhoShouldEnroll data={data} />
+
+               {/* 5.5: Trusted By Learners */}
+               <TrustedByLearners data={data} />
+
+               {/* 5.6: Meet The Trainer */}
+               <MeetTheTrainer data={data} />
+
+               {/* 5.7: Demo Class */}
+               <DemoClass data={data} />
+
+               {/* 5.8: Course Certification */}
+               <CourseCertification data={data} />
+
+               {/* 5.9: Course Benefits */}
+               <CourseBenefits data={data} />
+
+               {/* 5.10: Job Roles */}
+               <JobRoles data={data} />
+
+               {/* 5.11: Hiring Partners */}
+               <HiringPartners data={data} />
+
+               {/* 5.12: Choose Your Learning */}
+               <ChooseYourLearning data={data} />
 
                {/* SECTION 3: Short-Term Courses Interactive Slider */}
                <section className="bg-primary text-white py-12 md:py-16 w-full">
@@ -582,7 +622,7 @@ export default function Details({ data }) {
                </section>
 
                {/* SECTION 5: Explore More Career Domains Grid */}
-               <section className="relative py-12 md:py-20 w-full bg-primary-bg/30">
+               <section className="relative py-6 md:py-10 w-full bg-primary-bg/30">
                     <div className="max-w-350 mx-auto px-4 sm:px-6 lg:px-14 relative z-10">
                          <div className="text-left space-y-2 mb-10">
                               <h2 className="text-[28px] md:text-[36px] font-bold text-secondary">

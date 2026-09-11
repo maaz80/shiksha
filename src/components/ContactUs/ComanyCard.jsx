@@ -9,10 +9,10 @@ export default function CompanyCard({ data }) {
      };
 
      return (
-          <div className="w-full max-w-85 h-116.5 bg-[#f3f6f9] rounded-xl shadow-sm border border-gray-200 overflow-hidden text-secondary p-1 mx-auto">
+          <div className="w-full max-w-85 h-116.5 bg-[#f3f6f9] rounded-[20px] shadow-sm border border-gray-200 overflow-hidden text-secondary p-0 md:p-1 mx-auto">
 
                {/* Top Image */}
-               <div className="h-45 w-full rounded-xl overflow-hidden">
+               <div className="h-45 w-full rounded-t-xl overflow-hidden">
                     <img
                          src={data?.image || Template}
                          alt="Company Location Image"
@@ -25,7 +25,7 @@ export default function CompanyCard({ data }) {
                </div>
 
                {/* Content */}
-               <div className="p-2 space-y-4">
+               <div className="p-4 space-y-4">
 
                     <h3 className="text-[20px] font-semibold truncate">
                          {data?.companyname || "Company Registered Name"}

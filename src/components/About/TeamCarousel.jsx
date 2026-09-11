@@ -80,7 +80,7 @@ export default function TeamCarousel({ data: teamData }) {
                     {title}
                </h2>
 
-               <div className="relative max-w-5xl mx-auto flex items-center justify-center">
+               <div className="relative max-w-[340px] md:max-w-5xl mx-auto flex items-center justify-center">
 
                     {/* Left Arrow */}
                     {members.length > 1 && (
@@ -94,7 +94,7 @@ export default function TeamCarousel({ data: teamData }) {
                     )}
 
                     {/* Cards */}
-                    <div className="relative w-full h-105 flex items-center justify-center">
+                    <div className="relative w-full h-80 md:h-105 flex items-center justify-center">
 
                          {members.map((item, i) => {
                               const pos = getPosition(i);

@@ -27,11 +27,11 @@ export default function CourseCard({ course, setIsModal = false, className = "" 
           <Link
                href={courseHref}
                onClick={handleClick}
-               className={`block ${className ? className : "w-70 md:w-51 2xl:w-70"} rounded-xl shadow-[0_0px_8px_0px] shadow-[#000000]/7 bg-white p-2 cursor-pointer group hover:shadow-md transition-all duration-300 relative flex flex-col justify-between`}
+               className={`block ${className ? className : "w-70 md:w-51 2xl:w-70"} rounded-[20px] shadow-[0_0px_8px_0px] shadow-[#000000]/7 bg-white p-2 cursor-pointer group hover:shadow-md transition-all duration-300 relative flex flex-col justify-between`}
           >
                <div>
                     {/* Image section */}
-                    <div className="relative rounded-lg overflow-hidden h-28 w-full">
+                    <div className="relative rounded-lg overflow-hidden h-28 w-full shrink-0">
                          <CloudinaryImage
                               src={course?.image || CourseImage}
                               sizes="(max-width: 768px) 100vw, 280px"

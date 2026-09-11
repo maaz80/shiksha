@@ -54,7 +54,7 @@ export default function Enquiries({ data: enquiryData }) {
                          return (
                               <div
                                    key={index}
-                                   className="bg-white border border-gray-200 rounded-xl shadow-xl px-6 py-8 flex flex-col items-center justify-center text-center transition hover:shadow-md h-67.5"
+                                   className="bg-white border border-gray-200 rounded-[20px] shadow-xl px-6 py-8 flex flex-col items-center justify-center text-center transition hover:shadow-md h-67.5"
                               >
 
                                    {/* Icon or Image */}

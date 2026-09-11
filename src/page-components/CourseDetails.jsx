@@ -10,6 +10,10 @@ import useFaq from '../hooks/useFaq'
 import FAQ from '../components/FAQ'
 import Testimonials from '../components/Home/Testimonials'
 import RelatedBlogs from '../components/RelatedBlogs'
+import SocialProofBar from '../components/CourseDetails/SocialProofBar'
+import WhyChooseUs from '../components/CourseDetails/WhyChooseUs'
+import ReadyToStartJourney from '../components/CourseDetails/ReadyToStartJourney'
+import RelatedCourses from '../components/CourseDetails/RelatedCourses'
 
 const CourseDetails = ({ isLogin, setIsLogin, course: propCourse, slug: propSlug, initialTestimonials = [] }) => {
   const { slug: routeSlug } = useParams();
@@ -101,15 +105,20 @@ const CourseDetails = ({ isLogin, setIsLogin, course: propCourse, slug: propSlug
               }}
             />
           )}
-          <Hero course={course} courseId={course._id} setIsLogin={setIsLogin} />
           <Breadcrumb />
+          <Hero course={course} courseId={course._id} setIsLogin={setIsLogin} />
+          <SocialProofBar items={course?.socialProof} />
           <Details data={course} />
 
           <div className="relative">
             <Testimonials initialTestimonials={initialTestimonials} />
           </div>
 
-          <div id='blogs' className='max-w-330 mx-auto space-y-10 my-10 px-4 sm:px-6'>
+          <WhyChooseUs data={course} />
+          <ReadyToStartJourney data={course} />
+          <RelatedCourses currentSlug={slug} data={course} />
+
+          <div id='blogs' className='max-w-85 md:max-w-330 mx-auto space-y-10 my-10 px-1 sm:px-6'>
             <RelatedBlogs />
 
             <FAQ faqData={courseFaqs} />

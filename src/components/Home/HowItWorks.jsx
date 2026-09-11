@@ -49,7 +49,7 @@ const HowItWorks = ({ data }) => {
 
      return (
           <div className='flex flex-col md:flex-row items-center justify-between mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10 pt-18 lg:pt-16'>
-               <div className='w-91 2xl:w-[50%]'>
+               <div className='w-[308px] 2xl:w-[50%]'>
                     <h2 className="text-[24px] md:text-[48px] 2xl:text-[72px] leading-8 md:leading-15 2xl:leading-20 font-bold text-secondary text-center md:text-start">
                          {startTitleText}{" "}
                          <span className="relative inline-block text-orange">
@@ -74,13 +74,13 @@ const HowItWorks = ({ data }) => {
                     </h2>
 
                     {/* 1st card  */}
-                    <div className='w-91 2xl:w-142.5 h-17 2xl:h-26 flex items-center justify-between text-secondary mt-13' >
+                    <div className='w-77 xs:w-91 2xl:w-142.5 h-17 2xl:h-26 flex items-center justify-between text-secondary mt-13' >
                          <svg viewBox="0 0 110 80" className="w-16 2xl:w-28 h-12 2xl:h-20 opacity-20 text-secondary" aria-hidden="true">
                                <rect x="10" y="10" width="35" height="60" rx="12" fill="none" stroke="currentColor" strokeWidth="10" />
                                <path d="M 80 10 V 70 M 68 22 L 80 10" fill="none" stroke="currentColor" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" />
                           </svg>
-                         <div className="bg-white flex items-center justify-between rounded-xl md:rounded-[20px] p-2 2xl:p-6 max-w-72.25 2xl:max-w-md gap-5 h-auto">
-                              <div className='w-10 2xl:w-14 h-10 2xl:h-14 bg-[#E1E9FE] text-[24px] rounded-full flex items-center justify-center text-secondary'><LogIn /></div>
+                         <div className="bg-white flex items-center justify-between rounded-xl md:rounded-[20px] p-2 2xl:p-6 max-w-56.25 xs:max-w-62 2xl:max-w-md gap-3 md:gap-5 h-auto">
+                              <div className='min-w-10 2xl:w-14 h-10 2xl:h-14 bg-[#E1E9FE] text-[24px] rounded-full flex items-center justify-center text-secondary'><LogIn /></div>
                               <div className='spacey-1'>
                                    <div className='text-[14px] 2xl:text-[20px] leading-5 md:leading-7'>{step1.title}</div>
                                    <div className='text-[12px] 2xl:text-[16px] leading-5 md:leading-7'>{step1.description}</div>
@@ -88,8 +88,8 @@ const HowItWorks = ({ data }) => {
                          </div>
                     </div>
                     {/* 2nd card  */}
-                    <div className='w-91 2xl:w-142.5 h-17 2xl:h-26 flex items-center justify-between text-secondary mt-8 2xl:mt-13' >
-                         <div className="bg-white flex items-center justify-between rounded-xl md:rounded-[20px] p-2 2xl:p-6 max-w-72.25 2xl:max-w-md gap-5 h-auto">
+                    <div className='w-77 sm:w-91 2xl:w-142.5 h-17 2xl:h-26 flex items-center justify-between text-secondary mt-8 2xl:mt-13' >
+                         <div className="bg-white flex items-center justify-between rounded-xl md:rounded-[20px] p-2 2xl:p-6 max-w-56.25 xs:max-w-62 2xl:max-w-md gap-3 md:gap-5 h-auto">
                               <div className='w-10 2xl:w-14 h-10 2xl:h-14 bg-[#FFEED2] text-[24px] rounded-full flex items-center justify-center text-[#FF9900]'><Upload /></div>
                               <div className='spacey-1'>
                                    <div className='text-[14px] 2xl:text-[20px] leading-5 md:leading-7'>{step2.title}</div>
@@ -103,13 +103,13 @@ const HowItWorks = ({ data }) => {
                     </div>
 
                     {/* 3rd card  */}
-                    <div className='w-91 2xl:w-142.5 h-17 2xl:h-26 flex items-center justify-between text-secondary mt-8 2xl:mt-13' >
+                    <div className='w-77 sm:w-91 2xl:w-142.5 h-17 2xl:h-26 flex items-center justify-between text-secondary mt-8 2xl:mt-13' >
                          <svg viewBox="0 0 110 80" className="w-16 2xl:w-28 h-12 2xl:h-20 opacity-20 text-secondary" aria-hidden="true">
                                <rect x="10" y="10" width="35" height="60" rx="12" fill="none" stroke="currentColor" strokeWidth="10" />
                                <path d="M 65 15 C 65 5, 105 5, 105 25 C 105 38, 90 40, 80 40 C 90 40, 105 42, 105 55 C 105 75, 65 75, 65 65" fill="none" stroke="currentColor" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" />
                           </svg>
-                         <div className="bg-white flex items-center justify-between rounded-xl md:rounded-[20px] p-2 2xl:p-6 max-w-72.25 2xl:max-w-md gap-5 h-auto">
-                              <div className='w-10 2xl:w-14 h-10 2xl:h-14 bg-[#F6E2FF] text-[24px] rounded-full flex items-center justify-center text-[#AA16EF]'><TicketPercent /></div>
+                         <div className="bg-white flex items-center justify-between rounded-xl md:rounded-[20px] p-2 2xl:p-6 max-w-56.25 xs:max-w-62 2xl:max-w-md gap-3 md:gap-5 h-auto">
+                              <div className='min-w-10 2xl:w-14 h-10 2xl:h-14 bg-[#F6E2FF] text-[24px] rounded-full flex items-center justify-center text-[#AA16EF]'><TicketPercent /></div>
                               <div className='spacey-1'>
                                    <div className='text-[14px] 2xl:text-[20px] leading-5 md:leading-7'>{step3.title}</div>
                                    <div className='text-[12px] 2xl:text-[16px] leading-5 md:leading-7'>{step3.description}</div>

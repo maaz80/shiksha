@@ -189,7 +189,7 @@ const Testimonials = ({ data, initialTestimonials = [] }) => {
      }, []);
 
      return (
-          <div className='min-h-[80vh] md:min-h-screen mx-auto w-full px-3 sm:px-6 lg:px-10 pt-10 lg:pt-16 text-secondary bg-primary-bg relative'>
+          <div className='min-h-[80vh] md:min-h-screen mx-auto w-full px-3 sm:px-6 lg:px-10 py-10 lg:py-16 text-secondary bg-primary-bg relative'>
                <img src={Map?.src || Map} alt="Testimonial Map Bg" fetchPriority='high' decoding="async" className='absolute top-0 inset-0 w-full h-full z-0 object-cover pointer-events-none' />
 
                {/* Heading */}
@@ -230,7 +230,7 @@ const Testimonials = ({ data, initialTestimonials = [] }) => {
                     {/* Slider */}
                     <div
                          ref={sliderRef}
-                         className="flex gap-5 md:gap-11 overflow-x-auto scroll-smooth hide-scrollbar pt-20 pl-6 md:pl-9"
+                         className="flex gap-5 md:gap-11 overflow-x-auto scroll-smooth hide-scrollbar pt-13 md:pt-20 pl-6 md:pl-9"
                     >
                          {testimonialsList.map((item, i) => (
                               <div

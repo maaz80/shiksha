@@ -260,7 +260,7 @@ export default function Navbar({ isModal, setIsModal, setIsLogin, isLogin, onCou
                     </div>
                )}
 
-               <div className="mx-auto w-full max-w-350 h-15 md:h-16 lg:h-20 px-4 sm:px-6 lg:px-13 flex items-center justify-between gap-4">
+               <div className="mx-auto w-full max-w-350 h-15 md:h-16 lg:h-20 px-4 sm:px-6 lg:px-13 flex items-center justify-between gap-1 md:gap-4">
                     {!isDashboardPage && (
                          <div className='2xl:hidden text-secondary cursor-pointer'>
                               <button onClick={() => setIsMenu(true)} aria-label="Open navigation menu" className="p-2">

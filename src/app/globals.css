@@ -32,7 +32,7 @@ input[type="checkbox"] {
   --color-dark-blue: #26394D;
 
   /* Custom spacing classes used throughout the app */
-  --spacing-17: 4.25rem;
+  /* --spacing-17: 4.25rem;
   --spacing-22: 5.5rem;
   --spacing-26: 6.5rem;
   --spacing-43: 10.75rem;
@@ -57,7 +57,7 @@ input[type="checkbox"] {
   --spacing-130: 32.5rem;
   --spacing-142\.5: 35.625rem;
   --spacing-245: 61.25rem;
-  --spacing-330: 82.5rem;
+  --spacing-330: 82.5rem; */
 }
 
 /* Hide vertical scrollbar but keep scrolling functional */

@@ -7,7 +7,7 @@ const Template = '/images/shiksha-template-image.webp';
 const BlogCard = ({ blog, isEager = false }) => {
      if (!blog) {
           return (
-               <div className="w-91.25 md:w-[384px] h-118 bg-white rounded-xl border border-gray-200 shadow-sm p-3 text-secondary animate-pulse">
+               <div className="w-91.25 md:w-[384px] h-118 bg-white rounded-[20px] border border-gray-200 shadow-sm p-3 text-secondary animate-pulse">
                     <div className="relative rounded-lg overflow-hidden">
                          <img
                               src={Template}
@@ -58,7 +58,7 @@ const BlogCard = ({ blog, isEager = false }) => {
           <Link
                href={blogHref}
                onClick={handleCardClick}
-               className="block w-91.25 md:w-[384px] h-118 bg-white rounded-xl border border-gray-200 shadow-sm p-3 text-secondary cursor-pointer group hover:shadow-md transition-all duration-300"
+               className="block w-80 md:w-[384px] h-118 bg-white rounded-[20px] border border-gray-200 shadow-sm p-3 text-secondary cursor-pointer group hover:shadow-md transition-all duration-300"
           >
 
                {/* IMAGE */}

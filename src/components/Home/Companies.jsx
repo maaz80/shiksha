@@ -86,10 +86,7 @@ const Companies = ({ initialCompanies = null }) => {
                     {rows.map((row, rowIndex) => (
                          <div
                               key={rowIndex}
-                              className={`
-              ${rowWidths[rowIndex]}
-              flex justify-center items-center gap-3 md:gap-6 2xl:gap-15 mx-auto
-            `}
+                              className={`${rowWidths[rowIndex]} flex justify-center items-center gap-1 md:gap-6 2xl:gap-15 mx-auto `}
                          >
                               {row.map((company) => (
                                    <div

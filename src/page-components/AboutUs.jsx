@@ -49,7 +49,7 @@ const AboutUs = ({ initialTestimonials = [] }) => {
 
   return (
     <main className=''>
-      <Breadcrumb/>
+      <Breadcrumb />
       <Hero data={aboutData?.hero} />
 
       <Details data={aboutData?.shikshadetails} />
