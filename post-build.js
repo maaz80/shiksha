@@ -26,8 +26,20 @@ function getAllHtmlFiles(dirPath, arrayOfFiles = []) {
 function processHtmlFile(filePath) {
   let content = fs.readFileSync(filePath, 'utf8');
 
-  // 1. Remove onload attributes on link stylesheets if any (for instant CSS render without JS)
-  content = content.replace(/<link([^>]*rel=["']stylesheet["'][^>]*)onload=["'][^"']*["']([^>]*)>/gi, '<link$1$2>');
+  // 1. Inline CSS stylesheets into <head> to completely eliminate render-blocking CSS network requests
+  content = content.replace(/<link\s+[^>]*rel=["']stylesheet["'][^>]*href=["']([^"']+)["'][^>]*\/?>/gi, (match, href) => {
+    try {
+      const cleanHref = href.split('?')[0].replace(/^\/+/, '');
+      const cssPath = path.join(outDir, cleanHref);
+      if (fs.existsSync(cssPath)) {
+        const cssContent = fs.readFileSync(cssPath, 'utf8');
+        return `<style>${cssContent}</style>`;
+      }
+    } catch (e) {
+      console.error('Error inlining CSS:', href, e.message);
+    }
+    return match;
+  });
 
   // 2. Single standard robots tag inject
   const targetRobotsTag = `<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"/>`;
