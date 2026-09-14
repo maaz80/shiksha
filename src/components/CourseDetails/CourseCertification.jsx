@@ -19,8 +19,8 @@ const DeltaIcon = ({ className = "w-5 h-5" }) => (
 export default function CourseCertification({ data }) {
      const courseName = data?.title || "UI/UX Design";
      
-     const title = data?.certificationTitle || `${courseName} Course Certification`;
-     const subtitle = data?.certificationSubtitle || `Master ${courseName} Skills & Earn Your Professional Certificate`;
+     const title = data?.certificationTitle?.trim() || `${courseName} Course Certification`;
+     const subtitle = data?.certificationSubtitle?.trim() || `Master ${courseName} Skills & Earn Your Professional Certificate`;
 
      const defaultBullets = [
           `Industry-recognized ${courseName} certification awarded upon successful course completion.`,

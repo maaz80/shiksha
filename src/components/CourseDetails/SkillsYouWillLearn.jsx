@@ -17,7 +17,7 @@ export default function SkillsYouWillLearn({ data }) {
     "PROTOTYPING & USER TESTING"
   ];
 
-  const title = data?.skillsYouWillLearn?.title || "Skills you will learn";
+  const title = data?.skillsYouWillLearn?.title?.trim() || "Skills you will learn";
   const rawSkills = data?.skillsYouWillLearn?.skills;
   const skillsList = Array.isArray(rawSkills) && rawSkills.length > 0
     ? rawSkills.filter(s => s && String(s).trim())

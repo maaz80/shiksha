@@ -35,8 +35,8 @@ export default function MeetTheTrainer({ data }) {
     }
   ];
 
-  const title = data?.trainers?.title || "Meet The Trainers";
-  const subtitle = data?.trainers?.subtitle || "Get 1-on-1 mentorship and practical insights from active design leads and engineers at top companies.";
+  const title = data?.trainers?.title?.trim() || "Meet The Trainers";
+  const subtitle = data?.trainers?.subtitle?.trim() || "Get 1-on-1 mentorship and practical insights from active design leads and engineers at top companies.";
   const trainersList = (Array.isArray(data?.trainers?.items) && data.trainers.items.length > 0)
     ? data.trainers.items
     : (Array.isArray(data?.trainers) && data.trainers.length > 0)

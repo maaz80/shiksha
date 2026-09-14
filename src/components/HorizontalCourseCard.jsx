@@ -65,7 +65,7 @@ export default function HorizontalCourseCard({ course, unlocked = false }) {
 
                          <Link
                               href={courseHref}
-                              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${unlocked ? 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-xs' : 'bg-primary hover:bg-primary-hover text-white shadow-xs'}`}
+                              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${unlocked ? 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-xs' : 'bg-primary hover:bg-primary-hover text-white shadow-xs'}`}
                          >
                               <span>{unlocked ? "Open Course" : "View Course Details"}</span>
                               <ArrowRight size={14} />

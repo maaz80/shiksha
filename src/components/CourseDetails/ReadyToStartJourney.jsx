@@ -7,12 +7,12 @@ import { UserCheck } from "lucide-react";
 export default function ReadyToStartJourney({ data }) {
      const ctaData = data?.readyToStartJourney || {};
 
-     const title = ctaData.title || "Ready to start your journey?";
-     const subtitle = ctaData.subtitle || "Embark on your path to success with expert training and a world of opportunities awaiting you.";
-     const button1Text = ctaData.button1Text || "Contact us";
-     const button1Link = ctaData.button1Link || "/contact-us";
-     const button2Text = ctaData.button2Text || "Get A Free Demo";
-     const button2Link = ctaData.button2Link || "/contact-us#demo";
+     const title = ctaData.title?.trim() || "Ready to start your journey?";
+     const subtitle = ctaData.subtitle?.trim() || "Embark on your path to success with expert training and a world of opportunities awaiting you.";
+     const button1Text = ctaData.button1Text?.trim() || "Contact us";
+     const button1Link = ctaData.button1Link?.trim() || "/contact-us";
+     const button2Text = ctaData.button2Text?.trim() || "Get A Free Demo";
+     const button2Link = ctaData.button2Link?.trim() || "/contact-us#demo";
 
      const handleDemoClick = (e) => {
           if (!button2Link || button2Link.includes("#demo")) {

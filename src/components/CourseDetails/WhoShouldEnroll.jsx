@@ -3,8 +3,8 @@
 import { Briefcase, GraduationCap, Compass, Calculator } from "lucide-react";
 
 export default function WhoShouldEnroll({ data }) {
-  const title = data?.whoShouldEnroll?.title || "This Course Is Ideal For";
-  const subtitle = data?.whoShouldEnroll?.subtitle || "Real stories and tailored learning tracks for professionals and learners aiming to advance their careers.";
+  const title = data?.whoShouldEnroll?.title?.trim() || "This Course Is Ideal For";
+  const subtitle = data?.whoShouldEnroll?.subtitle?.trim() || "Real stories and tailored learning tracks for professionals and learners aiming to advance their careers.";
 
   const defaultCards = [
     {

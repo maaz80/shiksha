@@ -7,8 +7,8 @@ export default function ChooseYourLearning({ data }) {
      // Support multiple possible dynamic data object paths from backend / props
      const learningData = data?.chooseLearning || data?.chooseYourLearning || data?.learningOptions || {};
 
-     const sectionTitle = learningData.title || data?.chooseLearningTitle || "Choose Your Learning Path";
-     const sectionSubtitle = learningData.subtitle || data?.chooseLearningSubtitle || "Explore flexible payment options, merit scholarships, and upcoming live batch schedules tailored for your growth.";
+     const sectionTitle = learningData.title?.trim() || data?.chooseLearningTitle || "Choose Your Learning Path";
+     const sectionSubtitle = learningData.subtitle?.trim() || data?.chooseLearningSubtitle || "Explore flexible payment options, merit scholarships, and upcoming live batch schedules tailored for your growth.";
 
      // Default EMI Data
      const defaultEmi = {
@@ -67,14 +67,38 @@ export default function ChooseYourLearning({ data }) {
           ]
      };
 
-     // Dynamic Merge
-     const emi = { ...defaultEmi, ...(learningData.emi || data?.emi || {}) };
-     const scholarship = { ...defaultScholarship, ...(learningData.scholarship || data?.scholarship || {}) };
-     const batches = { ...defaultBatches, ...(learningData.batches || learningData.upcomingBatches || data?.batches || data?.upcomingBatches || {}) };
+     // Dynamic Merge with Fallbacks for Empty Strings
+     const emiRaw = learningData.emi || data?.emi || {};
+     const scholarshipRaw = learningData.scholarship || data?.scholarship || {};
+     const batchesRaw = learningData.batches || learningData.upcomingBatches || data?.batches || data?.upcomingBatches || {};
 
-     const emiPoints = (Array.isArray(emi.points) && emi.points.length > 0) ? emi.points : defaultEmi.points;
-     const scholarshipPoints = (Array.isArray(scholarship.points) && scholarship.points.length > 0) ? scholarship.points : defaultScholarship.points;
-     const batchItems = (Array.isArray(batches.items) && batches.items.length > 0) ? batches.items : defaultBatches.items;
+     const emi = {
+          title: emiRaw.title?.trim() || defaultEmi.title,
+          subtitle: emiRaw.subtitle?.trim() || defaultEmi.subtitle,
+          badge: emiRaw.badge?.trim() || defaultEmi.badge,
+          callout: emiRaw.callout?.trim() || defaultEmi.callout,
+          points: (Array.isArray(emiRaw.points) && emiRaw.points.length > 0) ? emiRaw.points : defaultEmi.points
+     };
+
+     const scholarship = {
+          title: scholarshipRaw.title?.trim() || defaultScholarship.title,
+          subtitle: scholarshipRaw.subtitle?.trim() || defaultScholarship.subtitle,
+          badge: scholarshipRaw.badge?.trim() || defaultScholarship.badge,
+          callout: scholarshipRaw.callout?.trim() || defaultScholarship.callout,
+          points: (Array.isArray(scholarshipRaw.points) && scholarshipRaw.points.length > 0) ? scholarshipRaw.points : defaultScholarship.points
+     };
+
+     const batches = {
+          title: batchesRaw.title?.trim() || defaultBatches.title,
+          subtitle: batchesRaw.subtitle?.trim() || defaultBatches.subtitle,
+          badge: batchesRaw.badge?.trim() || defaultBatches.badge,
+          callout: batchesRaw.callout?.trim() || defaultBatches.callout,
+          items: (Array.isArray(batchesRaw.items) && batchesRaw.items.length > 0) ? batchesRaw.items : defaultBatches.items
+     };
+
+     const emiPoints = emi.points;
+     const scholarshipPoints = scholarship.points;
+     const batchItems = batches.items;
 
      const handleLeadModalOpen = () => {
           if (typeof window !== "undefined") {

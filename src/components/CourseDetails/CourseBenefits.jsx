@@ -6,9 +6,9 @@ import { TrendingUp, Clock, RefreshCw, ShieldCheck, Coins, BarChart3 } from "luc
 export default function CourseBenefits({ data }) {
      const courseName = data?.title || "UI/UX Design";
      
-     const tag = data?.benefitsTag || `WHY ${courseName.toUpperCase()}?`;
-     const title = data?.benefitsTitle || `Benefits of ${courseName}`;
-     const subtitle = data?.benefitsSubtitle || `${courseName} helps learners and businesses streamline workflows, improve efficiency, and drive smarter decisions.`;
+     const tag = data?.benefitsTag?.trim() || `WHY ${courseName.toUpperCase()}?`;
+     const title = data?.benefitsTitle?.trim() || `Benefits of ${courseName}`;
+     const subtitle = data?.benefitsSubtitle?.trim() || `${courseName} helps learners and businesses streamline workflows, improve efficiency, and drive smarter decisions.`;
 
      const defaultCards = [
           {

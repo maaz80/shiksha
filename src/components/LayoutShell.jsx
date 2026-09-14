@@ -50,7 +50,7 @@ export default function LayoutShell({ children, initialLocations = [] }) {
   };
 
   return (
-    <div className={`open-sans bg-primary-bg min-h-screen flex flex-col ${isDashboardPage ? "pt-15 md:pt-16 lg:pt-20" : "pt-22 md:pt-24 lg:pt-28"} pb-2 md:pb-14`}>
+    <div className={`open-sans bg-primary-bg min-h-screen flex flex-col ${isDashboardPage ? "pt-15 md:pt-16 lg:pt-20 pb-0" : "pt-22 md:pt-24 lg:pt-28 pb-2 md:pb-14"}`}>
       <Suspense fallback={null}>
         <ProgramModal isModal={isModal} setIsModal={setIsModal} onMouseEnter={clearCloseTimeout} onMouseLeave={startCloseTimeout} />
       </Suspense>
@@ -71,7 +71,7 @@ export default function LayoutShell({ children, initialLocations = [] }) {
         <CookieBanner />
       </Suspense>
 
-      <QuickAccessBar />
+      {!isDashboardPage && <QuickAccessBar />}
 
       <Navbar key={authRefresh} isModal={isModal} setIsModal={setIsModal} isLogin={isLogin} setIsLogin={setIsLogin} onCoursesMouseEnter={clearCloseTimeout} onCoursesMouseLeave={startCloseTimeout} />
       <Toast />
@@ -80,7 +80,7 @@ export default function LayoutShell({ children, initialLocations = [] }) {
         {children}
       </main>
 
-      <Footer initialLocations={initialLocations} />
+      {!isDashboardPage && <Footer initialLocations={initialLocations} />}
     </div>
   );
 }

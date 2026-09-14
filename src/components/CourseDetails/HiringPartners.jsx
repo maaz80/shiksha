@@ -4,8 +4,8 @@ import React from "react";
 
 export default function HiringPartners({ data }) {
      const hiringData = data?.hiringPartners || {};
-     const title = hiringData.title || "Our Hiring Partners";
-     const subtitle = hiringData.subtitle || "Trusted by top companies across India";
+     const title = hiringData.title?.trim() || "Our Hiring Partners";
+     const subtitle = hiringData.subtitle?.trim() || "Trusted by top companies across India";
 
      const partnerLogos = [
           { image: "/images/google-logo-icon.webp" },

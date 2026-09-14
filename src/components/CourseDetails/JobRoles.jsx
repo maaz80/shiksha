@@ -7,9 +7,9 @@ export default function JobRoles({ data }) {
      const courseName = data?.title || "UI/UX Design";
 
      const jobRolesData = data?.jobRoles || {};
-     const tag = jobRolesData.tag || "JOB ROLES";
-     const title = jobRolesData.title || `Job Roles After ${courseName}`;
-     const description = jobRolesData.description || `Unlock exciting career opportunities with in-demand ${courseName} roles. Plan your path from fundamental skills to industry leadership.`;
+     const tag = jobRolesData.tag?.trim() || "JOB ROLES";
+     const title = jobRolesData.title?.trim() || `Job Roles After ${courseName}`;
+     const description = jobRolesData.description?.trim() || `Unlock exciting career opportunities with in-demand ${courseName} roles. Plan your path from fundamental skills to industry leadership.`;
 
      const defaultRoles = [
           {

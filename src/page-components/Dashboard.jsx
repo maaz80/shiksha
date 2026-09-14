@@ -4,10 +4,10 @@ import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { useUserAuth } from "../context/UserAuthContext";
 import { getCourses } from "../utils/courseService";
-import { BookOpen, Video, CheckCircle2, Lock, Unlock, Play, PlayCircle, X, Film, AlertCircle } from "lucide-react";
+import { BookOpen, Video, CheckCircle2, Lock, Unlock, Play, PlayCircle, X, Film, AlertCircle, Radio } from "lucide-react";
 import HorizontalCourseCard from "../components/HorizontalCourseCard";
 import CloudinaryImage from "../components/CloudinaryImage";
-import Form from "../components/CourseDetails/Form";
+import ZoomMeetingModal from "../components/ZoomMeetingModal";
 
 const getEmbedUrl = (url) => {
      if (!url) return "";
@@ -67,6 +67,7 @@ export default function Dashboard() {
      const [coursesLoading, setCoursesLoading] = useState(true);
      const [activeTab, setActiveTab] = useState("my-courses"); // "my-courses" | "session-recordings"
      const [selectedVideo, setSelectedVideo] = useState(null); // { videoUrl, title }
+     const [dashboardLiveModalCourse, setDashboardLiveModalCourse] = useState(null);
 
      // Route Guard: Non-logged-in users cannot access dashboard page. Redirect to home page "/" immediately!
      useEffect(() => {
@@ -96,6 +97,9 @@ export default function Dashboard() {
      // Split into Unlocked Courses vs Locked Courses
      const unlockedCourses = useMemo(() => courses.filter((c) => isCourseUnlocked(c)), [courses, isCourseUnlocked]);
      const lockedCourses = useMemo(() => courses.filter((c) => !isCourseUnlocked(c)), [courses, isCourseUnlocked]);
+
+     // Active Live Zoom Class course for student
+     const activeLiveCourse = useMemo(() => unlockedCourses.find((c) => c.liveClass?.active), [unlockedCourses]);
 
      // Recordings MUST ONLY come from UNLOCKED courses (🎬 Course Session Recording Videos)
      const recordingCourses = useMemo(() => {
@@ -161,13 +165,12 @@ export default function Dashboard() {
      }
 
      return (
-          <main className="min-h-screen text-secondary py-10 mt- px-4 sm:px-6 lg:px-12 open-sans">
+          <main className="min-h-screen text-secondary py-10 mb-10 px-4 sm:px-6 lg:px-12 open-sans">
                <div className="max-w-7xl mx-auto space-y-8">
 
                     {/* GREETING BANNER */}
                     <div className="space-y-1">
                          <div className="flex items-center gap-2">
-                              <span className="text-2xl">🎓</span>
                               <h1 className="text-2xl sm:text-3xl font-bold text-secondary">
                                    Student Dashboard
                               </h1>
@@ -216,6 +219,35 @@ export default function Dashboard() {
                          </div>
                     </div>
 
+                    {/* ACTIVE LIVE ZOOM SESSION FEATURE BANNER */}
+                    {activeLiveCourse && activeLiveCourse.liveClass?.active && (
+                         <div className="bg-primary rounded-3xl p-5 sm:p-6 shadow-xl shadow-red-900/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-white animate-in fade-in slide-in-from-top-4 duration-300">
+                              <div className="space-y-1.5">
+                                   <div className="flex items-center gap-2">
+                                        <span className="w-2.5 h-2.5 rounded-full bg-white animate-ping" />
+                                        <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider text-white/90 bg-white/20 px-2.5 py-0.5 rounded-full border border-white/20">
+                                             LIVE ZOOM SESSION ACTIVE NOW
+                                        </span>
+                                   </div>
+                                   <h3 className="text-lg sm:text-xl font-bold text-white leading-snug">
+                                        {activeLiveCourse.liveClass?.title || `Live Session: ${activeLiveCourse.title}`}
+                                   </h3>
+                                   <p className="text-xs text-white/80 font-medium">
+                                        Scheduled: <strong className="text-white font-bold">{activeLiveCourse.liveClass?.scheduledAt || "Live Now"}</strong> • Course: <span className="font-semibold">{activeLiveCourse.title}</span>
+                                   </p>
+                              </div>
+
+                              <button
+                                   type="button"
+                                   onClick={() => setDashboardLiveModalCourse(activeLiveCourse)}
+                                   className="w-full sm:w-auto px-6 py-3 bg-white hover:bg-gray-100 text-primary font-extrabold text-xs sm:text-sm rounded-2xl shadow-lg transition-all duration-200 hover:scale-102 flex items-center justify-center gap-2 cursor-pointer shrink-0"
+                              >
+                                   <Radio size={16} className="animate-pulse text-primary" />
+                                   <span>Enter Zoom Live Class</span>
+                              </button>
+                         </div>
+                    )}
+
                     {/* MAIN NAVIGATION TOGGLE TABS */}
                     <div className="flex items-center gap-3 border-b border-gray-200 pb-4 overflow-x-auto">
                          <button
@@ -247,197 +279,187 @@ export default function Dashboard() {
                          </button>
                     </div>
 
-                    {/* MAIN BODY GRID: LEFT CONTENT + RIGHT SIDEBAR */}
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-
-                         {/* LEFT COLUMN */}
-                         <div className="lg:col-span-2 space-y-8">
-                              {/* TAB 1: MY COURSES VIEW */}
-                              {activeTab === "my-courses" && (
-                                   <div className="space-y-8">
-                                        {/* SECTION A: ENROLLED / UNLOCKED COURSES */}
-                                        <div className="space-y-4">
-                                             <div className="flex items-center justify-between">
-                                                  <div className="flex items-center gap-2">
-                                                       <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-                                                       <h2 className="text-lg sm:text-xl font-bold text-secondary">
-                                                            Enrolled Courses (Unlocked)
-                                                       </h2>
-                                                  </div>
-                                                  <span className="text-xs text-gray-500 font-semibold">
-                                                       {unlockedCourses.length} Unlocked
-                                                  </span>
+                    {/* MAIN CONTENT AREA (FULL WIDTH) */}
+                    <div className="w-full space-y-8">
+                         {/* TAB 1: MY COURSES VIEW */}
+                         {activeTab === "my-courses" && (
+                              <div className="space-y-8">
+                                   {/* SECTION A: ENROLLED / UNLOCKED COURSES */}
+                                   <div className="space-y-4">
+                                        <div className="flex items-center justify-between">
+                                             <div className="flex items-center gap-2">
+                                                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+                                                  <h2 className="text-lg sm:text-xl font-bold text-secondary">
+                                                       Enrolled Courses (Unlocked)
+                                                  </h2>
                                              </div>
-
-                                             {unlockedCourses.length > 0 ? (
-                                                  <div className="flex flex-col gap-4">
-                                                       {unlockedCourses.map((course) => (
-                                                            <HorizontalCourseCard
-                                                                 key={course._id}
-                                                                 course={course}
-                                                                 unlocked={true}
-                                                            />
-                                                       ))}
-                                                  </div>
-                                             ) : (
-                                                  <div className="bg-white border border-gray-200 rounded-2xl p-6 text-center space-y-3">
-                                                       <AlertCircle className="w-10 h-10 text-amber-500 mx-auto" />
-                                                       <h3 className="text-sm font-bold text-gray-800">No Unlocked Courses Yet</h3>
-                                                       <p className="text-xs text-gray-500 max-w-sm mx-auto">
-                                                            Once our team unlocks a course for your account, your course access will appear here.
-                                                       </p>
-                                                  </div>
-                                             )}
+                                             <span className="text-xs text-gray-500 font-semibold">
+                                                  {unlockedCourses.length} Unlocked
+                                             </span>
                                         </div>
 
-                                        {/* SEPARATOR BORDER BETWEEN UNLOCKED AND LOCKED */}
-                                        <div className="pt-4 border-t-2 border-gray-200 my-6 sm:my-8" />
-
-                                        {/* SECTION B: REMAINING LOCKED COURSES */}
-                                        {lockedCourses.length > 0 && (
-                                             <div className="space-y-4">
-                                                  <div className="flex items-center justify-between">
-                                                       <div className="flex items-center gap-2">
-                                                            <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-                                                            <h2 className="text-lg sm:text-xl font-bold text-secondary">
-                                                                 Remaining Courses (Locked)
-                                                            </h2>
-                                                       </div>
-                                                       <span className="text-xs text-gray-500 font-semibold">
-                                                            {lockedCourses.length} Available
-                                                       </span>
-                                                  </div>
-
-                                                  <div className="flex flex-col gap-4">
-                                                       {lockedCourses.map((course) => (
-                                                            <HorizontalCourseCard
-                                                                 key={course._id}
-                                                                 course={course}
-                                                                 unlocked={false}
-                                                            />
-                                                       ))}
-                                                  </div>
+                                        {unlockedCourses.length > 0 ? (
+                                             <div className="flex flex-col gap-4">
+                                                  {unlockedCourses.map((course) => (
+                                                       <HorizontalCourseCard
+                                                            key={course._id}
+                                                            course={course}
+                                                            unlocked={true}
+                                                       />
+                                                  ))}
                                              </div>
-                                        )}
-                                   </div>
-                              )}
-
-                              {/* TAB 2: SESSION RECORDINGS VIEW (ONLY UNLOCKED COURSES '🎬 Course Session Recording Videos') */}
-                              {activeTab === "session-recordings" && (
-                                   <div className="space-y-6">
-                                        {recordingCourses.length > 0 ? (
-                                             recordingCourses.map((course) => {
-                                                  const courseVideos = course.videos || [];
-                                                  return (
-                                                       <div key={course._id} className="bg-white border border-gray-200 rounded-2xl p-6 shadow-xs">
-                                                            <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
-                                                                 <div>
-                                                                      <span className="text-[10px] font-bold uppercase tracking-wider text-primary">
-                                                                           {course.category || "Track"}
-                                                                      </span>
-                                                                      <h3 className="text-lg font-bold text-secondary mt-0.5">
-                                                                           {course.title}
-                                                                      </h3>
-                                                                 </div>
-                                                                 <span className="text-xs font-semibold text-purple-700 bg-purple-50 px-2.5 py-1 rounded-lg border border-purple-200 flex items-center gap-1">
-                                                                      <Film size={12} /> {courseVideos.length} Video{courseVideos.length !== 1 ? 's' : ''}
-                                                                 </span>
-                                                            </div>
-
-                                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                                                                 {courseVideos.map((v, vIdx) => (
-                                                                      <div
-                                                                           key={vIdx}
-                                                                           onClick={() => setSelectedVideo({ videoUrl: v.video, title: v.title || `${course.title} - Session #${vIdx + 1}` })}
-                                                                           className="group relative bg-white border border-gray-200/90 rounded-2xl overflow-hidden hover:border-primary/80 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 ease-out cursor-pointer flex flex-col justify-between"
-                                                                      >
-                                                                           {/* Thumbnail & Video Badges Overlay */}
-                                                                           <div className="relative aspect-video bg-gray-950 overflow-hidden">
-                                                                                <CloudinaryImage
-                                                                                     src={v.thumbnail || course.image}
-                                                                                     alt={v.title || course.title}
-                                                                                     className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500 ease-out opacity-90"
-                                                                                />
-                                                                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/10 transition-opacity duration-300" />
-                                                                                
-                                                                                {/* Live Recording Badge */}
-                                                                                <div className="absolute top-3 left-3 z-10">
-                                                                                     <span className="flex items-center gap-1.5 bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full border border-white/20 shadow-xs">
-                                                                                          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-ping" />
-                                                                                          Live Session
-                                                                                     </span>
-                                                                                </div>
-
-                                                                                {/* Session Tag */}
-                                                                                <div className="absolute top-3 right-3 z-10">
-                                                                                     <span className="bg-primary text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm">
-                                                                                          #{vIdx + 1}
-                                                                                     </span>
-                                                                                </div>
-
-                                                                                {/* Center Play Button Icon */}
-                                                                                <div className="absolute inset-0 z-10 flex items-center justify-center">
-                                                                                     <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center shadow-lg group-hover:scale-115 group-hover:bg-primary-hover group-hover:shadow-primary/40 transition-all duration-300 ring-4 ring-white/30">
-                                                                                          <Play size={20} fill="white" className="ml-0.5" />
-                                                                                     </div>
-                                                                                </div>
-                                                                           </div>
-
-                                                                           {/* Card Content & Action Bar */}
-                                                                           <div className="p-4 space-y-2.5 bg-white flex-1 flex flex-col justify-between">
-                                                                                <div className="space-y-1">
-                                                                                     <h4 className="font-bold text-xs sm:text-sm text-secondary group-hover:text-primary transition-colors line-clamp-1">
-                                                                                          {v.title || `Session Video #${vIdx + 1}`}
-                                                                                     </h4>
-                                                                                     {v.alt && (
-                                                                                          <p className="text-[11px] text-gray-500 line-clamp-2 leading-relaxed">
-                                                                                               {v.alt}
-                                                                                          </p>
-                                                                                     )}
-                                                                                </div>
-
-                                                                                <div className="flex items-center justify-between pt-2.5 border-t border-gray-100 text-xs font-bold text-primary">
-                                                                                     <span className="flex items-center gap-1.5">
-                                                                                          <PlayCircle size={14} className="text-primary group-hover:rotate-12 transition-transform" />
-                                                                                          Watch Recording
-                                                                                     </span>
-                                                                                     <span className="text-[11px] text-gray-400 group-hover:text-primary transition-colors font-medium">
-                                                                                          HD Video →
-                                                                                     </span>
-                                                                                </div>
-                                                                           </div>
-                                                                      </div>
-                                                                 ))}
-                                                            </div>
-                                                       </div>
-                                                  );
-                                             })
                                         ) : (
-                                             <div className="bg-white border border-gray-200 rounded-2xl p-8 text-center space-y-2">
-                                                  <Video className="w-10 h-10 text-gray-400 mx-auto" />
-                                                  <h3 className="text-sm font-bold text-secondary">No Session Recordings Available</h3>
-                                                  <p className="text-xs text-gray-500">
-                                                       Only session recordings for your unlocked courses will appear here once published by your instructor.
+                                             <div className="bg-white border border-gray-200 rounded-2xl p-6 text-center space-y-3">
+                                                  <AlertCircle className="w-10 h-10 text-amber-500 mx-auto" />
+                                                  <h3 className="text-sm font-bold text-gray-800">No Unlocked Courses Yet</h3>
+                                                  <p className="text-xs text-gray-500 max-w-sm mx-auto">
+                                                       Once our team unlocks a course for your account, your course access will appear here.
                                                   </p>
                                              </div>
                                         )}
                                    </div>
-                              )}
-                         </div>
 
-                         {/* RIGHT COLUMN: ADMISSION / COUNSELOR FORM */}
-                         <div className="lg:col-span-1">
-                              <Form />
-                         </div>
+                                   {/* SEPARATOR BORDER BETWEEN UNLOCKED AND LOCKED */}
+                                   <div className="pt-4 border-t-2 border-gray-200 my-6 sm:my-8" />
 
+                                   {/* SECTION B: REMAINING LOCKED COURSES */}
+                                   {lockedCourses.length > 0 && (
+                                        <div className="space-y-4">
+                                             <div className="flex items-center justify-between">
+                                                  <div className="flex items-center gap-2">
+                                                       <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+                                                       <h2 className="text-lg sm:text-xl font-bold text-secondary">
+                                                            Remaining Courses (Locked)
+                                                       </h2>
+                                                  </div>
+                                                  <span className="text-xs text-gray-500 font-semibold">
+                                                       {lockedCourses.length} Available
+                                                  </span>
+                                             </div>
+
+                                             <div className="flex flex-col gap-4">
+                                                  {lockedCourses.map((course) => (
+                                                       <HorizontalCourseCard
+                                                            key={course._id}
+                                                            course={course}
+                                                            unlocked={false}
+                                                       />
+                                                  ))}
+                                             </div>
+                                        </div>
+                                   )}
+                              </div>
+                         )}
+
+                         {/* TAB 2: SESSION RECORDINGS VIEW (ONLY UNLOCKED COURSES '🎬 Course Session Recording Videos') */}
+                         {activeTab === "session-recordings" && (
+                              <div className="space-y-6">
+                                   {recordingCourses.length > 0 ? (
+                                        recordingCourses.map((course) => {
+                                             const courseVideos = course.videos || [];
+                                             return (
+                                                  <div key={course._id} className="bg-white border border-gray-200 rounded-2xl p-6 shadow-xs">
+                                                       <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
+                                                            <div>
+                                                                 <span className="text-[10px] font-bold uppercase tracking-wider text-primary">
+                                                                      {course.category || "Track"}
+                                                                 </span>
+                                                                 <h3 className="text-lg font-bold text-secondary mt-0.5">
+                                                                      {course.title}
+                                                                 </h3>
+                                                            </div>
+                                                            <span className="text-xs font-semibold text-purple-700 bg-purple-50 px-2.5 py-1 rounded-lg border border-purple-200 flex items-center gap-1">
+                                                                 <Film size={12} /> {courseVideos.length} Video{courseVideos.length !== 1 ? 's' : ''}
+                                                            </span>
+                                                       </div>
+
+                                                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+                                                            {courseVideos.map((v, vIdx) => (
+                                                                 <div
+                                                                      key={vIdx}
+                                                                      onClick={() => setSelectedVideo({ videoUrl: v.video, title: v.title || `${course.title} - Session #${vIdx + 1}` })}
+                                                                      className="group relative bg-white border border-gray-200/90 rounded-2xl overflow-hidden hover:border-primary/80 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 ease-out cursor-pointer flex flex-col justify-between"
+                                                                 >
+                                                                      {/* Thumbnail & Video Badges Overlay */}
+                                                                      <div className="relative aspect-video bg-gray-950 overflow-hidden">
+                                                                           <CloudinaryImage
+                                                                                src={v.thumbnail || course.image}
+                                                                                alt={v.title || course.title}
+                                                                                className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500 ease-out opacity-90"
+                                                                           />
+                                                                           <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/25 to-black/10 transition-opacity duration-300" />
+                                                                           
+                                                                           {/* Live Recording Badge */}
+                                                                           <div className="absolute top-3 left-3 z-10">
+                                                                                <span className="flex items-center gap-1.5 bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full border border-white/20 shadow-xs">
+                                                                                     <span className="w-1.5 h-1.5 rounded-full bg-primary animate-ping" />
+                                                                                     Live Session
+                                                                                </span>
+                                                                           </div>
+
+                                                                           {/* Session Tag */}
+                                                                           <div className="absolute top-3 right-3 z-10">
+                                                                                <span className="bg-primary text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm">
+                                                                                     #{vIdx + 1}
+                                                                                </span>
+                                                                           </div>
+
+                                                                           {/* Center Play Button Icon */}
+                                                                           <div className="absolute inset-0 z-10 flex items-center justify-center">
+                                                                                <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center shadow-lg group-hover:scale-115 group-hover:bg-primary-hover group-hover:shadow-primary/40 transition-all duration-300 ring-4 ring-white/30">
+                                                                                     <Play size={20} fill="white" className="ml-0.5" />
+                                                                                </div>
+                                                                           </div>
+                                                                      </div>
+
+                                                                      {/* Card Content & Action Bar */}
+                                                                      <div className="p-4 space-y-2.5 bg-white flex-1 flex flex-col justify-between">
+                                                                           <div className="space-y-1">
+                                                                                <h4 className="font-bold text-xs sm:text-sm text-secondary group-hover:text-primary transition-colors line-clamp-1">
+                                                                                     {v.title || `Session Video #${vIdx + 1}`}
+                                                                                </h4>
+                                                                                {v.alt && (
+                                                                                     <p className="text-[11px] text-gray-500 line-clamp-2 leading-relaxed">
+                                                                                          {v.alt}
+                                                                                     </p>
+                                                                                )}
+                                                                           </div>
+
+                                                                           <div className="flex items-center justify-between pt-2.5 border-t border-gray-100 text-xs font-bold text-primary">
+                                                                                <span className="flex items-center gap-1.5">
+                                                                                     <PlayCircle size={14} className="text-primary group-hover:rotate-12 transition-transform" />
+                                                                                     Watch Recording
+                                                                                </span>
+                                                                                <span className="text-[11px] text-gray-400 group-hover:text-primary transition-colors font-medium">
+                                                                                     HD Video →
+                                                                                </span>
+                                                                           </div>
+                                                                      </div>
+                                                                 </div>
+                                                            ))}
+                                                       </div>
+                                                  </div>
+                                             );
+                                        })
+                                   ) : (
+                                        <div className="bg-white border border-gray-200 rounded-2xl p-8 text-center space-y-2">
+                                             <Video className="w-10 h-10 text-gray-400 mx-auto" />
+                                             <h3 className="text-sm font-bold text-secondary">No Session Recordings Available</h3>
+                                             <p className="text-xs text-gray-500">
+                                                  Only session recordings for your unlocked courses will appear here once published by your instructor.
+                                             </p>
+                                        </div>
+                                   )}
+                              </div>
+                         )}
                     </div>
 
                </div>
 
                {/* VIDEO MODAL PLAYER OVERLAY */}
                {selectedVideo && (
-                    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[999999] flex items-center justify-center p-4">
-                         <div className="bg-gray-900 text-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl border border-gray-800 flex flex-col h-[75vh] max-h-[700px]">
+                    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-999999 flex items-center justify-center p-4">
+                         <div className="bg-gray-900 text-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl border border-gray-800 flex flex-col h-[75vh] max-h-175">
                               <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800 shrink-0">
                                    <h3 className="text-sm font-bold line-clamp-1">{selectedVideo.title}</h3>
                                    <button
@@ -470,15 +492,24 @@ export default function Dashboard() {
                                              </video>
                                         )
                                    ) : (
-                                        <div className="p-6 text-center text-gray-400">
-                                             <Film className="w-8 h-8 mx-auto text-gray-600 mb-2" />
-                                             <p className="text-xs font-semibold">Video stream link not configured for this lesson.</p>
-                                        </div>
-                                   )}
-                              </div>
-                         </div>
-                    </div>
-               )}
-          </main>
-     );
+                                         <div className="p-6 text-center text-gray-400">
+                                              <Film className="w-8 h-8 mx-auto text-gray-600 mb-2" />
+                                              <p className="text-xs font-semibold">Video stream link not configured for this lesson.</p>
+                                         </div>
+                                    )}
+                               </div>
+                          </div>
+                     </div>
+                )}
+
+                {/* STUDENT ZOOM LIVE CLASS MODAL OVERLAY */}
+                {dashboardLiveModalCourse && (
+                     <ZoomMeetingModal
+                          liveClass={dashboardLiveModalCourse.liveClass}
+                          courseTitle={dashboardLiveModalCourse.title}
+                          onClose={() => setDashboardLiveModalCourse(null)}
+                     />
+                )}
+           </main>
+      );
 }
