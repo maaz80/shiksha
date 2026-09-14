@@ -10,7 +10,6 @@ export async function generateMetadata() {
     keywords: seo?.keywords || "about us, shiksha, education",
   };
 }
-
 export default async function Page() {
   const testimonials = await getTestimonials().catch(() => []);
   return <AboutUs initialTestimonials={testimonials} />;
