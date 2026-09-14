@@ -134,18 +134,26 @@ const Testimonials = ({ initialTestimonials = [] }) => {
 
      // ✅ Calculate maxIndex (responsive safe)
      useEffect(() => {
+          let rAFId = null;
           const calculateAll = () => {
-               calculateCardWidth();
-               calculateVisibleCards();
-               setMaxIndex(
-                    Math.max(testimonialsList.length - visibleCardsRef.current, 0)
-               );
+               rAFId = requestAnimationFrame(() => {
+                    calculateCardWidth();
+                    calculateVisibleCards();
+                    setMaxIndex(
+                         Math.max(testimonialsList.length - visibleCardsRef.current, 0)
+                    );
+               });
           };
 
           calculateAll();
 
-          window.addEventListener("resize", calculateAll);
-          return () => window.removeEventListener("resize", calculateAll);
+          if (typeof window !== "undefined") {
+               window.addEventListener("resize", calculateAll);
+               return () => {
+                    if (rAFId) cancelAnimationFrame(rAFId);
+                    window.removeEventListener("resize", calculateAll);
+               };
+          }
      }, [testimonialsList]);
 
      // ✅ Arrow scroll

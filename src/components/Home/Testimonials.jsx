@@ -127,19 +127,25 @@ const Testimonials = ({ data, initialTestimonials = [] }) => {
      }, []);
 
      useEffect(() => {
+          let rAFId = null;
           const calculateAll = () => {
-               calculateCardWidth();
-               calculateVisibleCards();
-               const total = testimonialsList.length;
-               const visible = visibleCardsRef.current || 1;
-               setMaxIndex(Math.max(0, total - visible));
+               rAFId = requestAnimationFrame(() => {
+                    calculateCardWidth();
+                    calculateVisibleCards();
+                    const total = testimonialsList.length;
+                    const visible = visibleCardsRef.current || 1;
+                    setMaxIndex(Math.max(0, total - visible));
+               });
           };
 
           calculateAll();
 
           if (typeof window !== "undefined") {
                window.addEventListener("resize", calculateAll);
-               return () => window.removeEventListener("resize", calculateAll);
+               return () => {
+                    if (rAFId) cancelAnimationFrame(rAFId);
+                    window.removeEventListener("resize", calculateAll);
+               };
           }
      }, [testimonialsList]);
 

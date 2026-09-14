@@ -125,10 +125,16 @@ const Hero = ({ data }) => {
                     <div>
                          {/* <img src={HeroImg} fetchPriority='high' alt="Hero" width={293} height={287} loading="eager" decoding="async" className='absolute md:relative right-5 md:right-0 top-18 md:top-0 w-51 h-56.5 md:w-130.75 md:h-141.75 2xl:w-155 2xl:h-159.25 object-cover' /> */}
                          <picture>
-                              <source media="(max-width: 768px)" srcSet={HeroImgMobile} />
+                              <source media="(max-width: 768px)" srcSet={HeroImgMobile} width="204" height="226" />
                               <img
                                    src={HeroImg}
-                                   fetchPriority='high' alt="Hero" width={293} height={287} loading="eager" decoding="async" className='absolute md:relative right-5 md:right-0 top-18 md:top-0 w-51 h-56.5 md:w-130.75 md:h-141.75 2xl:w-155 2xl:h-159.25 object-cover'
+                                   fetchPriority='high'
+                                   alt="Hero AI Design Courses"
+                                   width="523"
+                                   height="567"
+                                   loading="eager"
+                                   decoding="async"
+                                   className='absolute md:relative right-5 md:right-0 top-18 md:top-0 w-51 h-56.5 md:w-130.75 md:h-141.75 2xl:w-155 2xl:h-159.25 object-cover'
                               />
                          </picture>
                     </div>

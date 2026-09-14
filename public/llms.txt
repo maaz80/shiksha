@@ -13,16 +13,6 @@
 - [Disclaimer](https://shikshadesign.com/disclaimer): Website disclaimer and liability terms
 - [Terms & Conditions Enrolment](https://shikshadesign.com/terms-and-conditions-enrolment): Official enrolment rules and student terms
 
-## Featured Courses
-
-- [Web Development Course in Delhi](https://shikshadesign.com/courses/web-development-course-in-delhi): Join Weekend UX's Best Web Development Course and save up to 75% OFF. Learn HTML, CSS, JavaScript, React, Node.js & build job-ready projects.
-- [Figma Professional Training ](https://shikshadesign.com/courses/figma-professional-training): Learn UI/UX design with the Figma Professional Training | Weekend UX upto 90% OFF . Join online classes and build industry-ready Figma skills.
-
-## Latest Blog Posts
-
-- [Title What is the difference between UI and UX?](https://shikshadesign.com/blog/what-is-the-difference-between-ui-and-ux): Learn the difference between UI and UX with Weekend UX. Explore key concepts, design roles, and how UI and UX work together to create better digital experiences.
-- [This is the first test blog for testing purpose only](https://shikshadesign.com/blog/hey-there): qberbqeb
-
 ## Sitemaps & Resources
 
 - [XML Sitemap](https://shikshadesign.com/sitemap.xml): Standard XML Sitemap for search engine indexers

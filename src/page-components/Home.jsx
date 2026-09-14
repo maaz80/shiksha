@@ -1,18 +1,20 @@
 "use client";
 
 import { useEffect, useState } from 'react'
+import dynamic from 'next/dynamic'
 import Hero from '../components/Home/Hero'
-import WhatWeDo from '../components/Home/WhatWeDo'
 import OurPrograms from '../components/Home/OurPrograms'
-import HowItWorks from '../components/Home/HowItWorks'
-import Companies from '../components/Home/Companies'
-import Community from '../components/Home/Community'
-import StatsBanner from '../components/Home/StatsBanner'
-import Testimonials from '../components/Home/Testimonials'
-import RelatedBlogs from '../components/RelatedBlogs'
-import FAQ from '../components/FAQ'
 import useFaq from '../hooks/useFaq'
 import { getHomeData } from '../utils/homeService'
+
+const WhatWeDo = dynamic(() => import('../components/Home/WhatWeDo'))
+const HowItWorks = dynamic(() => import('../components/Home/HowItWorks'))
+const Companies = dynamic(() => import('../components/Home/Companies'))
+const Community = dynamic(() => import('../components/Home/Community'))
+const StatsBanner = dynamic(() => import('../components/Home/StatsBanner'))
+const Testimonials = dynamic(() => import('../components/Home/Testimonials'))
+const RelatedBlogs = dynamic(() => import('../components/RelatedBlogs'))
+const FAQ = dynamic(() => import('../components/FAQ'))
 
 const Home = ({ initialBlogs = [], initialTestimonials = [], initialCompanies = null }) => {
      const { faqData } = useFaq();
