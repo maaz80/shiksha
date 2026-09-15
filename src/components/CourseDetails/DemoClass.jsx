@@ -177,7 +177,7 @@ export default function DemoClass({ data }) {
                          {/* Left Column: Title & Feature List */}
                          <div className="lg:col-span-7 space-y-6 text-left min-w-0">
                               <div>
-                                   <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-primary/10 text-primary border border-primary/20 mb-3">
+                                   <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-primary/10 text-[#0050B3] border border-primary/20 mb-3">
                                         FREE DEMO CLASS
                                    </span>
                                    <h2 className="text-[24px] sm:text-[36px] md:text-[40px] lg:text-[48px] font-bold leading-tight text-secondary">
@@ -229,7 +229,7 @@ export default function DemoClass({ data }) {
                                    
                                    {/* Card Header Badge */}
                                    <div className="flex items-center justify-between mb-4">
-                                        <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-primary/15 text-primary border border-primary/30">
+                                        <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-primary/15 text-[#0050B3] border border-primary/30">
                                              LIMITED SEATS LEFT
                                         </span>
                                        

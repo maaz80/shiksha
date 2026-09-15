@@ -61,7 +61,7 @@ export default function JobRoles({ data }) {
                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0">
                     <div className="text-center space-y-2 max-w-3xl mx-auto mb-10 md:mb-14">
                          <div>
-                              <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-primary/10 text-primary border border-primary/20 mb-1">
+                              <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-primary/10 text-[#0050B3] border border-primary/20 mb-1">
                                    {tag}
                               </span>
                          </div>
@@ -87,7 +87,7 @@ export default function JobRoles({ data }) {
                                                   <div className="w-12 h-12 rounded-xl flex items-center justify-center border border-primary/20 bg-primary/10 text-primary shrink-0 transition-all duration-300 group-hover:bg-primary group-hover:text-white">
                                                        {getIcon(item.iconName, idx)}
                                                   </div>
-                                                  <span className="font-bold text-sm text-gray-400 group-hover:text-secondary tracking-wider">
+                                                  <span className="font-bold text-sm text-gray-600 group-hover:text-secondary tracking-wider">
                                                        {stepNum}
                                                   </span>
                                              </div>

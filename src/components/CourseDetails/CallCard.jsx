@@ -13,7 +13,7 @@ export default function CallCard({ title, subtitle, buttonText, bgImage, onButto
                     <h3 className="text-xl md:text-2xl font-bold leading-snug text-white">
                          {title || "Design is more than just being creative!"}
                     </h3>
-                    <p className="text-sm md:text-base text-gray-100">
+                    <p className="text-sm md:text-base text-white">
                          {subtitle || "Learn how to make design that sells"}
                     </p>
                </div>

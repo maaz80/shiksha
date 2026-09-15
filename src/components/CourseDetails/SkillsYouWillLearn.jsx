@@ -31,7 +31,7 @@ export default function SkillsYouWillLearn({ data }) {
     <section className="w-full bg-white pt-0 pb-8 sm:py-16 border-b border-gray-100 font-open-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0">
         <div className="space-y-4 text-left">
-          <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-primary/10 text-primary border border-primary/20">
+          <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-primary/10 text-[#0050B3] border border-primary/20">
             SKILLS & COMPETENCIES
           </span>
           <h2 className="text-[24px] sm:text-[36px] md:text-[40px] font-bold leading-tight text-secondary">

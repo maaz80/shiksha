@@ -112,7 +112,7 @@ export default function ChooseYourLearning({ data }) {
                     
                     {/* Header */}
                     <div className="text-center space-y-2 max-w-3xl mx-auto mb-10 md:mb-14">
-                         <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-primary/20 text-primary border border-primary/30 mb-1">
+                         <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-white/10 text-white border border-white/20 mb-1">
                               FLEXIBLE PATHWAYS
                          </span>
                          <h2 className="text-[24px] sm:text-[36px] md:text-[40px] lg:text-[48px] font-bold text-white leading-tight">
@@ -158,7 +158,7 @@ export default function ChooseYourLearning({ data }) {
                                              <p className="font-bold text-xs sm:text-sm text-secondary leading-snug">
                                                   {emi.callout || "No Cost EMI Available"}
                                              </p>
-                                             <span className="text-[11px] font-semibold text-primary">
+                                             <span className="text-[11px] font-semibold text-[#0050B3]">
                                                   {emi.badge || "0% Interest Options"}
                                              </span>
                                         </div>
@@ -226,7 +226,7 @@ export default function ChooseYourLearning({ data }) {
                                              <p className="font-bold text-xs sm:text-sm text-secondary leading-snug">
                                                   {scholarship.badge || "UP TO 30% OFF"}
                                              </p>
-                                             <span className="text-[11px] font-semibold text-primary">
+                                             <span className="text-[11px] font-semibold text-[#0050B3]">
                                                   {scholarship.callout || "Eligible for Early Applicants"}
                                              </span>
                                         </div>
@@ -290,7 +290,7 @@ export default function ChooseYourLearning({ data }) {
                                                        <h4 className="font-bold text-xs sm:text-sm leading-tight text-secondary truncate">{batch.title}</h4>
                                                        <p className="text-[11px] font-normal text-gray-500 mt-0.5 leading-normal truncate">{batch.time}</p>
                                                   </div>
-                                                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider shrink-0 bg-primary/10 text-primary border border-primary/20">
+                                                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider shrink-0 bg-primary/10 text-[#0050B3] border border-primary/20">
                                                        {batch.status || "Upcoming"}
                                                   </span>
                                              </div>

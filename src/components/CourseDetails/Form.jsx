@@ -305,7 +305,7 @@ export default function Form() {
                                                   }}
                                                   className="mt-1 accent-primary"
                                              />
-                                             <label htmlFor="terms-checkbox" className="text-[12px] text-gray-600 leading-4">
+                                             <label htmlFor="terms-agree" className="text-[12px] text-gray-600 leading-4">
                                                   You accept our {" "}
                                                   <span className="text-[#0050B3] cursor-pointer">Terms & Condition</span>
                                                   ,{" "}

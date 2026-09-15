@@ -120,18 +120,18 @@ export default function Details({ data }) {
      };
 
      const defaultCareerDomains = [
-          { name: "Graphic Design", link: "#", iconName: "graphic", color: "#10B981" },
-          { name: "Web Design", link: "#", iconName: "web", color: "#2563EB" },
-          { name: "Post Production", link: "#", iconName: "post", color: "#9333EA" },
+          { name: "Graphic Design", link: "#", iconName: "graphic", color: "#047857" },
+          { name: "Web Design", link: "#", iconName: "web", color: "#1D4ED8" },
+          { name: "Post Production", link: "#", iconName: "post", color: "#7E22CE" },
           { name: "Data Analytics", link: "#", iconName: "analytics", color: "#701A75" },
           { name: "CAD & Architecture", link: "#", iconName: "cad", color: "#854D0E" },
-          { name: "3D Animation", link: "#", iconName: "animation", color: "#0D9488" },
+          { name: "3D Animation", link: "#", iconName: "animation", color: "#0F766E" },
           { name: "Web Development", link: "#", iconName: "code", color: "#1E3A8A" },
-          { name: "CAD Textile Design", link: "#", iconName: "textile", color: "#D97706" },
-          { name: "Software Development", link: "#", iconName: "software", color: "#16A34A" },
-          { name: "Digital Marketing", link: "#", iconName: "marketing", color: "#0891B2" },
-          { name: "Machine Learning & AI", link: "#", iconName: "ai", color: "#C026D3" },
-          { name: "Video Editing", link: "#", iconName: "video", color: "#DC2626" }
+          { name: "CAD Textile Design", link: "#", iconName: "textile", color: "#B45309" },
+          { name: "Software Development", link: "#", iconName: "software", color: "#15803D" },
+          { name: "Digital Marketing", link: "#", iconName: "marketing", color: "#0E7490" },
+          { name: "Machine Learning & AI", link: "#", iconName: "ai", color: "#A21CAF" },
+          { name: "Video Editing", link: "#", iconName: "video", color: "#B91C1C" }
      ];
 
      const careerDomainsItems = (data?.careerDomains?.items && data.careerDomains.items.length > 0)
@@ -481,7 +481,7 @@ export default function Details({ data }) {
                                         <h2 className="text-[28px] md:text-[36px] font-bold leading-tight text-white">
                                              {data?.shortTerm?.title || "Short-term UX Design Courses"}
                                         </h2>
-                                        <p className="text-gray-200 text-[15px] md:text-[16px] leading-relaxed max-w-lg mt-3">
+                                        <p className="text-white text-[15px] md:text-[16px] leading-relaxed max-w-lg mt-3">
                                              {data?.shortTerm?.description || "Check out short duration courses for building a strong foundation in UI & UX design."}
                                         </p>
                                    </div>
@@ -579,7 +579,7 @@ export default function Details({ data }) {
                                                        {study.image ? (
                                                             <img
                                                                  src={study.image}
-                                                                 alt={study.alt || "Case Study"}
+                                                                 alt=""
                                                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                                             />
                                                        ) : (

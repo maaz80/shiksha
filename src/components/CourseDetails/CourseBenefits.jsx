@@ -60,7 +60,7 @@ export default function CourseBenefits({ data }) {
                     
                     <div className="text-center space-y-2 max-w-3xl mx-auto mb-10 md:mb-14">
                          <div>
-                              <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-primary/10 text-primary border border-primary/20 mb-1">
+                              <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-primary/10 text-[#0050B3] border border-primary/20 mb-1">
                                    {tag}
                               </span>
                          </div>

@@ -39,7 +39,7 @@ export default function WhoShouldEnroll({ data }) {
         
         {/* Header */}
         <div className="text-center space-y-2 max-w-2xl mx-auto mb-10 md:mb-14">
-          <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-primary/20 text-primary border border-primary/30 mb-1">
+          <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-white/10 text-white border border-white/20 mb-1">
             TARGET AUDIENCE
           </span>
           <h2 className="text-[24px] sm:text-[36px] md:text-[40px] lg:text-[48px] font-bold leading-tight text-white">

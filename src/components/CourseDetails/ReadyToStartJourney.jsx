@@ -30,7 +30,7 @@ export default function ReadyToStartJourney({ data }) {
                     <h2 className="text-[24px] sm:text-[36px] md:text-[40px] lg:text-[48px] font-bold leading-tight max-w-3xl mx-auto text-white">
                          {title.includes("journey?") ? (
                               <>
-                                   Ready to start your <span className="text-primary">journey?</span>
+                                   Ready to start your <span className="text-blue-400">journey?</span>
                               </>
                          ) : (
                               title

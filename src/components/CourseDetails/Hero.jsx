@@ -94,7 +94,7 @@ const Hero = ({ course, courseId, setIsLogin }) => {
                               {course?.title}
                          </h1>
 
-                         <p className="text-xs sm:text-base text-white/95 mt-3 leading-relaxed max-w-3xl">
+                         <p className="text-xs sm:text-base text-white mt-3 leading-relaxed max-w-3xl">
                               {course?.overview || course?.description}
                          </p>
                     </div>

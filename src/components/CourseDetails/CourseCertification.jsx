@@ -56,20 +56,20 @@ export default function CourseCertification({ data }) {
 
                          {/* Right Side: Bullets List */}
                          <div className="md:col-span-2 space-y-4 text-left min-w-0">
-                              <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-primary/20 text-primary border border-primary/30">
+                              <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-white/10 text-white border border-white/20">
                                    CERTIFICATION
                               </span>
                               <h2 className="text-[24px] sm:text-[36px] md:text-[40px] lg:text-[48px] font-bold text-white leading-tight">
                                    {title}
                               </h2>
-                              <p className="text-base sm:text-lg font-semibold text-primary leading-snug">
+                              <p className="text-base sm:text-lg font-semibold text-blue-300 leading-snug">
                                    {subtitle}
                               </p>
                               <div className="space-y-4 pt-4 border-t border-white/15">
                                    {bullets.map((bulletText, idx) => (
                                         <div key={idx} className="flex items-start gap-3.5 text-left group min-w-0">
-                                             <div className="w-8 h-8 rounded-xl bg-primary/20 border border-primary/40 text-primary flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                                                  <DeltaIcon className="w-4 h-4 text-primary group-hover:text-white transition-colors" />
+                                             <div className="w-8 h-8 rounded-xl bg-blue-500/20 border border-blue-400/40 text-blue-300 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                                                  <DeltaIcon className="w-4 h-4 text-blue-300 group-hover:text-white transition-colors" />
                                              </div>
                                              <p className="text-sm sm:text-base text-gray-200 font-normal leading-relaxed pt-0.5">
                                                   {bulletText}

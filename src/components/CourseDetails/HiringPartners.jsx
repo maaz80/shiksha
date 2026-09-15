@@ -61,7 +61,7 @@ export default function HiringPartners({ data }) {
 
                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0 text-center">
                     <div className="space-y-2 max-w-2xl mx-auto mb-10 md:mb-14">
-                         <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-primary/10 text-primary border border-primary/20 mb-1">
+                         <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-primary/10 text-[#0050B3] border border-primary/20 mb-1">
                               PLACEMENT NETWORK
                          </span>
                          <h2 className="text-[24px] sm:text-[36px] md:text-[40px] lg:text-[48px] font-bold leading-tight text-secondary">
