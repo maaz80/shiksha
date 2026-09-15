@@ -19,8 +19,9 @@ const WhatWeDo = ({ data }) => {
                     <img
                          src="/images/whatwedobg.webp"
                          alt="What We Do Bg Image"
-                         loading="lazy"
+                         loading="eager"
                          decoding="async"
+                         fetchPriority="high"
                          className='w-full h-full object-cover'
                     />
                </picture>

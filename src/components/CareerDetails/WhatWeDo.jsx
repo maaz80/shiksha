@@ -10,8 +10,9 @@ const WhatWeDo = () => {
                     <img
                          src="/images/whatwedobg.webp"
                          alt="What We Do Bg"
-                         loading="lazy"
+                         loading="eager"
                          decoding="async"
+                         fetchPriority="high"
                          className='absolute inset-0 w-full h-full object-cover z-5 min-h-63.75 md:min-h-60.25 2xl:min-h-75.75'
                     />
                </picture>

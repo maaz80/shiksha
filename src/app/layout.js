@@ -73,9 +73,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en" className={`h-full antialiased ${openSans.variable} ${plusJakartaSans.variable} ${poiretOne.variable}`}>
       <head>
-        {/* Preconnect origins with crossorigin for CORS fetch reuse */}
-        <link rel="preconnect" href="https://api.shikshadesign.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
+        {/* DNS prefetch for third-party origins (lightweight, no connection overhead) */}
         <link rel="dns-prefetch" href="https://api.shikshadesign.com" />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
         {/* Mobile hero LCP preload for instant FCP/LCP boost */}

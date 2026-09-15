@@ -10,6 +10,7 @@ const nextConfig = {
     root: __dirname,
     resolveAlias: {
       'next/dist/build/polyfills/polyfill-module': path.resolve(__dirname, 'empty-polyfill.js'),
+      'next/dist/build/polyfills/polyfill-nomodule': path.resolve(__dirname, 'empty-polyfill.js'),
     },
   },
   experimental: {
@@ -24,9 +25,16 @@ const nextConfig = {
       },
     ],
   },
+  compiler: {
+    // Target modern ES2022 — no polyfills for .at(), .flat(), Object.hasOwn(), etc.
+    ...(process.env.NODE_ENV === 'production' && {
+      reactRemoveProperties: true,
+    }),
+  },
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.alias['next/dist/build/polyfills/polyfill-module'] = false;
+      config.resolve.alias['next/dist/build/polyfills/polyfill-nomodule'] = false;
     }
     return config;
   },
