@@ -179,3 +179,31 @@ DirectorySlash Off
     AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/javascript application/json application/xml image/svg+xml font/woff font/ttf application/x-font-ttf
     SetEnvIfNoCase Request_URI \.(gif|jpg|jpeg|png|webp|ico|mp4|woff2)$ no-gzip
 </IfModule>
+
+# 15. SERVE PRE-COMPRESSED BROTLI / GZIP ASSETS (ZERO CPU LATENCY FOR HOSTINGER)
+<IfModule mod_headers.c>
+    <FilesMatch "\.js\.br$">
+        Header set Content-Encoding br
+        Header set Content-Type "application/javascript; charset=utf-8"
+    </FilesMatch>
+    <FilesMatch "\.css\.br$">
+        Header set Content-Encoding br
+        Header set Content-Type "text/css; charset=utf-8"
+    </FilesMatch>
+    <FilesMatch "\.html\.br$">
+        Header set Content-Encoding br
+        Header set Content-Type "text/html; charset=utf-8"
+    </FilesMatch>
+    <FilesMatch "\.js\.gz$">
+        Header set Content-Encoding gzip
+        Header set Content-Type "application/javascript; charset=utf-8"
+    </FilesMatch>
+    <FilesMatch "\.css\.gz$">
+        Header set Content-Encoding gzip
+        Header set Content-Type "text/css; charset=utf-8"
+    </FilesMatch>
+    <FilesMatch "\.html\.gz$">
+        Header set Content-Encoding gzip
+        Header set Content-Type "text/html; charset=utf-8"
+    </FilesMatch>
+</IfModule>

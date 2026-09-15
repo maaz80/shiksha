@@ -1,9 +1,7 @@
 "use client";
 
-import { Grip } from "lucide-react";
+import { Grip, ArrowUpRight as GoArrowUpRight, ArrowRight as HiOutlineArrowLongRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { GoArrowUpRight } from "react-icons/go";
-import { HiOutlineArrowLongRight } from "react-icons/hi2";
 
 const fields = [
     { label: "Full Name", name: "fullName", type: "text" },

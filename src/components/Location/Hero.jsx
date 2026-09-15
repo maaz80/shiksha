@@ -2,11 +2,8 @@
 
 import Link from "next/link";
 import LocationHeroBG from "../../assets/location-hero-bg.webp";
-import { HiOutlineArrowLongRight } from "react-icons/hi2";
-import { IoCheckmarkSharp } from "react-icons/io5";
-import { useEffect, useState } from "react";
+import { Grip, ArrowRight as HiOutlineArrowLongRight, Check as IoCheckmarkSharp } from "lucide-react";
 import ContactForm from "./Form";
-import { Grip } from "lucide-react";
 
 const Hero = ({ location }) => {
      const handleClick = () => {

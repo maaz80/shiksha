@@ -1,6 +1,5 @@
-'use client';
 import React from "react";
-import { FiPhoneCall, FiPhone, FiMessageSquare } from "react-icons/fi";
+import { PhoneCall as FiPhoneCall, Phone as FiPhone, MessageSquare as FiMessageSquare } from "lucide-react";
 import { useChat } from "../context/ChatContext";
 
 const QuickAccessBar = ({

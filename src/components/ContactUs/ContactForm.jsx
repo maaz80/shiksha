@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { User, Mail, Phone, ArrowLeft } from "lucide-react";
-import { HiOutlineArrowLongRight } from "react-icons/hi2";
+import { User, Mail, Phone, ArrowLeft, ArrowRight as HiOutlineArrowLongRight } from "lucide-react";
 
 const API_URL = (process.env.NEXT_PUBLIC_API_URL || process.env.VITE_API_URL) || "http://localhost:5000/api";
 

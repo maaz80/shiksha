@@ -74,10 +74,12 @@ export default async function RootLayout({ children }) {
     <html lang="en" className={`h-full antialiased ${openSans.variable} ${plusJakartaSans.variable} ${poiretOne.variable}`}>
       <head>
         {/* Preconnect origins with crossorigin for CORS fetch reuse */}
-        <link rel="preconnect" href="https://api.shikshadesign.com" crossorigin="anonymous" />
-        <link rel="preconnect" href="https://res.cloudinary.com" crossorigin="anonymous" />
+        <link rel="preconnect" href="https://api.shikshadesign.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://api.shikshadesign.com" />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+        {/* Mobile hero LCP preload for instant FCP/LCP boost */}
+        <link rel="preload" as="image" href="/images/shiksha-design-hero-mobile.webp" media="(max-width: 768px)" fetchPriority="high" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(globalSchema) }}

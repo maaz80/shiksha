@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { Grip } from "lucide-react";
+import { Grip, ArrowRight as HiOutlineArrowLongRight } from "lucide-react";
 import CardImgImported from "../../assets/shiksha-template-image.webp";
 const CardImg = CardImgImported?.src || CardImgImported;
-import { HiOutlineArrowLongRight } from "react-icons/hi2";
 
 const Services = ({ location }) => {
      const locationContent = location?.page?.location;

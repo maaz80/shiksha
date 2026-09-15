@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { HiOutlineHome } from "react-icons/hi";
+import { Home } from "lucide-react";
 
 const Breadcrumb = () => {
      const pathname = usePathname();
@@ -45,7 +45,7 @@ const Breadcrumb = () => {
                <div className="mx-auto max-w-340 w-full flex items-center gap-2 flex-nowrap overflow-hidden h-7 md:h-9 px-4 md:px-8 text-[10px] md:text-[12px] lg:text-[14px] plus-jakarta-sans text-gray-500">
                     {/* Home */}
                     <Link href="/" className="flex items-center gap-1 hover:text-black text-gray-500">
-                         <HiOutlineHome />
+                         <Home className="w-3.5 h-3.5" />
                          Home
                     </Link>
 

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, Suspense, useMemo } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { FiSearch, FiBookOpen, FiFilter, FiCompass, FiX, FiSliders, FiRotateCcw, FiChevronDown, FiCheck } from "react-icons/fi";
+import { Search as FiSearch, BookOpen as FiBookOpen, Filter as FiFilter, Compass as FiCompass, X as FiX, SlidersHorizontal as FiSliders, RotateCcw as FiRotateCcw, ChevronDown as FiChevronDown, Check as FiCheck } from "lucide-react";
 import { useCourses } from "@/context/CourseContext";
 import CourseCard from "@/components/CourseCard";
 import Testimonials from "@/components/Home/Testimonials";

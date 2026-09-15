@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { ChevronDown as FiChevronDown, ChevronUp as FiChevronUp } from "lucide-react";
 
 export default function SkillsYouWillLearn({ data }) {
   const [showAll, setShowAll] = useState(false);
