@@ -2,18 +2,20 @@
 
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation';
-import Hero from '../components/CourseDetails/Hero'
-import Details from '../components/CourseDetails/Details'
-import { getCourseBySlug } from '../utils/courseService'
-import Breadcrumb from '../components/BreadCrumb'
-import useFaq from '../hooks/useFaq'
-import FAQ from '../components/FAQ'
-import Testimonials from '../components/Home/Testimonials'
-import RelatedBlogs from '../components/RelatedBlogs'
-import SocialProofBar from '../components/CourseDetails/SocialProofBar'
-import WhyChooseUs from '../components/CourseDetails/WhyChooseUs'
-import ReadyToStartJourney from '../components/CourseDetails/ReadyToStartJourney'
-import RelatedCourses from '../components/CourseDetails/RelatedCourses'
+import dynamic from 'next/dynamic';
+import Hero from '../components/CourseDetails/Hero';
+import Details from '../components/CourseDetails/Details';
+import { getCourseBySlug } from '../utils/courseService';
+import Breadcrumb from '../components/BreadCrumb';
+import useFaq from '../hooks/useFaq';
+import SocialProofBar from '../components/CourseDetails/SocialProofBar';
+
+const Testimonials = dynamic(() => import('../components/Home/Testimonials'));
+const FAQ = dynamic(() => import('../components/FAQ'));
+const RelatedBlogs = dynamic(() => import('../components/RelatedBlogs'));
+const WhyChooseUs = dynamic(() => import('../components/CourseDetails/WhyChooseUs'));
+const ReadyToStartJourney = dynamic(() => import('../components/CourseDetails/ReadyToStartJourney'));
+const RelatedCourses = dynamic(() => import('../components/CourseDetails/RelatedCourses'));
 
 const CourseDetails = ({ isLogin, setIsLogin, course: propCourse, slug: propSlug, initialTestimonials = [] }) => {
   const { slug: routeSlug } = useParams();

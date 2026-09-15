@@ -24,20 +24,34 @@ export default function LayoutShell({ children, initialLocations = [] }) {
   const [isLogin, setIsLogin] = useState(false);
   const [authRefresh, setAuthRefresh] = useState(0);
   const [shouldLoadChatbot, setShouldLoadChatbot] = useState(false);
+  const [shouldLoadModals, setShouldLoadModals] = useState(false);
   const hoverTimeoutRef = useRef(null);
 
   const { isChatbotOpen } = useChat();
 
-  // Defer Chatbot JS bundle loading until user opens chat or after 4s idle time
+  // Defer Chatbot & Overlay JS bundles until user opens chat or after 3.5s idle time
   useEffect(() => {
     if (isChatbotOpen) {
       setShouldLoadChatbot(true);
+      setShouldLoadModals(true);
       return;
     }
     const timer = setTimeout(() => {
       setShouldLoadChatbot(true);
-    }, 4000);
-    return () => clearTimeout(timer);
+      setShouldLoadModals(true);
+    }, 3500);
+
+    const handleOpenLead = () => setShouldLoadModals(true);
+    if (typeof window !== "undefined") {
+      window.addEventListener("openLeadModal", handleOpenLead);
+    }
+
+    return () => {
+      clearTimeout(timer);
+      if (typeof window !== "undefined") {
+        window.removeEventListener("openLeadModal", handleOpenLead);
+      }
+    };
   }, [isChatbotOpen]);
 
   const startCloseTimeout = () => {
@@ -78,9 +92,11 @@ export default function LayoutShell({ children, initialLocations = [] }) {
         </Suspense>
       )}
 
-      <Suspense fallback={null}>
-        <LeadModal />
-      </Suspense>
+      {shouldLoadModals && (
+        <Suspense fallback={null}>
+          <LeadModal />
+        </Suspense>
+      )}
 
       {shouldLoadChatbot && (
         <Suspense fallback={null}>
@@ -88,9 +104,11 @@ export default function LayoutShell({ children, initialLocations = [] }) {
         </Suspense>
       )}
 
-      <Suspense fallback={null}>
-        <CookieBanner />
-      </Suspense>
+      {shouldLoadModals && (
+        <Suspense fallback={null}>
+          <CookieBanner />
+        </Suspense>
+      )}
 
       {!isDashboardPage && <QuickAccessBar />}
 

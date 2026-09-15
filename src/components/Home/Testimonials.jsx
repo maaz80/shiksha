@@ -191,7 +191,7 @@ const Testimonials = ({ data, initialTestimonials = [] }) => {
 
      return (
           <div className='min-h-[80vh] md:min-h-screen mx-auto w-full px-3 sm:px-6 lg:px-10 py-10 lg:py-16 text-secondary bg-primary-bg relative'>
-               <img src={Map?.src || Map} alt="Testimonial Map Bg" fetchPriority='high' decoding="async" className='absolute top-0 inset-0 w-full h-full z-0 object-cover pointer-events-none' />
+               <img src={Map?.src || Map} alt="Testimonial Map Bg" loading="lazy" decoding="async" className='absolute top-0 inset-0 w-full h-full z-0 object-cover pointer-events-none' />
 
                {/* Heading */}
                {isLocation ? (

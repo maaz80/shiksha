@@ -196,7 +196,7 @@ const Testimonials = ({ initialTestimonials = [] }) => {
 
      return (
           <div className='min-h-screen mx-auto w-full px-4 sm:px-6 lg:px-10 pt-18 lg:pt-16 text-secondary bg-primary-bg relative'>
-               <img src={Map?.src || Map} alt="Testimonial Map Bg" fetchPriority='high' decoding="async" className='absolute top-0 inset-0 w-full h-[179vh] z-0 object-cover pointer-events-none' />
+               <img src={Map?.src || Map} alt="Testimonial Map Bg" loading="lazy" decoding="async" className='absolute top-0 inset-0 w-full h-[179vh] z-0 object-cover pointer-events-none' />
 
                {/* Heading */}
                <h2 className="plus-jakarta-sans text-3xl md:text-5xl xl:text-[48px] font-bold leading-10 md:leading-15 max-w-140 text-primary text-center z-20 relative mx-auto">

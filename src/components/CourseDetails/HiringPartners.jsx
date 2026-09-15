@@ -88,6 +88,8 @@ export default function HiringPartners({ data }) {
                                              alt="Hiring Partner Logo"
                                              width="130"
                                              height="40"
+                                             loading="lazy"
+                                             decoding="async"
                                              className="h-6 sm:h-10 w-auto max-w-32.5 sm:max-w-40 object-contain shrink-0 transition-transform duration-300 group-hover:scale-105"
                                         />
                                    </div>
@@ -106,6 +108,8 @@ export default function HiringPartners({ data }) {
                                              alt="Hiring Partner Logo"
                                              width="130"
                                              height="40"
+                                             loading="lazy"
+                                             decoding="async"
                                              className="h-6 sm:h-10 w-auto max-w-32.5 sm:max-w-40 object-contain shrink-0 transition-transform duration-300 group-hover:scale-105"
                                         />
                                    </div>

@@ -5,7 +5,7 @@ import { Clock, Users, BarChart3, FileText, Lock, Unlock } from "lucide-react";
 import CloudinaryImage from '../CloudinaryImage';
 import { useUserAuth } from '../../context/UserAuthContext';
 
-const CourseCard = ({ course }) => {
+const CourseCard = ({ course, isFirst = false }) => {
      if (!course) return null;
 
      const { isLoggedIn, isCourseUnlocked } = useUserAuth();
@@ -52,8 +52,7 @@ const CourseCard = ({ course }) => {
                          src={course.image}
                          sizes="(max-width: 768px) 100vw, 400px"
                          alt={course.alt || course.title || course.name}
-                         priority={true}
-                         fetchPriority="high"
+                         priority={isFirst || false}
                          className="w-full h-full object-cover"
                     />
                </div>
