@@ -82,30 +82,27 @@ const Testimonials = ({ initialTestimonials = [] }) => {
 
      const isLocation = pathname.startsWith("/location");
      // ✅ Card width
-     const cardWidthRef = useRef(0);
-
-     const calculateCardWidth = () => {
-          const slider = sliderRef.current;
-          const card = slider?.children[0];
-
-          if (!slider || !card) return;
-
-          const gap = window.innerWidth >= 768 ? 44 : 20;
-
-          // ✅ ONE TIME READ
-          cardWidthRef.current = card.getBoundingClientRect().width + gap;
-     };
-
-     // ✅ Visible cards
+     const cardWidthRef = useRef(320);
      const visibleCardsRef = useRef(1);
 
-     const calculateVisibleCards = () => {
+     const calculateLayout = () => {
           const slider = sliderRef.current;
-          if (!slider || !cardWidthRef.current) return;
+          if (!slider) return;
+          const card = slider.children?.[0];
+          if (!card) return;
 
-          visibleCardsRef.current = Math.floor(
-               slider.offsetWidth / cardWidthRef.current
-          );
+          // Single batch DOM read to avoid forced synchronous reflow
+          const gap = (typeof window !== "undefined" && window.innerWidth >= 768) ? 44 : 20;
+          const rectWidth = card.getBoundingClientRect().width;
+          const sliderWidth = slider.offsetWidth;
+
+          const totalCardW = (rectWidth > 0 ? rectWidth : 300) + gap;
+          cardWidthRef.current = totalCardW;
+
+          const visibleCount = Math.max(1, Math.floor(sliderWidth / totalCardW));
+          visibleCardsRef.current = visibleCount;
+
+          setMaxIndex(Math.max(0, testimonialsList.length - visibleCount));
      };
 
      // ✅ Fetch all reviews dynamically
@@ -137,11 +134,7 @@ const Testimonials = ({ initialTestimonials = [] }) => {
           let rAFId = null;
           const calculateAll = () => {
                rAFId = requestAnimationFrame(() => {
-                    calculateCardWidth();
-                    calculateVisibleCards();
-                    setMaxIndex(
-                         Math.max(testimonialsList.length - visibleCardsRef.current, 0)
-                    );
+                    calculateLayout();
                });
           };
 

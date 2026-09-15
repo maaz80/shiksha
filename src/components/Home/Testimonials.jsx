@@ -81,28 +81,27 @@ const Testimonials = ({ data, initialTestimonials = [] }) => {
 
      const isLocation = pathname ? pathname.startsWith("/location") : false;
      const cardWidthRef = useRef(320);
-
-     const calculateCardWidth = () => {
-          const slider = sliderRef.current;
-          const card = slider?.children?.[0];
-
-          if (!slider || !card) return;
-
-          const gap = (typeof window !== "undefined" && window.innerWidth >= 768) ? 44 : 20;
-          const rectWidth = card.getBoundingClientRect().width;
-          if (rectWidth > 0) {
-               cardWidthRef.current = rectWidth + gap;
-          }
-     };
-
      const visibleCardsRef = useRef(1);
 
-     const calculateVisibleCards = () => {
+     const calculateLayout = () => {
           const slider = sliderRef.current;
-          const cardW = cardWidthRef.current || 320;
-          if (!slider || !cardW) return;
+          if (!slider) return;
+          const card = slider.children?.[0];
+          if (!card) return;
 
-          visibleCardsRef.current = Math.max(1, Math.floor(slider.offsetWidth / cardW));
+          // Single batch DOM read to avoid forced synchronous reflow
+          const gap = (typeof window !== "undefined" && window.innerWidth >= 768) ? 44 : 20;
+          const rectWidth = card.getBoundingClientRect().width;
+          const sliderWidth = slider.offsetWidth;
+
+          const totalCardW = (rectWidth > 0 ? rectWidth : 300) + gap;
+          cardWidthRef.current = totalCardW;
+
+          const visibleCount = Math.max(1, Math.floor(sliderWidth / totalCardW));
+          visibleCardsRef.current = visibleCount;
+
+          const total = testimonialsList.length;
+          setMaxIndex(Math.max(0, total - visibleCount));
      };
 
      useEffect(() => {
@@ -130,11 +129,7 @@ const Testimonials = ({ data, initialTestimonials = [] }) => {
           let rAFId = null;
           const calculateAll = () => {
                rAFId = requestAnimationFrame(() => {
-                    calculateCardWidth();
-                    calculateVisibleCards();
-                    const total = testimonialsList.length;
-                    const visible = visibleCardsRef.current || 1;
-                    setMaxIndex(Math.max(0, total - visible));
+                    calculateLayout();
                });
           };
 
