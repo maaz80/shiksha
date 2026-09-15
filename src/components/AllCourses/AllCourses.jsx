@@ -103,8 +103,8 @@ const Courses = ({ title }) => {
                               <CourseCardSkeleton key={index} />
                          ))
                     ) : currentCourses.length > 0 ? (
-                         currentCourses.map((course) => (
-                              <CourseCard key={course._id} course={course} />
+                         currentCourses.map((course, idx) => (
+                              <CourseCard key={course._id} course={course} isFirst={idx === 0} />
                          ))
                     ) : (
                          <div className="text-center py-10 text-gray-500">No courses found</div>

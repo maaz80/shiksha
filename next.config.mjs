@@ -9,7 +9,7 @@ const nextConfig = {
   turbopack: {
     root: __dirname,
     resolveAlias: {
-      'next/dist/build/polyfills/polyfill-module': './empty-polyfill.js',
+      'next/dist/build/polyfills/polyfill-module': path.resolve(__dirname, 'empty-polyfill.js'),
     },
   },
   experimental: {

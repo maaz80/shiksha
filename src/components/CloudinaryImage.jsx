@@ -63,16 +63,20 @@ export function CloudinaryImage({
      alt = "",
      className = "",
      priority = false, // Set to true if this image appears above the fold (e.g. Hero banner)
-     sizes = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px",
+     sizes = "(max-width: 640px) 360px, (max-width: 1024px) 450px, 400px",
      objectFit = "fill",
      fallbackSrc = "/images/shiksha-design-hero.webp",
-     fetchPriority = undefined,
+     fetchPriority: userFetchPriority = undefined,
      aspectRatio = undefined,
      quality = "auto",
      width,
      height,
      ...props
 }) {
+     const { loading: userLoading, ...restProps } = props;
+     const effectiveLoading = priority ? "eager" : (userLoading || "lazy");
+     const effectiveFetchPriority = priority ? "high" : (userFetchPriority || undefined);
+
      let imageSrc = src || fallbackSrc;
      if (src && typeof src === 'object' && src.src) {
           imageSrc = src.src;
@@ -86,12 +90,12 @@ export function CloudinaryImage({
                     src={imageSrc}
                     alt={alt}
                     className={className}
-                    loading={priority ? "eager" : "lazy"}
+                    loading={effectiveLoading}
                     decoding="async"
                     {...(width ? { width } : {})}
                     {...(height ? { height } : {})}
-                    {...(fetchPriority ? { fetchPriority } : priority ? { fetchPriority: "high" } : {})}
-                    {...props}
+                    {...(effectiveFetchPriority ? { fetchPriority: effectiveFetchPriority } : {})}
+                    {...restProps}
                />
           );
      }
@@ -113,9 +117,9 @@ export function CloudinaryImage({
           return `${url} ${w}w`;
      }).join(", ");
 
-     // Default src for legacy fallback: ~800px image instead of 1920px
+     // Default src for legacy fallback: ~640px image instead of 1920px
      const defaultSrc = getOptimizedCloudinaryUrl(imageSrc, {
-          width: 800,
+          width: 640,
           aspectRatio: effectiveAspectRatio,
           quality,
           format: "auto",
@@ -129,12 +133,12 @@ export function CloudinaryImage({
                sizes={sizes}
                alt={alt}
                className={className}
-               loading={priority ? "eager" : "lazy"}
+               loading={effectiveLoading}
                decoding="async"
                {...(width ? { width } : {})}
                {...(height ? { height } : {})}
-               {...(fetchPriority ? { fetchPriority } : priority ? { fetchPriority: "high" } : {})}
-               {...props}
+               {...(effectiveFetchPriority ? { fetchPriority: effectiveFetchPriority } : {})}
+               {...restProps}
           />
      );
 }

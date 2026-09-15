@@ -14,6 +14,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-plus-jakarta-sans',
+  preload: false,
 });
 
 const poiretOne = Poiret_One({
@@ -72,8 +73,9 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en" className={`h-full antialiased ${openSans.variable} ${plusJakartaSans.variable} ${poiretOne.variable}`}>
       <head>
-        {/* Preconnect API origin and dns-prefetch media origin */}
-        <link rel="preconnect" href="https://api.shikshadesign.com" />
+        {/* Preconnect origins with crossorigin for CORS fetch reuse */}
+        <link rel="preconnect" href="https://api.shikshadesign.com" crossorigin="anonymous" />
+        <link rel="preconnect" href="https://res.cloudinary.com" crossorigin="anonymous" />
         <link rel="dns-prefetch" href="https://api.shikshadesign.com" />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
         <script
