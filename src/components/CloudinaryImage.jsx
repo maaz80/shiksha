@@ -5,7 +5,7 @@ import React from "react";
 /**
  * Utility function to dynamically insert transformation parameters into a Cloudinary URL.
  */
-export function getOptimizedCloudinaryUrl(url, { width, height, aspectRatio, quality = "auto", format = "auto", crop = "fill" } = {}) {
+export function getOptimizedCloudinaryUrl(url, { width, height, aspectRatio, quality = "auto:eco", format = "auto", crop = "fill" } = {}) {
      let urlStr = url;
      if (url && typeof url === 'object' && url.src) {
           urlStr = url.src;
@@ -50,8 +50,8 @@ export function getOptimizedCloudinaryUrl(url, { width, height, aspectRatio, qua
      return `${baseUrl}${transformString}/${remainingUrl}`;
 }
 
-// Granular responsive image breakpoints matching Next.js & industry standards (Vercel/Shopify/Airbnb)
-const DEFAULT_IMAGE_WIDTHS = [360, 480, 640, 768, 828, 960, 1080, 1200, 1600, 1920];
+// Granular responsive image breakpoints for exact container sizing
+const DEFAULT_IMAGE_WIDTHS = [240, 280, 320, 360, 400, 440, 480, 520, 560, 600, 640, 720, 800, 960, 1080, 1200, 1600];
 
 /**
  * CloudinaryImage / OptimizedImage component for highly optimized responsive images.
@@ -63,12 +63,12 @@ export function CloudinaryImage({
      alt = "",
      className = "",
      priority = false, // Set to true if this image appears above the fold (e.g. Hero banner)
-     sizes = "(max-width: 640px) 360px, (max-width: 1024px) 450px, 400px",
+     sizes = "(max-width: 640px) 320px, (max-width: 1024px) 400px, 400px",
      objectFit = "fill",
      fallbackSrc = "/images/shiksha-design-hero.webp",
      fetchPriority: userFetchPriority = undefined,
      aspectRatio = undefined,
-     quality = "auto",
+     quality = "auto:eco",
      width,
      height,
      ...props
@@ -117,9 +117,10 @@ export function CloudinaryImage({
           return `${url} ${w}w`;
      }).join(", ");
 
-     // Default src for legacy fallback: ~640px image instead of 1920px
+     // Default src for legacy fallback: matched to container width (~380px/400px) instead of 640px
+     const fallbackWidth = width ? Math.min(Number(width) || 400, 400) : 380;
      const defaultSrc = getOptimizedCloudinaryUrl(imageSrc, {
-          width: 640,
+          width: fallbackWidth,
           aspectRatio: effectiveAspectRatio,
           quality,
           format: "auto",

@@ -172,7 +172,7 @@ const Testimonials = ({ data, initialTestimonials = [] }) => {
                               const index = Math.round(
                                    sliderRef.current.scrollLeft / cardW
                               );
-                              setCurrentIndex(index);
+                              setCurrentIndex((prev) => (prev !== index ? index : prev));
                          }
                          ticking = false;
                     });
@@ -181,7 +181,7 @@ const Testimonials = ({ data, initialTestimonials = [] }) => {
           };
 
           if (slider) {
-               slider.addEventListener("scroll", handleScroll);
+               slider.addEventListener("scroll", handleScroll, { passive: true });
           }
 
           return () => {

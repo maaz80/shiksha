@@ -118,28 +118,26 @@ const BlogDetails = ({ blog: propBlog, slug: propSlug, initialTestimonials = [] 
      useEffect(() => {
           if (!headingsList.length) return;
 
-          const handleScrollSpy = () => {
-               const headerOffset = 160;
-               let currentActiveId = headingsList[0]?.id || "";
+          const elements = headingsList
+               .map((h) => document.getElementById(h.id))
+               .filter(Boolean);
 
-               for (let i = 0; i < headingsList.length; i++) {
-                    const el = document.getElementById(headingsList[i].id);
-                    if (el) {
-                         const rect = el.getBoundingClientRect();
-                         if (rect.top <= headerOffset) {
-                              currentActiveId = headingsList[i].id;
-                         } else {
-                              break;
-                         }
+          if (!elements.length) return;
+
+          const observer = new IntersectionObserver(
+               (entries) => {
+                    // Find the uppermost intersecting section
+                    const visible = entries.filter(e => e.isIntersecting);
+                    if (visible.length > 0) {
+                         // Pick the first visible element
+                         setActiveId(visible[0].target.id);
                     }
-               }
+               },
+               { rootMargin: "-100px 0px -60% 0px", threshold: 0 }
+          );
 
-               setActiveId(currentActiveId);
-          };
-
-          handleScrollSpy();
-          window.addEventListener("scroll", handleScrollSpy, { passive: true });
-          return () => window.removeEventListener("scroll", handleScrollSpy);
+          elements.forEach((el) => observer.observe(el));
+          return () => observer.disconnect();
      }, [headingsList]);
 
      const handleScrollToHeading = (id) => {

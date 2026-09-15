@@ -175,9 +175,9 @@ const Testimonials = ({ initialTestimonials = [] }) => {
                     requestAnimationFrame(() => {
                          if (sliderRef.current) {
                               const index = Math.round(
-                                   sliderRef.current.scrollLeft / cardWidthRef.current
+                                   sliderRef.current.scrollLeft / (cardWidthRef.current || 320)
                               );
-                              setCurrentIndex(index);
+                              setCurrentIndex((prev) => (prev !== index ? index : prev));
                          }
                          ticking = false;
                     });
@@ -186,7 +186,7 @@ const Testimonials = ({ initialTestimonials = [] }) => {
           };
 
           if (slider) {
-               slider.addEventListener("scroll", handleScroll);
+               slider.addEventListener("scroll", handleScroll, { passive: true });
           }
 
           return () => {
