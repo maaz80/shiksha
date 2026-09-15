@@ -84,8 +84,8 @@ const Hero = ({ course, courseId, setIsLogin }) => {
                               <span className="bg-white text-black text-xs font-semibold px-3 py-1 rounded-md shadow-xs">
                                    {course?.category || "Development"}
                               </span>
-                              <span className="text-xs sm:text-sm text-white/90">
-                                   by <span className="font-medium text-white">{course?.name || "Instructor"}</span>
+                              <span className="text-xs sm:text-sm text-white font-medium">
+                                   by <span className="font-semibold text-white">{course?.name || "Instructor"}</span>
                               </span>
                          </div>
 
@@ -94,27 +94,27 @@ const Hero = ({ course, courseId, setIsLogin }) => {
                               {course?.title}
                          </h1>
 
-                         {/* MOBILE ADMISSION CARD */}
-                         <div className="md:hidden w-full max-w-sm mt-6 text-secondary">
-                              <div className="bg-white rounded-2xl shadow-xl p-5 border border-gray-100 space-y-4">
-                                   {/* PRICE */}
-                                   <div className="flex items-center justify-between gap-2">
-                                        <div>
-                                             <p className="text-[12px] text-gray-500 font-medium">
-                                                  Total Admission Fee
-                                             </p>
-                                             <div className="flex items-baseline gap-1.5 mt-0.5">
-                                                  <span className="text-2xl font-bold text-secondary">
-                                                       ₹{course?.fees || '10000'}
-                                                  </span>
-                                                  <span className="text-[11px] text-gray-400">
-                                                       (Inclusive of all charges)
-                                                  </span>
-                                             </div>
+                         <p className="text-xs sm:text-base text-white/95 mt-3 leading-relaxed max-w-3xl">
+                              {course?.overview || course?.description}
+                         </p>
+                    </div>
+
+                    {/* MOBILE FLOATING CTA CARD */}
+                    <div className="block md:hidden mt-6 w-full text-secondary">
+                         <div className="bg-white rounded-2xl shadow-xl p-5 border border-gray-100 space-y-4">
+                              <div className="flex items-center justify-between">
+                                   <div>
+                                        <p className="text-xs text-slate-600 font-medium">Total Admission Fee</p>
+                                        <div className="flex items-baseline gap-1.5 mt-0.5">
+                                             <span className="text-2xl font-bold text-secondary">
+                                                  ₹{course?.fees || '10000'}
+                                             </span>
+                                             <span className="text-[11px] text-slate-600 font-medium">
+                                                  (Inclusive of all charges)
+                                             </span>
                                         </div>
                                    </div>
 
-                                   {/* BUTTON */}
                                    <button
                                         onClick={handleStartNow}
                                         disabled={loading}

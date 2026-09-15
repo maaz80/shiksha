@@ -198,9 +198,9 @@ export default function DemoClass({ data }) {
                                                        <IconComponent size={20} />
                                                   </div>
                                                   <div>
-                                                       <h4 className="font-bold text-sm text-secondary leading-snug">
+                                                       <h3 className="font-bold text-sm text-secondary leading-snug">
                                                             {item.title}
-                                                       </h4>
+                                                       </h3>
                                                        <p className="text-xs text-gray-600 leading-relaxed mt-1">
                                                             {item.desc}
                                                        </p>
