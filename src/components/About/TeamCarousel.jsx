@@ -73,7 +73,7 @@ export default function TeamCarousel({ data: teamData }) {
      if (members.length === 0) return null;
 
      return (
-          <section className="w-full bg-[#f3f6f9] py-12 md:py-16 lg:py-20 text-center">
+          <section className="w-full bg-[#f3f6f9] py-12 md:py-16 lg:py-20 text-center cv-auto">
 
                {/* Heading */}
                <h2 className="text-center text-[26px] md:text-[36px] lg:text-[48px] font-bold text-primary mb-0 md:mb-16">
@@ -125,7 +125,7 @@ export default function TeamCarousel({ data: teamData }) {
                                                   } object-contain`}
                                              sizes={pos === "center" ? "(max-width: 768px) 136px, 304px" : "(max-width: 768px) 88px, 200px"}
                                              {...(item.imgSmall ? {
-                                                  srcSet: `${item.imgSmall} 200w, ${item.img} 380w`
+                                                  srcSet: `${item.imgSmall?.src || item.imgSmall} 200w, ${item.img?.src || item.img} 380w`
                                              } : {})}
                                         />
 

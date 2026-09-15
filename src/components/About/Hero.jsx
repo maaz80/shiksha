@@ -57,8 +57,8 @@ const Hero = ({ data }) => {
                               alt="Template Image"
                               width={293}
                               height={287}
-                              loading="lazy"
-                              decoding="async"
+                              priority={true}
+                              fetchPriority="high"
                               className='relative object-cover rounded-xl w-full'
                               sizes="(max-width: 640px) 180px, (max-width: 768px) 284px, (max-width: 1536px) 523px, 620px"
                          />

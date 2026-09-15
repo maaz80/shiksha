@@ -72,10 +72,9 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en" className={`h-full antialiased ${openSans.variable} ${plusJakartaSans.variable} ${poiretOne.variable}`}>
       <head>
-        {/* Preconnect & DNS-prefetch critical origins to save 370ms API + image LCP latency */}
-        <link rel="preconnect" href="https://api.shikshadesign.com" crossOrigin="anonymous" />
+        {/* Preconnect API origin and dns-prefetch media origin */}
+        <link rel="preconnect" href="https://api.shikshadesign.com" />
         <link rel="dns-prefetch" href="https://api.shikshadesign.com" />
-        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
         <script
           type="application/ld+json"
