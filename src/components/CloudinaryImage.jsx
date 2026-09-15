@@ -5,7 +5,7 @@ import React from "react";
 /**
  * Utility function to dynamically insert transformation parameters into a Cloudinary URL.
  */
-export function getOptimizedCloudinaryUrl(url, { width, height, quality = "auto", format = "auto", crop = "fill" } = {}) {
+export function getOptimizedCloudinaryUrl(url, { width, height, aspectRatio, quality = "auto", format = "auto", crop = "fill" } = {}) {
      let urlStr = url;
      if (url && typeof url === 'object' && url.src) {
           urlStr = url.src;
@@ -30,30 +30,48 @@ export function getOptimizedCloudinaryUrl(url, { width, height, quality = "auto"
      }
 
      const transforms = [];
-     if (width) transforms.push(`w_${width}`);
-     if (height) transforms.push(`h_${height}`);
-     if (crop && (width || height)) transforms.push(`c_${crop}`);
+     if (width) transforms.push(`w_${Math.round(width)}`);
+     if (height) transforms.push(`h_${Math.round(height)}`);
+     else if (aspectRatio && width) {
+          let arNumeric = aspectRatio;
+          if (typeof aspectRatio === 'string' && aspectRatio.includes(':')) {
+               const [wStr, hStr] = aspectRatio.split(':').map(Number);
+               if (wStr && hStr) arNumeric = wStr / hStr;
+          }
+          if (typeof arNumeric === 'number' && arNumeric > 0) {
+               transforms.push(`h_${Math.round(width / arNumeric)}`);
+          }
+     }
+     if (crop && (width || height || aspectRatio)) transforms.push(`c_${crop},g_auto`);
      if (quality) transforms.push(`q_${quality}`);
      if (format) transforms.push(`f_${format}`);
-     transforms.push("dpr_auto"); // Automatically adjust image density for retina/high-res displays
 
      const transformString = transforms.join(",");
      return `${baseUrl}${transformString}/${remainingUrl}`;
 }
 
+// Granular responsive image breakpoints matching Next.js & industry standards (Vercel/Shopify/Airbnb)
+const DEFAULT_IMAGE_WIDTHS = [360, 480, 640, 768, 828, 960, 1080, 1200, 1600, 1920];
+
 /**
  * CloudinaryImage / OptimizedImage component for highly optimized responsive images.
- * Ideal for dynamic Cloudinary images, falling back to static local images seamlessly.
+ * Provides fine-grained device viewport steps, automatic Cloudinary aspect cropping,
+ * and smart modern AVIF/WebP auto format selection.
  */
 export function CloudinaryImage({
      src,
      alt = "",
      className = "",
      priority = false, // Set to true if this image appears above the fold (e.g. Hero banner)
-     sizes = "100vw",
+     sizes = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px",
      objectFit = "fill",
      fallbackSrc = "/images/shiksha-design-hero.webp",
-     fetchPriority = undefined // Optional fetch priority attribute
+     fetchPriority = undefined,
+     aspectRatio = undefined,
+     quality = "auto",
+     width,
+     height,
+     ...props
 }) {
      let imageSrc = src || fallbackSrc;
      if (src && typeof src === 'object' && src.src) {
@@ -67,23 +85,42 @@ export function CloudinaryImage({
                <img
                     src={imageSrc}
                     alt={alt}
-                    className={`${className}`}
+                    className={className}
                     loading={priority ? "eager" : "lazy"}
                     decoding="async"
-                    {...(fetchPriority ? { fetchPriority } : {})}
+                    {...(width ? { width } : {})}
+                    {...(height ? { height } : {})}
+                    {...(fetchPriority ? { fetchPriority } : priority ? { fetchPriority: "high" } : {})}
+                    {...props}
                />
           );
      }
 
-     // Generate a responsive srcSet using Cloudinary widths
-     const srcSet = [
-          `${getOptimizedCloudinaryUrl(imageSrc, { width: 640, quality: "auto" })} 640w`,
-          `${getOptimizedCloudinaryUrl(imageSrc, { width: 1024, quality: "auto" })} 1024w`,
-          `${getOptimizedCloudinaryUrl(imageSrc, { width: 1920, quality: "auto" })} 1920w`,
-          `${getOptimizedCloudinaryUrl(imageSrc, { width: 2560, quality: "auto" })} 2560w`
-     ].join(", ");
+     let effectiveAspectRatio = aspectRatio;
+     if (!effectiveAspectRatio && width && height) {
+          effectiveAspectRatio = width / height;
+     }
 
-     const defaultSrc = getOptimizedCloudinaryUrl(imageSrc, { width: 1920, quality: "auto" });
+     // Generate a granular responsive srcSet matching actual container widths
+     const srcSet = DEFAULT_IMAGE_WIDTHS.map((w) => {
+          const url = getOptimizedCloudinaryUrl(imageSrc, {
+               width: w,
+               aspectRatio: effectiveAspectRatio,
+               quality,
+               format: "auto",
+               crop: objectFit === "cover" || objectFit === "fill" ? "fill" : "fit",
+          });
+          return `${url} ${w}w`;
+     }).join(", ");
+
+     // Default src for legacy fallback: ~800px image instead of 1920px
+     const defaultSrc = getOptimizedCloudinaryUrl(imageSrc, {
+          width: 800,
+          aspectRatio: effectiveAspectRatio,
+          quality,
+          format: "auto",
+          crop: objectFit === "cover" || objectFit === "fill" ? "fill" : "fit",
+     });
 
      return (
           <img
@@ -91,10 +128,13 @@ export function CloudinaryImage({
                srcSet={srcSet}
                sizes={sizes}
                alt={alt}
-               className={`${className}`}
+               className={className}
                loading={priority ? "eager" : "lazy"}
                decoding="async"
-               {...(fetchPriority ? { fetchPriority } : {})}
+               {...(width ? { width } : {})}
+               {...(height ? { height } : {})}
+               {...(fetchPriority ? { fetchPriority } : priority ? { fetchPriority: "high" } : {})}
+               {...props}
           />
      );
 }

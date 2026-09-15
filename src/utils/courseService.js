@@ -28,13 +28,13 @@ export const getCourseBySlug = async (slug) => {
 
 export const getAllReviews = async () => {
      try {
-          const res = await fetchWithFallback("/reviews/all");
+          const res = await fetchWithFallback("/testimonials");
           if (res && res.ok) {
                return await res.json();
           }
           return [];
      } catch (err) {
-          console.error("Failed to fetch reviews:", err);
+          console.error("Failed to fetch testimonials:", err);
           return [];
      }
 };

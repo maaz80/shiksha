@@ -88,7 +88,7 @@ export default function Review({ reviews = [] }) {
                               </h2>
 
                               <div>
-                                   <div className="flex gap-1 text-orange-500">
+                                   <div className="flex gap-1 text-orange">
                                         {[1, 2, 3, 4, 5].map((i) => (
                                              <Star
                                                   key={i}

@@ -24,11 +24,10 @@
     "tailwindcss": "^4"
   },
   "browserslist": [
-    "chrome >= 90",
-    "edge >= 90",
-    "firefox >= 88",
-    "safari >= 15",
-    "not dead",
-    "not ie <= 11"
+    "chrome >= 100",
+    "edge >= 100",
+    "firefox >= 100",
+    "safari >= 15.4",
+    "not dead"
   ]
 }

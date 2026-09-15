@@ -118,7 +118,7 @@ const Hero = ({ course, courseId, setIsLogin }) => {
                                    <button
                                         onClick={handleStartNow}
                                         disabled={loading}
-                                        className="w-full bg-orange-500 hover:bg-orange-600 active:scale-[0.98] disabled:bg-gray-400 disabled:cursor-not-allowed text-white py-3 rounded-xl font-semibold transition text-sm cursor-pointer shadow-sm"
+                                        className="w-full bg-orange hover:bg-orange-hover active:scale-[0.98] disabled:bg-gray-400 disabled:cursor-not-allowed text-white py-3 rounded-xl font-semibold transition text-sm cursor-pointer shadow-sm"
                                    >
                                         {loading
                                              ? "Processing..."

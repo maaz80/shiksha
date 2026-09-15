@@ -8,6 +8,9 @@ const nextConfig = {
   output: 'export',
   turbopack: {
     root: __dirname,
+    resolveAlias: {
+      'next/dist/build/polyfills/polyfill-module': './empty-polyfill.js',
+    },
   },
   experimental: {
     workerThreads: false,
@@ -20,6 +23,12 @@ const nextConfig = {
         hostname: 'res.cloudinary.com',
       },
     ],
+  },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.alias['next/dist/build/polyfills/polyfill-module'] = false;
+    }
+    return config;
   },
 };
 

@@ -36,7 +36,7 @@ const Hero = () => {
                               <img src={Template} alt="Template Image" className="w-full object-cover h-50" />
                               <div className="p-2">
                                    {/* BUTTON */}
-                                   <button className="w-full bg-orange-500 hover:bg-orange-600 text-white h-9 xl:h-12 rounded-md font-medium transition text-[14px] xl:text-[16px]">
+                                   <button className="w-full bg-orange hover:bg-orange-hover text-white h-9 xl:h-12 rounded-md font-medium transition text-[14px] xl:text-[16px] cursor-pointer">
                                         Apply
                                    </button>
                               </div>

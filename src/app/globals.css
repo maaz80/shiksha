@@ -27,8 +27,8 @@ input[type="checkbox"] {
   --color-primary: #0071E5;
   --color-primary-hover: #024d9b;
   --color-secondary: #26394D;
-  --color-orange: #FF660A;
-  --color-orange-hover: #92390e;
+  --color-orange: #C84200;
+  --color-orange-hover: #9a3200;
   --color-dark-blue: #26394D;
 
   /* Custom spacing classes used throughout the app */

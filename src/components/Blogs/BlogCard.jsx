@@ -46,9 +46,9 @@ const BlogCard = ({ blog, isEager = false }) => {
 
      // Safe date format
      const formatDate = (dateString) => {
-          if (!dateString) return new Date().toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+          if (!dateString) return "Recent";
           const date = new Date(dateString);
-          if (isNaN(date.getTime())) return new Date().toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+          if (isNaN(date.getTime())) return "Recent";
           return date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
      };
 
