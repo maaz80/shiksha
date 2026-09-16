@@ -59,3 +59,14 @@ export const deferNonCriticalStyles = () => {
           }
      });
 };
+
+// Cached scrollbar width calculation to prevent forced reflow on modal open
+let cachedScrollbarWidth = null;
+export const getScrollbarWidth = () => {
+     if (typeof window === "undefined") return 0;
+     if (cachedScrollbarWidth === null) {
+          cachedScrollbarWidth = Math.max(0, window.innerWidth - document.documentElement.clientWidth);
+     }
+     return cachedScrollbarWidth;
+};
+

@@ -145,8 +145,13 @@ const BlogDetails = ({ blog: propBlog, slug: propSlug, initialTestimonials = [] 
           const element = document.getElementById(id);
           if (element) {
                const yOffset = -130;
-               const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-               window.scrollTo({ top: y, behavior: 'smooth' });
+               let topPos = 0;
+               let el = element;
+               while (el) {
+                    topPos += el.offsetTop;
+                    el = el.offsetParent;
+               }
+               window.scrollTo({ top: Math.max(0, topPos + yOffset), behavior: 'smooth' });
           }
      };
 

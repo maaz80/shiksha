@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { X, Lock, CheckCircle2, Send, User, Mail, Phone } from "lucide-react";
+import { getScrollbarWidth } from "../utils/performance";
 
 const getApiBase = () => {
      let baseUrl = "";
@@ -38,13 +39,11 @@ export default function LeadModal() {
           if (typeof window === "undefined") return;
           const html = document.documentElement;
           if (isOpen) {
-               requestAnimationFrame(() => {
-                    const scrollbarWidth = window.innerWidth - html.clientWidth;
-                    html.style.overflow = "hidden";
-                    if (scrollbarWidth > 0) {
-                         html.style.paddingRight = `${scrollbarWidth}px`;
-                    }
-               });
+               const scrollbarWidth = getScrollbarWidth();
+               html.style.overflow = "hidden";
+               if (scrollbarWidth > 0) {
+                    html.style.paddingRight = `${scrollbarWidth}px`;
+               }
           } else {
                html.style.overflow = "";
                html.style.paddingRight = "";

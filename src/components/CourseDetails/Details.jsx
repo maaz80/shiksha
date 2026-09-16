@@ -471,9 +471,8 @@ export default function Details({ data }) {
                <ChooseYourLearning data={data} />
 
                {/* SECTION 3: Short-Term Courses Interactive Slider */}
-               <section className="bg-primary text-white py-12 md:py-16 w-full">
-                    <div className="max-w-350 mx-auto px-4 sm:px-6 lg:px-14">
-                         <div className="grid grid-cols-1 lg:grid-cols-[1fr_450px] xl:grid-cols-[1fr_520px] gap-10 items-center">
+               <section className="bg-primary text-white py-12 md:py-16 w-full px-4 sm:px-6 lg:px-14">
+                    <div className="max-w-350 mx-auto grid grid-cols-1 lg:grid-cols-[1fr_450px] xl:grid-cols-[1fr_520px] gap-10 items-center">
 
                               {/* Left Controls & Headings */}
                               <div className="space-y-6 text-left">
@@ -544,7 +543,6 @@ export default function Details({ data }) {
                               </div>
 
                          </div>
-                    </div>
                </section>
 
                {/* SECTION 4: Student Case Studies Slider / Showcase Gallery */}

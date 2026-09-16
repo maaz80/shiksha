@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import login from '../assets/shiksha-login-image.webp';
 import { Mail, User, X, KeyRound, Phone } from "lucide-react";
 import { sendOTP, loginWithOTP, signupWithOTP } from "../utils/auth.js";
+import { getScrollbarWidth } from "../utils/performance";
 
 const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
      const [authMode, setAuthMode] = useState("login"); // "login" or "signup"
@@ -25,11 +26,11 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
           const html = document.documentElement;
 
           if (isOpen) {
-               requestAnimationFrame(() => {
-                    const scrollbarWidth = window.innerWidth - html.clientWidth;
-                    html.style.overflow = "hidden";
+               const scrollbarWidth = getScrollbarWidth();
+               html.style.overflow = "hidden";
+               if (scrollbarWidth > 0) {
                     html.style.paddingRight = `${scrollbarWidth}px`;
-               });
+               }
           } else {
                html.style.overflow = "";
                html.style.paddingRight = "";

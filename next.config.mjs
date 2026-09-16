@@ -33,8 +33,11 @@ const nextConfig = {
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {
-      config.resolve.alias['next/dist/build/polyfills/polyfill-module'] = false;
-      config.resolve.alias['next/dist/build/polyfills/polyfill-nomodule'] = false;
+      const emptyPolyfillPath = path.resolve(__dirname, 'empty-polyfill.js');
+      config.resolve.alias['next/dist/build/polyfills/polyfill-module'] = emptyPolyfillPath;
+      config.resolve.alias['next/dist/build/polyfills/polyfill-module$'] = emptyPolyfillPath;
+      config.resolve.alias['next/dist/build/polyfills/polyfill-nomodule'] = emptyPolyfillPath;
+      config.resolve.alias['next/dist/build/polyfills/polyfill-nomodule$'] = emptyPolyfillPath;
     }
     return config;
   },

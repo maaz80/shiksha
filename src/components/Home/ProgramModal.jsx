@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import ProgramsSidebar from '../ProgramsSidebar';
 import CourseCard from '../CourseCard';
 import { useCourses } from '../../context/CourseContext';
+import { getScrollbarWidth } from '../../utils/performance';
 
 const ProgramModal = ({ isModal, setIsModal, onMouseEnter, onMouseLeave }) => {
      const [isMounted, setIsMounted] = useState(false);
@@ -24,11 +25,11 @@ const ProgramModal = ({ isModal, setIsModal, onMouseEnter, onMouseLeave }) => {
           const html = document.documentElement;
 
           if (isModal) {
-               requestAnimationFrame(() => {
-                    const scrollBarWidth = window.innerWidth - html.clientWidth;
-                    html.style.overflow = "hidden";
+               const scrollBarWidth = getScrollbarWidth();
+               html.style.overflow = "hidden";
+               if (scrollBarWidth > 0) {
                     html.style.paddingRight = `${scrollBarWidth}px`;
-               });
+               }
           } else {
                html.style.overflow = "";
                html.style.paddingRight = "";
