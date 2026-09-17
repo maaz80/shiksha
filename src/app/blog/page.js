@@ -2,6 +2,7 @@ import Blogs from "../../page-components/Blogs";
 import { getBlogs } from "../../utils/blogService";
 import { getTestimonials } from "../../utils/testimonialService";
 import { getPageSEO } from "../../utils/seoService";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinary";
 
 export async function generateMetadata() {
   const seo = await getPageSEO("blogs").catch(() => null);
@@ -12,11 +13,22 @@ export async function generateMetadata() {
   };
 }
 
-
 export default async function Page() {
   const [blogs, testimonials] = await Promise.all([
     getBlogs().catch(() => []),
     getTestimonials().catch(() => [])
   ]);
-  return <Blogs initialBlogs={blogs} initialTestimonials={testimonials} />;
+
+  const firstBlogImage = blogs?.[0]?.image;
+  const lcpPreloadUrl = firstBlogImage ? getOptimizedCloudinaryUrl(firstBlogImage, { width: 400, quality: "auto:eco", format: "auto", crop: "fill" }) : null;
+
+  return (
+    <>
+      {lcpPreloadUrl && (
+        <link rel="preload" as="image" href={lcpPreloadUrl} fetchPriority="high" />
+      )}
+      <Blogs initialBlogs={blogs} initialTestimonials={testimonials} />
+    </>
+  );
 }
+

@@ -63,7 +63,7 @@ const Hero = ({ data }) => {
                                         {desktopAvatars.map((avatar, index) => (
                                              <div
                                                   key={index}
-                                                  className={`relative w-9 md:w-13 h-9 md:h-13 rounded-full border-2 border-[#0071E5] overflow-hidden bg-white ${index !== 0 ? "-ml-3" : ""}`}
+                                                  className={`relative w-9 md:w-13 h-9 md:h-13 rounded-full border-2 border-primary overflow-hidden bg-white ${index !== 0 ? "-ml-3" : ""}`}
                                                   style={{ zIndex: desktopAvatars.length + index }}
                                              >
                                                   <img
@@ -159,7 +159,7 @@ const Hero = ({ data }) => {
                               {mobileAvatars.map((avatar, index) => (
                                    <div
                                         key={index}
-                                        className={`relative w-9 md:w-13 h-9 md:h-13 rounded-full border-2 border-[#0071E5] overflow-hidden bg-white ${index !== 0 ? "-ml-3" : ""}`}
+                                        className={`relative w-9 md:w-13 h-9 md:h-13 rounded-full border-2 border-primary overflow-hidden bg-white ${index !== 0 ? "-ml-3" : ""}`}
                                         style={{ zIndex: mobileAvatars.length + index }}
                                    >
                                         <img

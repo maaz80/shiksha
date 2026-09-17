@@ -14,7 +14,6 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-plus-jakarta-sans',
-  preload: false,
 });
 
 const poiretOne = Poiret_One({
@@ -22,7 +21,6 @@ const poiretOne = Poiret_One({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-poiret-one',
-  preload: false,
 });
 
 export const metadata = {
@@ -74,9 +72,9 @@ export default async function RootLayout({ children }) {
     <html lang="en" className={`h-full antialiased ${openSans.variable} ${plusJakartaSans.variable} ${poiretOne.variable}`}>
       <head>
         {/* Preconnect & DNS prefetch for critical API and asset origins to eliminate network latency */}
-        <link rel="preconnect" href="https://api.shikshadesign.com" />
+        <link rel="preconnect" href="https://api.shikshadesign.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://api.shikshadesign.com" />
-        <link rel="preconnect" href="https://res.cloudinary.com" />
+        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
         {/* Mobile hero LCP preload for instant FCP/LCP boost */}
         <link rel="preload" as="image" href="/images/shiksha-design-hero-mobile.webp" media="(max-width: 768px)" fetchPriority="high" />

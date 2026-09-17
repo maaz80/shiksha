@@ -16,7 +16,8 @@ import FAQ from '../components/FAQ';
 const Blogs = ({ initialBlogs = [], initialTestimonials = [] }) => {
      const { blogs } = useBlogs();
      const { faqData } = useFaq();
-     const blog = (blogs && blogs.length > 0 ? blogs : initialBlogs)?.[0];
+     const blogList = initialBlogs && initialBlogs.length > 0 ? initialBlogs : blogs;
+     const blog = blogList?.[0];
      const [blogPageData, setBlogPageData] = useState(null);
      const [homeData, setHomeData] = useState(null);
 

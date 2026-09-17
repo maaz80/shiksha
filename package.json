@@ -24,10 +24,10 @@
     "tailwindcss": "^4"
   },
   "browserslist": [
-    "chrome >= 100",
-    "edge >= 100",
-    "firefox >= 100",
+    "chrome >= 105",
+    "edge >= 105",
+    "firefox >= 105",
     "safari >= 15.4",
-    "not dead"
+    "ios_saf >= 15.4"
   ]
 }
