@@ -9,7 +9,7 @@ import { getHomeData } from "../utils/homeService";
 import RelatedBlogs from '../components/RelatedBlogs';
 import FAQ from '../components/FAQ';
 
-const AllCourses = () => {
+const AllCourses = ({ initialCourses = [] }) => {
      const { faqData } = useFaq();
      const [coursePageData, setCoursePageData] = useState(null);
      const [homeData, setHomeData] = useState(null);
@@ -46,7 +46,7 @@ const AllCourses = () => {
           <main className="">
                <Breadcrumb />
                <div className='pt-5 max-w-80 sm:max-w-150 lg:max-w-200 xl:max-w-7xl mx-auto'>
-                    <Courses title={coursePageData?.coursestitle} />
+                    <Courses title={coursePageData?.coursestitle} initialCourses={initialCourses} />
                </div>
 
                <div className='max-w-330 mx-auto space-y-10 min-h-245'>

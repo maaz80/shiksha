@@ -44,9 +44,15 @@ const CourseCardSkeleton = () => {
      );
 };
 
-const Courses = ({ title }) => {
+const Courses = ({ title, initialCourses = [] }) => {
      const [currentPage, setCurrentPage] = useState(1);
-     const { courses, loading } = useCourses();
+     const { courses: contextCourses, loading: contextLoading } = useCourses();
+
+     const courses = (Array.isArray(contextCourses) && contextCourses.length > 0)
+          ? contextCourses
+          : (Array.isArray(initialCourses) ? initialCourses : []);
+
+     const loading = contextLoading && courses.length === 0;
 
      const totalPages = Math.max(1, Math.ceil(courses.length / ITEMS_PER_PAGE));
 
