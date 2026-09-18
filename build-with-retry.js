@@ -26,6 +26,23 @@ async function buildWithRetry() {
   console.log('🚀 Starting Automated Build Flow (with Auto-Retry)');
   console.log('====================================================');
 
+  // Fix: Permanently remove legacy polyfills that cause Lighthouse warnings
+  try {
+    const fs = await import('fs');
+    const polyfillPaths = [
+      path.join(__dirname, 'node_modules', 'next', 'dist', 'build', 'polyfills', 'polyfill-module.js'),
+      path.join(__dirname, 'node_modules', 'next', 'dist', 'build', 'polyfills', 'polyfill-nomodule.js')
+    ];
+    for (const p of polyfillPaths) {
+      if (fs.existsSync(p)) {
+        fs.writeFileSync(p, '');
+      }
+    }
+    console.log('✅ Next.js legacy polyfills eliminated.');
+  } catch (err) {
+    console.error('⚠️ Could not remove polyfills:', err);
+  }
+
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     console.log(`\n📌 Build Attempt ${attempt} of ${MAX_RETRIES}`);
 

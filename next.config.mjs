@@ -8,10 +8,6 @@ const nextConfig = {
   output: 'export',
   turbopack: {
     root: __dirname,
-    resolveAlias: {
-      'next/dist/build/polyfills/polyfill-module': path.resolve(__dirname, 'empty-polyfill.js'),
-      'next/dist/build/polyfills/polyfill-nomodule': path.resolve(__dirname, 'empty-polyfill.js'),
-    },
   },
   experimental: {
     workerThreads: false,
@@ -32,14 +28,7 @@ const nextConfig = {
       removeConsole: { exclude: ['error'] },
     }),
   },
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      const emptyPolyfillPath = path.resolve(__dirname, 'empty-polyfill.js');
-      config.resolve.alias['next/dist/build/polyfills/polyfill-module'] = emptyPolyfillPath;
-      config.resolve.alias['next/dist/build/polyfills/polyfill-module$'] = emptyPolyfillPath;
-      config.resolve.alias['next/dist/build/polyfills/polyfill-nomodule'] = emptyPolyfillPath;
-      config.resolve.alias['next/dist/build/polyfills/polyfill-nomodule$'] = emptyPolyfillPath;
-    }
+  webpack: (config) => {
     return config;
   },
 };

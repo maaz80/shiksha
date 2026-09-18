@@ -7,12 +7,14 @@ import { getLocations } from "../utils/locations";
 const openSans = Open_Sans({
   subsets: ['latin'],
   display: 'swap',
+  preload: false,
   variable: '--font-open-sans',
 });
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
   display: 'swap',
+  preload: false,
   variable: '--font-plus-jakarta-sans',
 });
 
@@ -20,6 +22,7 @@ const poiretOne = Poiret_One({
   weight: '400',
   subsets: ['latin'],
   display: 'swap',
+  preload: false,
   variable: '--font-poiret-one',
 });
 
