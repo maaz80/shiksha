@@ -29,6 +29,7 @@ const nextConfig = {
     // Target modern ES2022 — no polyfills for .at(), .flat(), Object.hasOwn(), etc.
     ...(process.env.NODE_ENV === 'production' && {
       reactRemoveProperties: true,
+      removeConsole: { exclude: ['error'] },
     }),
   },
   webpack: (config, { isServer }) => {

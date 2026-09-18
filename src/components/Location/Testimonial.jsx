@@ -102,7 +102,8 @@ const Testimonials = ({ initialTestimonials = [] }) => {
           const visibleCount = Math.max(1, Math.floor(sliderWidth / totalCardW));
           visibleCardsRef.current = visibleCount;
 
-          setMaxIndex(Math.max(0, testimonialsList.length - visibleCount));
+          const newMax = Math.max(0, testimonialsList.length - visibleCount);
+          setMaxIndex(prev => (prev !== newMax ? newMax : prev));
      };
 
      // ✅ Fetch all reviews dynamically

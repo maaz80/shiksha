@@ -71,12 +71,12 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en" className={`h-full antialiased ${openSans.variable} ${plusJakartaSans.variable} ${poiretOne.variable}`}>
       <head>
-        {/* Preconnect & DNS prefetch for critical API and asset origins to eliminate network latency */}
+        {/* Preconnect for primary API and DNS prefetch for Cloudinary */}
         <link rel="preconnect" href="https://api.shikshadesign.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://api.shikshadesign.com" />
-        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
-        {/* Mobile hero LCP preload for instant FCP/LCP boost */}
+        {/* Desktop & Mobile hero LCP preload for FCP/LCP boost */}
+        <link rel="preload" as="image" href="/images/shiksha-design-hero.webp" media="(min-width: 769px)" fetchPriority="high" />
         <link rel="preload" as="image" href="/images/shiksha-design-hero-mobile.webp" media="(max-width: 768px)" fetchPriority="high" />
         <script
           type="application/ld+json"

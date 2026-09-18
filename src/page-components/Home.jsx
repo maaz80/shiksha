@@ -16,10 +16,10 @@ const Testimonials = dynamic(() => import('../components/Home/Testimonials'))
 const RelatedBlogs = dynamic(() => import('../components/RelatedBlogs'))
 const FAQ = dynamic(() => import('../components/FAQ'))
 
-const Home = ({ initialBlogs = [], initialTestimonials = [], initialCompanies = null }) => {
+const Home = ({ initialBlogs = [], initialTestimonials = [], initialCompanies = null, initialHomeData = null }) => {
      const { faqData } = useFaq();
-     const [homeData, setHomeData] = useState(null);
-     const [loadingHome, setLoadingHome] = useState(true);
+     const [homeData, setHomeData] = useState(initialHomeData);
+     const [loadingHome, setLoadingHome] = useState(!initialHomeData);
      const [homeError, setHomeError] = useState(null);
 
      useEffect(() => {

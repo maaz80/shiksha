@@ -5,15 +5,7 @@ import { getBlogs } from "../utils/blogService";
 
 const BlogContext = createContext({ blogs: [], loading: false, getBlogBySlug: () => null });
 
-let preloadedBlogs = [];
-try {
-     const initialData = await getBlogs();
-     if (Array.isArray(initialData) && initialData.length > 0) {
-          preloadedBlogs = initialData;
-     }
-} catch (e) {
-     // Preload fallback if offline during build
-}
+const preloadedBlogs = [];
 
 export const BlogProvider = ({ children }) => {
      const [blogs, setBlogs] = useState(preloadedBlogs);

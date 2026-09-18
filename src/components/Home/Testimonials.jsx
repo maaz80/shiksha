@@ -41,15 +41,7 @@ const DEFAULT_TESTIMONIALS = [
      }
 ];
 
-let preloadedTestimonials = [];
-try {
-     const initialData = await getTestimonials();
-     if (Array.isArray(initialData) && initialData.length > 0) {
-          preloadedTestimonials = initialData;
-     }
-} catch (e) {
-     // Preload fallback if offline during build
-}
+const preloadedTestimonials = [];
 
 const Testimonials = ({ data, initialTestimonials = [] }) => {
      const getInitials = (name) => {
@@ -101,7 +93,8 @@ const Testimonials = ({ data, initialTestimonials = [] }) => {
           visibleCardsRef.current = visibleCount;
 
           const total = testimonialsList.length;
-          setMaxIndex(Math.max(0, total - visibleCount));
+          const newMax = Math.max(0, total - visibleCount);
+          setMaxIndex(prev => (prev !== newMax ? newMax : prev));
      };
 
      useEffect(() => {

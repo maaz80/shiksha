@@ -5,15 +5,7 @@ import { getCourses } from "../utils/courseService";
 
 const CourseContext = createContext({ courses: [], loading: false });
 
-let preloadedCourses = [];
-try {
-     const initialData = await getCourses();
-     if (Array.isArray(initialData) && initialData.length > 0) {
-          preloadedCourses = initialData;
-     }
-} catch (e) {
-     // Preload fallback if offline during build
-}
+const preloadedCourses = [];
 
 export const CourseProvider = ({ children }) => {
      const [courses, setCourses] = useState(preloadedCourses);

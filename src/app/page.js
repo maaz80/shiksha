@@ -3,6 +3,7 @@ import { getBlogs } from "../utils/blogService";
 import { getTestimonials } from "../utils/testimonialService";
 import { getCompanies } from "../utils/companyService";
 import { getLocations } from "../utils/locations";
+import { getHomeData } from "../utils/homeService";
 import { getPageSEO } from "../utils/seoService";
 
 export async function generateMetadata() {
@@ -15,11 +16,12 @@ export async function generateMetadata() {
 }
 
 export default async function Page() {
-  const [blogs, testimonials, companies, locations] = await Promise.all([
+  const [blogs, testimonials, companies, locations, homeData] = await Promise.all([
     getBlogs().catch(() => []),
     getTestimonials().catch(() => []),
     getCompanies().catch(() => null),
-    getLocations().catch(() => [])
+    getLocations().catch(() => []),
+    getHomeData().catch(() => null)
   ]);
 
   return (
@@ -28,6 +30,7 @@ export default async function Page() {
       initialTestimonials={testimonials}
       initialCompanies={companies}
       initialLocations={locations}
+      initialHomeData={homeData}
     />
   );
 }
