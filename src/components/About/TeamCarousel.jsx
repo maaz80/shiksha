@@ -84,7 +84,7 @@ export default function TeamCarousel({ data: teamData }) {
                     className="mb-8 md:mb-16"
                />
 
-               <div className="relative max-w-[340px] md:max-w-5xl mx-auto flex items-center justify-center">
+               <div className="relative max-w-85 md:max-w-5xl mx-auto flex items-center justify-center">
 
                     {/* Left Arrow */}
                     {members.length > 1 && (
