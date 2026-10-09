@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, Grip, Menu, Search, X, LogOut, Phone as FaPhoneAlt, Mail as FaEnvelope } from 'lucide-react';
+import { ChevronDown, Grip, Menu, Search, X, LogOut, Phone as FaPhoneAlt, Mail as FaEnvelope, ChevronRight } from 'lucide-react';
 import logo from '../assets//shiksha-logo.webp';
 import CourseImage from '../assets/course-card.webp';
 import { useEffect, useState, useRef } from 'react';
@@ -321,7 +321,7 @@ export default function Navbar({ isModal, setIsModal, setIsLogin, isLogin, onCou
                                                   setIsModal(true);
                                              }} className="flex justify-between items-center cursor-pointer font-semibold">
                                                   {buttonName}
-                                                  <span>›</span>
+                                                  <span className='text-2xl'><ChevronRight/></span>
                                              </div>
 
                                              {((moreItems?.dropdown_items && moreItems.dropdown_items.length > 0) ? moreItems.dropdown_items : fallbackMoreItems.dropdown_items).map((cat, catIdx) => (

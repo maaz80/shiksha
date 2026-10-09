@@ -2,11 +2,11 @@
 
 import React from "react";
 import { TrendingUp, Clock, RefreshCw, ShieldCheck, Coins, BarChart3 } from "lucide-react";
+import CourseSectionHeading from "./CourseSectionHeading";
 
 export default function CourseBenefits({ data }) {
      const courseName = data?.title || "UI/UX Design";
      
-     const tag = data?.benefitsTag?.trim() || `WHY ${courseName.toUpperCase()}?`;
      const title = data?.benefitsTitle?.trim() || `Benefits of ${courseName}`;
      const subtitle = data?.benefitsSubtitle?.trim() || `${courseName} helps learners and businesses streamline workflows, improve efficiency, and drive smarter decisions.`;
 
@@ -58,19 +58,10 @@ export default function CourseBenefits({ data }) {
           <section className="w-full py-12 sm:py-16 md:py-20 bg-primary-bg/30 font-open-sans border-b border-gray-100 relative z-1">
                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0">
                     
-                    <div className="text-center space-y-2 max-w-3xl mx-auto mb-10 md:mb-14">
-                         <div>
-                              <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-primary/10 text-[#0050B3] border border-primary/20 mb-1">
-                                   {tag}
-                              </span>
-                         </div>
-                         <h2 className="text-[24px] sm:text-[36px] md:text-[40px] lg:text-[48px] font-bold leading-tight text-secondary">
-                              {displayTitle}
-                         </h2>
-                         <p className="text-sm sm:text-base font-normal text-gray-600 max-w-2xl mx-auto leading-relaxed mt-2">
-                              {subtitle}
-                         </p>
-                    </div>
+                    <CourseSectionHeading
+                         title={displayTitle}
+                         subtitle={subtitle}
+                    />
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                          {cardsList.map((item, idx) => {
@@ -79,7 +70,7 @@ export default function CourseBenefits({ data }) {
                               return (
                                    <div
                                         key={idx}
-                                        className="group bg-white rounded-xl p-6 sm:p-7 flex flex-col justify-between text-left transition-all duration-300 shadow-2xs hover:shadow-md hover:-translate-y-1 border border-gray-200/90 hover:border-primary/40"
+                                        className="group bg-white rounded-[20px] p-6 sm:p-7 flex flex-col justify-between text-left transition-all duration-300 shadow-2xs hover:shadow-md hover:-translate-y-1 border border-gray-200/90 hover:border-primary/40"
                                    >
                                         <div>
                                              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 shrink-0 transition-all duration-300 bg-primary/10 border border-primary/20 text-primary group-hover:bg-primary group-hover:text-white">

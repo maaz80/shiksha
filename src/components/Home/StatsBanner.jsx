@@ -7,7 +7,7 @@ import mapMobile from "../../assets/map-mobile.webp";
 
 
 
-const StatsBanner = ({data}) => {
+const StatsBanner = ({ data }) => {
      // Default static stats with icons
      const defaultStats = [
           {
@@ -76,7 +76,7 @@ const StatsBanner = ({data}) => {
                                         <span className="text-[24px] md:text-xl font-medium md:font-semibold leading-tight">
                                              {item.value}
                                         </span>
-                                        <span className="text-[16px] md:text-sm text-white/80">
+                                        <span className="para text-white/95">
                                              {item.label}
                                         </span>
                                    </div>

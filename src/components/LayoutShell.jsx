@@ -15,11 +15,13 @@ const AuthModal = lazy(() => import('./AuthModal'));
 const LeadModal = lazy(() => import('./LeadModal'));
 const Chatbot = lazy(() => import('./Chatbot'));
 const CookieBanner = lazy(() => import('./CookieBanner'));
+import WhatsAppButton from './WhatsAppButton';
 
 export default function LayoutShell({ children, initialLocations = [] }) {
   usePageSEO();
   const pathname = usePathname();
   const isDashboardPage = pathname === "/dashboard" || pathname?.startsWith("/dashboard");
+  const isImmersivePage = pathname === "/coming-soon";
   const [isModal, setIsModal] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [authRefresh, setAuthRefresh] = useState(0);
@@ -28,14 +30,13 @@ export default function LayoutShell({ children, initialLocations = [] }) {
   const hoverTimeoutRef = useRef(null);
 
   const { isChatbotOpen } = useChat();
+  const shouldRenderChatbot = isChatbotOpen || shouldLoadChatbot;
+  const shouldRenderModals = isChatbotOpen || shouldLoadModals;
 
   // Defer Chatbot & Overlay JS bundles until user opens chat or after 3.5s idle time
   useEffect(() => {
-    if (isChatbotOpen) {
-      setShouldLoadChatbot(true);
-      setShouldLoadModals(true);
-      return;
-    }
+    if (isChatbotOpen) return;
+
     const timer = setTimeout(() => {
       setShouldLoadChatbot(true);
       setShouldLoadModals(true);
@@ -79,7 +80,7 @@ export default function LayoutShell({ children, initialLocations = [] }) {
   };
 
   return (
-    <div className={`open-sans bg-primary-bg min-h-screen flex flex-col ${isDashboardPage ? "pt-15 md:pt-16 lg:pt-20 pb-0" : "pt-22 md:pt-24 lg:pt-28 pb-2 md:pb-14"}`}>
+    <div className={`open-sans bg-primary-bg min-h-screen flex flex-col ${isDashboardPage ? "pt-15 md:pt-16 lg:pt-20 pb-0" : isImmersivePage ? "pt-20 md:pt-24 pb-2 md:pb-10" : "pt-22 md:pt-24 lg:pt-28 pb-2 md:pb-14"}`}>
       {isModal && (
         <Suspense fallback={null}>
           <ProgramModal isModal={isModal} setIsModal={setIsModal} onMouseEnter={clearCloseTimeout} onMouseLeave={startCloseTimeout} />
@@ -92,25 +93,26 @@ export default function LayoutShell({ children, initialLocations = [] }) {
         </Suspense>
       )}
 
-      {shouldLoadModals && (
+      {shouldRenderModals && (
         <Suspense fallback={null}>
           <LeadModal />
         </Suspense>
       )}
 
-      {shouldLoadChatbot && (
+      {shouldRenderChatbot && (
         <Suspense fallback={null}>
           <Chatbot />
         </Suspense>
       )}
 
-      {shouldLoadModals && (
+      {shouldRenderModals && (
         <Suspense fallback={null}>
           <CookieBanner />
         </Suspense>
       )}
 
-      {!isDashboardPage && <QuickAccessBar />}
+      {!isDashboardPage && !isImmersivePage && <QuickAccessBar />}
+      {!isDashboardPage && !isImmersivePage && <WhatsAppButton />}
 
       <Navbar key={authRefresh} isModal={isModal} setIsModal={setIsModal} isLogin={isLogin} setIsLogin={setIsLogin} onCoursesMouseEnter={clearCloseTimeout} onCoursesMouseLeave={startCloseTimeout} />
       <Toast />

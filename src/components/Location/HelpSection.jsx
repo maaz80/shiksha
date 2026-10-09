@@ -1,5 +1,6 @@
 import Image from "next/image";
 import LocationBg from "../../assets/location-bg.webp";
+import CourseSectionHeading from "../CourseDetails/CourseSectionHeading";
 
 const HelpSection = ({ location }) => {
      const help = location?.page?.help;
@@ -22,19 +23,20 @@ const HelpSection = ({ location }) => {
                 <div className="relative max-w-310 mx-auto plus-jakarta-sans text-dark-black">
 
                      {/* Heading */}
-                     <h2 className="plus-jakarta-sans text-3xl md:text-5xl xl:text-[48px] font-bold leading-10 md:leading-15 max-w-300 text-primary text-center">
-                          {help?.title || "How we can help you for Web Design Service in Delhi"}
-                     </h2>
-
-                     {/* Description */}
-                     <p className="mt-6 text-sm md:text-base xl:text-[16px] text-dark-black max-w-300 leading-7 md:leading-7">
-                          {help?.description ||
+                     <CourseSectionHeading
+                          variant="testimonial"
+                          title={help?.title || "How we can help you for Web Design Service in Delhi"}
+                          subtitle={help?.description ||
                                `We know [City]'s business landscape. Whether you're a [local industry example]
                           in the [City] city centre or a growing startup on the outskirts, Keeya Design
                           builds websites that speak directly to your local audience and rank for the
                           searches that matter. Our team works with businesses throughout [City] and the
                           surrounding area — understanding what local customers expect and what makes them convert.`}
-                     </p>
+                          align="center"
+                          className="mb-8 md:mb-12"
+                          headingClassName="max-w-300 mx-auto text-3xl md:text-5xl xl:text-[48px] font-bold leading-10 md:leading-15"
+                          subtitleClassName="mt-4 md:mt-6 text-sm md:text-base xl:text-[16px] text-dark-black max-w-300 leading-7 md:leading-7 mx-auto"
+                     />
 
                      {/* Cards */}
                      <div className="mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 plus-jakarta-sans">

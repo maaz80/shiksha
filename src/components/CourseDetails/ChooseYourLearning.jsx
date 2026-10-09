@@ -109,9 +109,9 @@ export default function ChooseYourLearning({ data }) {
      return (
           <section className="w-full py-12 sm:py-16 md:py-20 bg-secondary text-white font-open-sans relative z-1 overflow-hidden border-b border-gray-800">
                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 relative z-10">
-                    
+
                     {/* Header */}
-                    <div className="text-center space-y-2 max-w-3xl mx-auto mb-10 md:mb-14">
+                    <div className="text-center space-y-2 max-w-3xl mx-auto mb-6 md:mb-10">
                          <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-white/10 text-white border border-white/20 mb-1">
                               FLEXIBLE PATHWAYS
                          </span>
@@ -125,10 +125,10 @@ export default function ChooseYourLearning({ data }) {
 
                     {/* 3 Equal Height Cards Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
-                         
+
                          {/* Card 1: EMI OPTION */}
                          <div className="group bg-white text-secondary rounded-[20px] overflow-hidden border border-gray-200 shadow-md hover:shadow-xl flex flex-col h-full hover:-translate-y-1 transition-all duration-300 relative">
-                              
+
                               {/* Header */}
                               <div className="bg-primary-bg/80 p-5 sm:p-6 flex items-center justify-between border-b border-gray-200/80 min-h-22.5">
                                    <div className="flex items-center gap-3.5">
@@ -148,7 +148,7 @@ export default function ChooseYourLearning({ data }) {
 
                               {/* Card Body */}
                               <div className="p-6 flex-1 flex flex-col justify-between space-y-5 bg-white text-left">
-                                   
+
                                    {/* Callout Banner */}
                                    <div className="bg-primary-bg/50 border border-primary/20 rounded-xl p-3.5 flex items-center gap-3">
                                         <div className="w-8 h-8 rounded-lg bg-primary text-white font-bold text-xs flex items-center justify-center shrink-0">
@@ -189,11 +189,11 @@ export default function ChooseYourLearning({ data }) {
 
                          {/* Card 2: SCHOLARSHIP (Featured / Highlighted) */}
                          <div className="group bg-white text-secondary rounded-[20px] overflow-hidden border-2 border-primary/60 shadow-xl flex flex-col h-full hover:-translate-y-1 transition-all duration-300 relative">
-                              
+
                               {/* Featured Badge */}
                               <div className="absolute top-3 right-4 z-10">
                                    <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-primary text-white shadow-xs">
-                                   MOST POPULAR
+                                        MOST POPULAR
                                    </span>
                               </div>
 
@@ -216,7 +216,7 @@ export default function ChooseYourLearning({ data }) {
 
                               {/* Card Body */}
                               <div className="p-6 flex-1 flex flex-col justify-between space-y-5 bg-white text-left">
-                                   
+
                                    {/* Callout Banner */}
                                    <div className="bg-primary/10 border border-primary/30 rounded-xl p-3.5 flex items-center gap-3">
                                         <div className="w-8 h-8 rounded-lg bg-primary text-white font-bold text-xs flex items-center justify-center shrink-0">
@@ -257,7 +257,7 @@ export default function ChooseYourLearning({ data }) {
 
                          {/* Card 3: COMING BATCHES */}
                          <div className="group bg-white text-secondary rounded-[20px] overflow-hidden border border-gray-200 shadow-md hover:shadow-xl flex flex-col h-full hover:-translate-y-1 transition-all duration-300 relative">
-                              
+
                               {/* Header */}
                               <div className="bg-primary-bg/80 p-5 sm:p-6 flex items-center justify-between border-b border-gray-200/80 min-h-22.5">
                                    <div className="flex items-center gap-3.5">
@@ -277,7 +277,7 @@ export default function ChooseYourLearning({ data }) {
 
                               {/* Card Body */}
                               <div className="p-6 flex-1 flex flex-col justify-between space-y-4 bg-white text-left">
-                                   
+
                                    {/* Batches List */}
                                    <div className="space-y-3 flex-1 flex flex-col justify-center">
                                         {batchItems.map((batch, idx) => (

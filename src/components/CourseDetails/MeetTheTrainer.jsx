@@ -2,6 +2,7 @@
 
 import { Star, ArrowRight } from "lucide-react";
 import { getOptimizedCloudinaryUrl } from "../CloudinaryImage";
+import CourseSectionHeading from "./CourseSectionHeading";
 
 const FaLinkedinIn = ({ size = 14, className = "" }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
@@ -53,17 +54,11 @@ export default function MeetTheTrainer({ data }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         
         {/* Section Header */}
-        <div className="text-center space-y-2 max-w-2xl mx-auto mb-10 md:mb-14">
-          <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-primary/10 text-[#0050B3] border border-primary/20 mb-1">
-            LEARN FROM INDUSTRY LEADERS
-          </span>
-          <h2 className="text-[24px] sm:text-[36px] md:text-[40px] lg:text-[48px] font-bold leading-tight text-secondary">
-            {title}
-          </h2>
-          <p className="text-sm sm:text-base font-normal text-gray-600 leading-relaxed mt-2">
-            {subtitle}
-          </p>
-        </div>
+        <CourseSectionHeading
+          title={title}
+          highlightText={data?.trainers?.highlightText?.trim() || (title.toLowerCase().includes("trainers") ? "Trainers" : title.toLowerCase().includes("trainer") ? "Trainer" : undefined)}
+          subtitle={subtitle}
+        />
 
         {/* Dynamic Trainers Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">

@@ -303,6 +303,7 @@ export default function Footer({ initialLocations = [] }) {
                                              { title: "Home", to: "/" },
                                              { title: "Blogs", to: "/blog" },
                                              { title: "Courses", to: "/courses" },
+                                             { to: '/coming-soon', title: 'Upcoming Cohorts' },
                                              { to: '/about-us', title: 'About us' },
                                              { to: '/disclaimer', title: 'Disclaimer' },
                                              { to: '/terms-and-conditions-enrolment', title: 'Terms & Conditions' },

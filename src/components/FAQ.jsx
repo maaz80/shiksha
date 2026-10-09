@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
+import CourseSectionHeading from "./CourseDetails/CourseSectionHeading";
 
 const defaultFaqData = [
      {
@@ -18,7 +19,13 @@ const defaultFaqData = [
      },
 ];
 
-export default function FAQ({ faqData, title }) {
+export default function FAQ({
+     faqData,
+     title,
+     subtitle,
+     highlightText,
+     align = "center"
+}) {
      const [activeIndex, setActiveIndex] = useState(0);
      const [faqs, setFaqs] = useState(defaultFaqData);
 
@@ -34,12 +41,33 @@ export default function FAQ({ faqData, title }) {
           }
      }, [faqData]);
 
+     const rawTitle = title || faqData?.title;
+     const displayTitle = rawTitle ? rawTitle : "Frequently Asked Questions";
+
+     let autoHighlight = highlightText;
+     if (!autoHighlight) {
+          if (displayTitle.toLowerCase().includes("questions")) {
+               autoHighlight = "Questions";
+          } else if (displayTitle.toLowerCase().includes("faqs")) {
+               autoHighlight = "FAQs";
+          } else if (displayTitle.toLowerCase().includes("faq")) {
+               autoHighlight = "FAQ";
+          } else {
+               autoHighlight = displayTitle.split(" ").pop();
+          }
+     }
+
+     const displaySubtitle = subtitle || faqData?.subtitle || "Have questions? Everything you need to know about the course and learning journey.";
+
      return (
           <div id="faqs" className="px-3 pb-6 h-auto w-full">
-               {/* Heading */}
-               <h2 className="text-[24px] xl:text-[32px] font-bold text-primary mb-5">
-                    {title || faqData?.title || "FAQ"}
-               </h2>
+               <CourseSectionHeading
+                    variant="testimonial"
+                    title={displayTitle}
+                    highlightText={autoHighlight}
+                    subtitle={displaySubtitle}
+                    align={align}
+               />
 
                {/* List */}
                <div className="divide-y divide-gray-200">
@@ -56,7 +84,7 @@ export default function FAQ({ faqData, title }) {
                                         className="w-full flex items-center justify-between text-left"
                                    >
                                         <span
-                                             className={`text-[16px] xl:text-[18px] cursor-pointer md:text-[18px] transition-all duration-500 ease-in-out hover:text-orange ${isOpen ? "text-orange font-medium" : "text-secondary"}`}
+                                             className={`text-[18px] xl:text-[22px] cursor-pointer md:text-[18px] transition-all duration-500 ease-in-out hover:text-orange ${isOpen ? "text-orange font-medium" : "text-secondary"}`}
                                         >
                                              {item.question || item.ques}
                                         </span>
@@ -71,7 +99,7 @@ export default function FAQ({ faqData, title }) {
                                    <div
                                         className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-200 opacity-100 mt-3" : "max-h-0 opacity-0"}`}
                                    >
-                                        <p className="text-[14px] xl:text-[16px] text-secondary leading-6 pr-10">
+                                        <p className="para text-secondary  pr-10">
                                              {item.answer || item.ans}
                                         </p>
                                    </div>

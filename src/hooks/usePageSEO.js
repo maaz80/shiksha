@@ -54,6 +54,7 @@ const STATIC_PAGE_SEO_IDS = new Set([
      "careers",
      "career-details",
      "not-found",
+     "coming-soon",
      "search",
      "dashboard",
 ]);

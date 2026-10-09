@@ -3,7 +3,7 @@
 export default function CallCard({ title, subtitle, buttonText, bgImage, onButtonClick }) {
      return (
           <div
-               className="relative rounded-2xl overflow-hidden p-6 md:p-8 text-white bg-cover bg-center bg-no-repeat shadow-md flex flex-col justify-between min-h-55"
+               className="relative rounded-[20px] overflow-hidden p-6 md:p-8 text-white bg-cover bg-center bg-no-repeat shadow-md flex flex-col justify-between min-h-55"
                style={{
                     backgroundImage: bgImage ? `url(${bgImage})` : 'bg-primary'
                }}

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import CompanyIcon from '../../assets/company-template.webp';
 import { getCompanies } from '../../utils/companyService';
+import SectionHeading from '../SectionHeading';
 
 const buildPaddedList = (data) => {
      const logos = data?.images || [];
@@ -53,36 +54,21 @@ const Companies = ({ initialCompanies = null }) => {
      const rowWidths = ['w-full', 'w-[85%]', 'w-[70%]'];
 
      return (
-          <div className='mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10 pt-18 lg:pt-16 text-secondary'>
+          <div className='mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10 pt-6 lg:pt-16 text-secondary'>
 
-               {/* Heading */}
-               <h2 className="text-[24px] md:text-[48px] 2xl:text-[72px] leading-8 md:leading-15 2xl:leading-20 font-bold text-center w-[99%] md:w-[99%] mx-auto">
-                    <span className="relative inline-block text-orange">
-                         {startTitle}
-                         <svg
-                              className="absolute left-0 -bottom-2 lg:-bottom-6 w-full"
-                              viewBox="0 0 200 20"
-                              preserveAspectRatio="none"
-                         >
-                              <path
-                                   d="M5 20 Q100 3 195 5"
-                                   stroke="#F97316"
-                                   strokeWidth="4"
-                                   fill="none"
-                                   strokeLinecap="round"
-                              />
-                         </svg>
-                    </span>{' '}
-                    {endTitle}
-               </h2>
-
-               {/* Description */}
-               <p className='text-[14px] 2xl:text-[16px] leading-6 md:leading-7 text-center w-[99%] md:w-[60%] mx-auto mt-6'>
-                    {description}
-               </p>
+               {/* Heading & Subtitle */}
+               <SectionHeading
+                    variant="testimonial"
+                    midHeading={startTitle}
+                    endHeading={endTitle}
+                    subtitle={description}
+                    headingClassName="w-[99%] md:w-[99%]"
+                    subtitleClassName="w-[99%] md:w-[60%]"
+                    className="mb-0"
+               />
 
                {/* Reverse Pyramid Logos */}
-               <div className="mt-12 flex flex-col items-center gap-8 ">
+               <div className="mt-4 md:mt-12 flex flex-col items-center gap-8 ">
                     {rows.map((row, rowIndex) => (
                          <div
                               key={rowIndex}

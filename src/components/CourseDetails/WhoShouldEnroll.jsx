@@ -36,16 +36,16 @@ export default function WhoShouldEnroll({ data }) {
   return (
     <section className="w-full bg-secondary text-white font-open-sans relative z-1 py-12 sm:py-16 md:py-20 border-b border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
-        
+
         {/* Header */}
-        <div className="text-center space-y-2 max-w-2xl mx-auto mb-10 md:mb-14">
-          <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-white/10 text-white border border-white/20 mb-1">
+        <div className="text-center space-y-2 max-w-2xl mx-auto mb-6 md:mb-10">
+          {/* <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-white/10 text-white border border-white/20 mb-1">
             TARGET AUDIENCE
-          </span>
-          <h2 className="text-[24px] sm:text-[36px] md:text-[40px] lg:text-[48px] font-bold leading-tight text-white">
+          </span> */}
+          <h2 className="text-[31px] sm:text-[36px] md:text-[40px] lg:text-[48px] font-bold leading-tight text-white">
             {title}
           </h2>
-          <p className="text-sm sm:text-base font-normal text-gray-300 max-w-2xl mx-auto leading-relaxed mt-2">
+          <p className="para text-gray-300 max-w-2xl mx-auto mt-2">
             {subtitle}
           </p>
         </div>

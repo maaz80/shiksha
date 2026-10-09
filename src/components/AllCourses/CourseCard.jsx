@@ -25,7 +25,7 @@ const CourseCard = ({ course, isFirst = false }) => {
           >
 
                {/* LEFT IMAGE SECTION */}
-               <div className="relative w-full h-48 sm:h-auto sm:w-[50%] md:w-[39%] xl:w-[25%] aspect-video shrink-0 overflow-hidden">
+               <div className="relative w-full h-48 sm:h-auto sm:w-[50%] md:w-[39%] xl:w-[29%] aspect-video shrink-0 overflow-hidden">
 
                     <span className="absolute top-4 left-4 bg-orange text-white text-xs font-medium px-3 py-1 rounded-md z-10">
                          {course.category || "Development"}

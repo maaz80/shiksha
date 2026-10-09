@@ -22,6 +22,7 @@ export default function LeadModal() {
      const [email, setEmail] = useState("");
      const [phone, setPhone] = useState("");
      const [courseId, setCourseId] = useState("");
+     const [source, setSource] = useState("Website Auto Popup (10s)");
      const [error, setError] = useState("");
      const [loading, setLoading] = useState(false);
      const [success, setSuccess] = useState(false);
@@ -62,6 +63,8 @@ export default function LeadModal() {
           // Event listener for manual trigger ("Download Syllabus", "Enquire Now", etc.)
           const handleOpen = async (e) => {
                const cId = e?.detail?.courseId || window.__currentCourseId || "";
+               const src = e?.detail?.source || "Course Page Brochure Request";
+               setSource(src);
 
                // Check if user already filled form previously
                let savedUser = null;
@@ -82,7 +85,7 @@ export default function LeadModal() {
                                    email: savedUser.email,
                                    phone: savedUser.phone || "",
                                    courseId: cId,
-                                   source: "Course Page Brochure Request"
+                                   source: src
                               })
                          });
                          if (response.ok) {
@@ -120,6 +123,7 @@ export default function LeadModal() {
                          setError("");
                          setSuccess(false);
                          setIsOpen(true);
+                         setSource("Website Auto Popup (10s)");
                          setCourseId(window.__currentCourseId || "");
                          localStorage.setItem("leadModalLastShown", now.toString());
                     }
@@ -176,7 +180,7 @@ export default function LeadModal() {
                          email: email.trim(),
                          phone: cleanPhone,
                          courseId,
-                         source: "Course Page Brochure Request"
+                         source: source || "Website Auto Popup (10s)"
                     })
                });
 

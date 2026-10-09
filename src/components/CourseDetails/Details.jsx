@@ -1,32 +1,31 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { CheckCircle2, ChevronLeft, ChevronRight, Download, Share2, PhoneCall } from "lucide-react";
 import Form from "./Form";
 import CallCard from "./CallCard";
 import SkillsYouWillLearn from "./SkillsYouWillLearn";
 import WhoShouldEnroll from "./WhoShouldEnroll";
-import TrustedByLearners from "./TrustedByLearners";
+// import TrustedByLearners from "./TrustedByLearners";
 import MeetTheTrainer from "./MeetTheTrainer";
-import DemoClass from "./DemoClass";
+// import DemoClass from "./DemoClass";
 import CourseCertification from "./CourseCertification";
 import CourseBenefits from "./CourseBenefits";
 import JobRoles from "./JobRoles";
 import HiringPartners from "./HiringPartners";
 import ChooseYourLearning from "./ChooseYourLearning";
+import CourseSectionHeading from "./CourseSectionHeading";
 
 export default function Details({ data }) {
      const [sliderIndex, setSliderIndex] = useState(0);
      const [caseStudyIndex, setCaseStudyIndex] = useState(0);
      const [visibleCards, setVisibleCards] = useState(3);
-     const [shareUrl, setShareUrl] = useState("");
-
-     useEffect(() => {
-          if (typeof window !== "undefined") {
-               setShareUrl(window.location.href);
-          }
-     }, []);
+     const shareUrl = useSyncExternalStore(
+          () => () => {},
+          () => window.location.href,
+          () => ""
+     );
 
      useEffect(() => {
           const handleResize = () => {
@@ -290,18 +289,19 @@ export default function Details({ data }) {
      return (
           <div className="w-full space-y-0">
                {/* SECTION 1: Promo Content, Benefits, Social Share & Admission Form */}
-               <section className="bg-primary-bg/50 py-12 lg:py-16 w-full border-b border-gray-100">
+               <section className="bg-primary-bg/50 py-4 lg:py-10 w-full border-b border-gray-100">
                     <div className="max-w-7xl mx-auto px-4 sm:px-4 lg:px-0">
                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-14 items-start">
 
                               {/* LEFT COLUMN: Content */}
                               <div className="space-y-8 lg:col-span-2">
-                                   <div>
-                                        <h2 className="text-[28px] md:text-[40px] font-bold leading-tight text-secondary">
-                                             {displayTitle}
-                                        </h2>
-                                        <div className="w-20 h-1 bg-primary mt-4 rounded-full"></div>
-                                   </div>
+                                   <CourseSectionHeading
+                                        variant="testimonial"
+                                        title={displayTitle}
+                                        align="left"
+                                        className="mb-4 md:mb-6"
+                                        headingClassName="text-[28px] md:text-[40px] leading-tight"
+                                   />
 
                                    <div className="space-y-4 text-[16px] text-secondary/80 leading-relaxed">
                                         {paragraphs.map((p, idx) => (
@@ -408,19 +408,19 @@ export default function Details({ data }) {
                {/* SECTION 2: Syllabus Brochure Banner & Dynamic PDF Downloader */}
                <section className="bg-white py-10 w-full border-b border-gray-100">
                     <div className="max-w-350 mx-auto px-4 sm:px-6 lg:px-14">
-                         <div className="relative overflow-hidden bg-primary-bg/60 border border-primary/20 rounded-2xl p-6 md:p-10 flex flex-col md:flex-row justify-between items-center gap-6 shadow-sm">
-                              <div className="flex-1 space-y-2 text-left">
-                                   <h2 className="text-[22px] md:text-[26px] font-bold text-secondary leading-tight">
+                         <div className="relative overflow-hidden bg-primary-bg/60 border border-primary/20 rounded-[20px] p-6 md:p-10 flex flex-col md:flex-row justify-between items-center gap-6 shadow-sm">
+                              <div className="w-full flex-1 space-y-2 text-left">
+                                   <h2 className="text-[24px] md:text-[26px] font-bold text-secondary leading-tight">
                                         {data?.brochureTitle || "Comprehensive Syllabus for UI UX Design Training"}
                                    </h2>
-                                   <p className="text-[14px] md:text-[15px] text-gray-600 leading-relaxed max-w-2xl">
+                                   <p className="para text-gray-600 max-w-2xl">
                                         {data?.brochureSubtext || "Explore our detailed course syllabus and module breakdown. Download the full brochure PDF now."}
                                    </p>
-                                   <p className="text-sm text-secondary font-medium pt-1">
+                                   <p className="para text-secondary font-medium pt-1">
                                         Get in touch: <span className="font-bold text-primary">{data?.brochurePhones || "+91 9911782350 or +91 9811818122"}</span>
                                    </p>
                               </div>
-                              <div className="shrink-0 flex items-center gap-3">
+                              <div className="w-full md:w-auto shrink-0 flex items-center gap-3">
                                    <button
                                         onClick={() => {
                                              if (typeof window !== "undefined") {
@@ -431,7 +431,7 @@ export default function Details({ data }) {
                                                   );
                                              }
                                         }}
-                                        className="btn-action-primary"
+                                        className="btn-action-primary w-full md:w-auto"
                                    >
                                         Get Brochure
                                    </button>
@@ -447,13 +447,13 @@ export default function Details({ data }) {
                <WhoShouldEnroll data={data} />
 
                {/* 5.5: Trusted By Learners */}
-               <TrustedByLearners data={data} />
+               {/* <TrustedByLearners data={data} /> */}
 
                {/* 5.6: Meet The Trainer */}
                <MeetTheTrainer data={data} />
 
                {/* 5.7: Demo Class */}
-               <DemoClass data={data} />
+               {/* <DemoClass data={data} /> */}
 
                {/* 5.8: Course Certification */}
                <CourseCertification data={data} />
@@ -468,13 +468,13 @@ export default function Details({ data }) {
                <HiringPartners data={data} />
 
                {/* 5.12: Choose Your Learning */}
-               <ChooseYourLearning data={data} />
+               {/* <ChooseYourLearning data={data} /> */}
 
                {/* SECTION 3: Short-Term Courses Interactive Slider */}
-               <section className="bg-primary text-white py-12 md:py-16 w-full px-4 sm:px-6 lg:px-14">
+               {/* <section className="bg-primary text-white py-12 md:py-16 w-full px-4 sm:px-6 lg:px-14">
                     <div className="max-w-350 mx-auto grid grid-cols-1 lg:grid-cols-[1fr_450px] xl:grid-cols-[1fr_520px] gap-10 items-center">
 
-                              {/* Left Controls & Headings */}
+                              Left Controls & Headings
                               <div className="space-y-6 text-left">
                                    <div>
                                         <h2 className="text-[28px] md:text-[36px] font-bold leading-tight text-white">
@@ -514,7 +514,7 @@ export default function Details({ data }) {
                                    </div>
                               </div>
 
-                              {/* Right Active Card Display */}
+                              Right Active Card Display
                               <div className="w-full">
                                    <div className="bg-white text-secondary rounded-2xl p-6 shadow-xl border border-white/10 min-h-55 flex flex-col justify-between">
                                         <p className="text-gray-600 text-[14px] md:text-[15px] leading-relaxed mb-6">
@@ -543,19 +543,15 @@ export default function Details({ data }) {
                               </div>
 
                          </div>
-               </section>
+               </section> */}
 
                {/* SECTION 4: Student Case Studies Slider / Showcase Gallery */}
                <section className="bg-gray-50 py-12 md:py-16 w-full border-b border-gray-100">
                     <div className="max-w-350 mx-auto px-4 sm:px-6 lg:px-14 overflow-hidden">
-                         <div className="text-center space-y-2 mb-10">
-                              <h2 className="text-[28px] md:text-[36px] font-bold text-secondary">
-                                   {displayCaseStudiesTitle}
-                              </h2>
-                              <p className="text-gray-600 text-sm md:text-base max-w-xl mx-auto">
-                                   {data?.caseStudies?.description || "Explore real-world UX case studies and projects created by our students."}
-                              </p>
-                         </div>
+                    <CourseSectionHeading
+                         title={displayCaseStudiesTitle}
+                         subtitle={data?.caseStudies?.description || "Explore real-world UX case studies and projects created by our students."}
+                    />
 
                          {/* Responsive Carousel */}
                          <div className="overflow-hidden relative w-full px-1">
@@ -571,7 +567,7 @@ export default function Details({ data }) {
                                         >
                                              <Link
                                                   href={study.link || "#"}
-                                                  className="group block bg-white rounded-2xl overflow-hidden border border-gray-200 hover:border-primary hover:shadow-md transition-all duration-300 transform mb-1"
+                                                  className="group block bg-white rounded-[20px] overflow-hidden border border-gray-200 hover:border-primary hover:shadow-md transition-all duration-300 transform mb-1"
                                              >
                                                   <div className="aspect-4/3 bg-gray-100 overflow-hidden relative">
                                                        {study.image ? (
@@ -622,14 +618,11 @@ export default function Details({ data }) {
                {/* SECTION 5: Explore More Career Domains Grid */}
                <section className="relative py-6 md:py-10 w-full bg-primary-bg/30">
                     <div className="max-w-350 mx-auto px-4 sm:px-6 lg:px-14 relative z-10">
-                         <div className="text-left space-y-2 mb-10">
-                              <h2 className="text-[28px] md:text-[36px] font-bold text-secondary">
-                                   {displayCareerDomainsTitle}
-                              </h2>
-                              <p className="text-gray-600 text-sm md:text-base max-w-2xl">
-                                   {careerDomainsDescription}
-                              </p>
-                         </div>
+                         <CourseSectionHeading
+                              title={displayCareerDomainsTitle}
+                              subtitle={careerDomainsDescription}
+                              align="center"
+                         />
 
                          {/* Career Domains Flex Layout */}
                          <div className="flex flex-wrap gap-3 justify-start">
@@ -637,7 +630,7 @@ export default function Details({ data }) {
                                    <Link
                                         key={idx}
                                         href={item.link || "#"}
-                                        className="flex items-center gap-3 bg-white px-4 py-3 rounded-xl border border-gray-200 hover:shadow-md hover:border-primary transition-all duration-300 group cursor-pointer"
+                                        className="flex items-center gap-3 bg-white px-4 py-3 rounded-md border border-gray-200 hover:shadow-md hover:border-primary transition-all duration-300 group cursor-pointer"
                                         onMouseEnter={(e) => {
                                              if (item.color) e.currentTarget.style.borderColor = item.color;
                                         }}

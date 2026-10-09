@@ -1,15 +1,16 @@
 "use client";
 
 import Link from 'next/link';
-import { ChevronRight, Lock, Unlock, Calendar } from 'lucide-react';
+import { ChevronRight, Lock, Unlock } from 'lucide-react';
 import CloudinaryImage from './CloudinaryImage';
 import CourseImage from '../assets/course-card.webp';
 import { useUserAuth } from '../context/UserAuthContext';
 
 export default function CourseCard({ course, setIsModal = false, className = "" }) {
+     const { isLoggedIn, isCourseUnlocked } = useUserAuth();
+
      if (!course) return null;
 
-     const { isLoggedIn, isCourseUnlocked } = useUserAuth();
      const isUnlocked = isLoggedIn ? isCourseUnlocked(course) : false;
 
      // Flow Logic:
@@ -21,44 +22,57 @@ export default function CourseCard({ course, setIsModal = false, className = "" 
 
      const handleClick = () => {
           if (setIsModal) setIsModal(false);
+          if (typeof window !== "undefined") {
+               window.scrollTo({ top: 0, behavior: "auto" });
+          }
      };
+
+     const categoryName = typeof course?.category === "object"
+          ? course?.category?.name || "Program"
+          : course?.category || "Course";
+
+     // Promo description first paragraph as in CourseDetails/Details.jsx line 307
+     const rawPromoDesc = course?.promoDescription || course?.overview || course?.description || "The demand for skilled UI and UX designers has increased rapidly with the rise of digital experiences.\n\nAs a result, UI UX design courses are now more popular than ever. In Delhi, these programs are among the most in-demand career options in today's time. Our UI/UX design institute has been providing industry-oriented training in these courses since its inception.";
+     const firstParagraph = rawPromoDesc.split(/\n\n|\n/)[0]?.trim();
 
      return (
           <Link
                href={courseHref}
                onClick={handleClick}
-               className={`block ${className ? className : "w-70 md:w-51 2xl:w-70"} rounded-[20px] shadow-[0_0px_8px_0px] shadow-[#000000]/7 bg-white p-2 cursor-pointer group hover:shadow-md transition-all duration-300 relative flex flex-col justify-between`}
+               suppressHydrationWarning
+               className={`block ${className ? className : "w-full md:w-85 xl:w-107.5"} max-w-full md:max-w-121 h-104 md:h-115 bg-white rounded-[20px] border border-gray-200 shadow-sm p-3 text-secondary cursor-pointer group hover:shadow-md transition-all duration-300 flex flex-col justify-between`}
           >
+               {/* TOP SECTION: IMAGE + CONTENT */}
                <div>
-                    {/* Image section */}
-                    <div className="relative rounded-lg overflow-hidden h-28 w-full shrink-0">
+                    {/* IMAGE CONTAINER - Exactly matches RelatedBlogCard size */}
+                    <div className="relative rounded-lg overflow-hidden w-full shrink-0">
                          <CloudinaryImage
                               src={course?.image || CourseImage}
-                              sizes="(max-width: 768px) 100vw, 280px"
+                              sizes="(max-width: 768px) 344px, 400px"
                               alt={course?.alt || course?.title || "Course Cover Image"}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                              width="400"
+                              height="210"
+                              loading="lazy"
+                              decoding="async"
+                              className="w-full h-52.25 object-cover group-hover:scale-105 transition-transform duration-500"
                          />
 
-                         {/* Category Badge */}
-                         {course?.category && (
-                              <div className="absolute top-2 left-2 z-10">
-                                   <span className="bg-slate-900/80 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-xs">
-                                        {course.category}
-                                   </span>
-                              </div>
-                         )}
+                         {/* CATEGORY BADGE - Exactly matches RelatedBlogCard */}
+                         <span className="absolute top-3 left-3 bg-white text-gray-700 text-xs px-3 py-1 rounded-md shadow-sm z-10 font-medium">
+                              {categoryName}
+                         </span>
 
                          {/* Logged in Badge */}
                          {isLoggedIn && (
-                              <div className="absolute top-2 right-2 z-10">
+                              <div className="absolute top-3 right-3 z-10">
                                    {isUnlocked ? (
-                                        <span className="bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-xs flex items-center gap-1">
-                                             <Unlock size={11} />
+                                        <span className="bg-emerald-600 text-white text-xs font-bold px-2.5 py-1 rounded-md shadow-sm flex items-center gap-1">
+                                             <Unlock size={12} />
                                              Unlocked
                                         </span>
                                    ) : (
-                                        <span className="bg-amber-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-xs flex items-center gap-1">
-                                             <Lock size={11} />
+                                        <span className="bg-amber-600 text-white text-xs font-bold px-2.5 py-1 rounded-md shadow-sm flex items-center gap-1">
+                                             <Lock size={12} />
                                              Locked
                                         </span>
                                    )}
@@ -66,34 +80,30 @@ export default function CourseCard({ course, setIsModal = false, className = "" 
                          )}
                     </div>
 
-                    {/* Content */}
-                    <div className="pt-3 px-1 text-left">
-                         {/* Title */}
-                         <h3 className="text-[15px] 2xl:text-[17px] leading-snug text-secondary font-bold group-hover:text-primary transition-colors line-clamp-1">
+                    {/* CONTENT */}
+                    <div className="mt-3 px-1 text-left">
+                         {/* TITLE */}
+                         <h3 className="text-[22px] leading-6 font-semibold mb-2 md:mb-3 line-clamp-1 text-secondary group-hover:text-primary transition-colors">
                               {course?.title}
                          </h3>
 
-                         {/* Description */}
-                         <p className="text-xs text-slate-600 line-clamp-2 mt-1.5 leading-relaxed font-normal">
-                              {course?.overview || course?.description || "Master in-demand skills with expert live sessions, hands-on projects, and mentorship."}
+                         {/* DESCRIPTION FROM DETAILS LINE 307 (LINE-CLAMP-2) */}
+                         <p className="para text-gray-600 line-clamp-2 mb-2">
+                              {firstParagraph}
+                         </p>
+
+                         {/* META */}
+                         <p className="text-[14px] text-gray-500 mb-2 truncate">
+                              Starts: <strong className="text-secondary font-semibold">{course?.deadline || "Upcoming Intake"}</strong> <span className="mx-2 text-gray-300">|</span> {course?.courselength || course?.duration || "Self-Paced"}
                          </p>
                     </div>
                </div>
 
-               {/* Bottom Section */}
-               <div className="pt-2 px-1 text-left">
-                    {/* Start Intake Metadata */}
-                    <div className="flex items-center justify-between text-xs text-slate-500 font-medium mb-3 pt-2.5 border-t border-slate-100">
-                         <span className="flex items-center gap-1.5">
-                              <Calendar size={13} className="text-primary shrink-0" />
-                              <span>Starts: <strong className="text-slate-800 font-semibold">{course?.deadline || "Upcoming Intake"}</strong></span>
-                         </span>
-                    </div>
-
-                    {/* CTA button */}
-                    <div className="w-full h-10.5 rounded-lg text-secondary text-[13px] 2xl:text-[15px] flex items-center justify-center gap-1.5 border border-[#E1EAF5] cursor-pointer group-hover:bg-primary group-hover:text-white transition-all duration-300 ease-in-out font-semibold">
-                         {isLoggedIn && isUnlocked ? "Open Dashboard" : "Learn More"}
-                         <ChevronRight size={16} />
+               {/* BUTTON - Exactly matches RelatedBlogCard dimensions and text size */}
+               <div className="px-1 pb-1">
+                    <div className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2.5 text-[16px] group-hover:bg-gray-100 transition-all duration-500 ease-in-out cursor-pointer font-medium text-secondary">
+                         <span>{isLoggedIn && isUnlocked ? "Open Dashboard" : "Learn More"}</span>
+                         <ChevronRight size={20} />
                     </div>
                </div>
           </Link>

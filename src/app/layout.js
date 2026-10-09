@@ -1,7 +1,7 @@
 import "./globals.css";
 import Providers from "../components/Providers";
 import LayoutShell from "../components/LayoutShell";
-import { Open_Sans, Plus_Jakarta_Sans, Poiret_One } from 'next/font/google';
+import { Open_Sans, Plus_Jakarta_Sans, Poiret_One, Playfair_Display, Urbanist } from 'next/font/google';
 import { getLocations } from "../utils/locations";
 
 const openSans = Open_Sans({
@@ -24,6 +24,20 @@ const poiretOne = Poiret_One({
   display: 'swap',
   preload: false,
   variable: '--font-poiret-one',
+});
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  display: 'swap',
+  preload: false,
+  variable: '--font-playfair',
+});
+
+const urbanist = Urbanist({
+  subsets: ['latin'],
+  display: 'swap',
+  preload: false,
+  variable: '--font-urbanist',
 });
 
 export const metadata = {
@@ -72,7 +86,7 @@ export default async function RootLayout({ children }) {
   const locations = await getLocations().catch(() => []);
 
   return (
-    <html lang="en" className={`h-full antialiased ${openSans.variable} ${plusJakartaSans.variable} ${poiretOne.variable}`}>
+    <html lang="en" className={`h-full antialiased ${openSans.variable} ${plusJakartaSans.variable} ${poiretOne.variable} ${playfair.variable} ${urbanist.variable}`}>
       <head>
         {/* Preconnect for primary API and DNS prefetch for Cloudinary */}
         <link rel="preconnect" href="https://api.shikshadesign.com" crossOrigin="anonymous" />

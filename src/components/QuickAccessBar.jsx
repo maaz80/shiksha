@@ -3,7 +3,7 @@ import { PhoneCall as FiPhoneCall, Phone as FiPhone, MessageSquare as FiMessageS
 import { useChat } from "../context/ChatContext";
 
 const QuickAccessBar = ({
-     barBackground = "fixed bottom-0 left-0 z-50 w-full border-t border-gray-200 bg-white/95 backdrop-blur-md shadow-[0_-4px_20px_rgba(0,0,0,0.08)]",
+     barBackground = "fixed bottom-0 left-0 z-500 w-full border-t border-gray-200 bg-white/95 backdrop-blur-md shadow-[0_-4px_20px_rgba(0,0,0,0.08)]",
      linkClass = "flex flex-1 items-center justify-center gap-2 text-[13px] md:text-sm font-semibold text-secondary transition hover:bg-gray-50",
      iconColor = "text-base shrink-0 text-primary",
      liveChatActive = "bg-primary text-white shadow-xs",
@@ -16,7 +16,7 @@ const QuickAccessBar = ({
                <div className="mx-auto flex h-14 max-w-4xl open-sans">
 
                     {/* Request Callback */}
-                    <a
+                    {/* <a
                          href="https://wa.me/919311500424?text=Hi! I would like to request a callback."
                          target="_blank"
                          rel="noopener noreferrer"
@@ -29,7 +29,7 @@ const QuickAccessBar = ({
                          <span className="sm:hidden">
                               Callback
                          </span>
-                    </a>
+                    </a> */}
 
                     {/* Call */}
                     <a
@@ -50,7 +50,7 @@ const QuickAccessBar = ({
                          onClick={() => setIsChatbotOpen(!isChatbotOpen)}
                          className="flex flex-1 items-center justify-center gap-2 text-[14px] md:text-sm font-bold text-white transition cursor-pointer mr-2.5 md:mr-0 select-none"
                     >
-                         <div className={`flex items-center justify-center bg-primary gap-2 w-35 h-10 my-2 rounded-lg transition-all duration-300 ${isChatbotOpen ? liveChatActive : liveChatInactive}`}>
+                         <div className={`flex items-center justify-center bg-primary gap-2 w-40 h-11 my-2 rounded-md transition-all duration-300 ${isChatbotOpen ? liveChatActive : liveChatInactive}`}>
                               <FiMessageSquare className="text-base shrink-0" />
                               <span>Live Chat</span>
                          </div>

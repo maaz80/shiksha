@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import CourseSectionHeading from "./CourseSectionHeading";
 
 export default function HiringPartners({ data }) {
      const hiringData = data?.hiringPartners || {};
@@ -60,17 +61,11 @@ export default function HiringPartners({ data }) {
                `}</style>
 
                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0 text-center">
-                    <div className="space-y-2 max-w-2xl mx-auto mb-10 md:mb-14">
-                         <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-primary/10 text-[#0050B3] border border-primary/20 mb-1">
-                              PLACEMENT NETWORK
-                         </span>
-                         <h2 className="text-[24px] sm:text-[36px] md:text-[40px] lg:text-[48px] font-bold leading-tight text-secondary">
-                              Our Hiring <span className="text-primary font-bold">Partners</span>
-                         </h2>
-                         <p className="text-sm sm:text-base font-normal text-gray-600 leading-relaxed mt-2">
-                              {subtitle}
-                         </p>
-                    </div>
+                    <CourseSectionHeading
+                         title={title}
+                         highlightText={hiringData.highlightText?.trim() || (title.toLowerCase().includes("partners") ? "Partners" : "")}
+                         subtitle={subtitle}
+                    />
 
                     <div className="relative w-full overflow-hidden space-y-4 sm:space-y-5">
                          <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-32 bg-linear-to-r from-white to-transparent z-10" />

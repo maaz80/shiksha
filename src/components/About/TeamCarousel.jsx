@@ -7,6 +7,7 @@ import team1_small from '../../assets/shikshas-ceo-small.webp';
 import team2 from '../../assets/shikshas-co-founder.webp';
 import team2_small from '../../assets/shikshas-co-founder-small.webp';
 import CloudinaryImage from "../CloudinaryImage";
+import SectionHeading from "../SectionHeading";
 
 export default function TeamCarousel({ data: teamData }) {
      const title = teamData?.title || "Meet The Leadership Team";
@@ -73,12 +74,15 @@ export default function TeamCarousel({ data: teamData }) {
      if (members.length === 0) return null;
 
      return (
-          <section className="w-full bg-[#f3f6f9] py-12 md:py-16 lg:py-20 text-center cv-auto">
+          <section className="w-full bg-[#f3f6f9] py-6 md:py-16 lg:py-20 text-center cv-auto">
 
                {/* Heading */}
-               <h2 className="text-center text-[26px] md:text-[36px] lg:text-[48px] font-bold text-primary mb-0 md:mb-16">
-                    {title}
-               </h2>
+               <SectionHeading
+                    variant="testimonial"
+                    title={title}
+                    align="center"
+                    className="mb-8 md:mb-16"
+               />
 
                <div className="relative max-w-[340px] md:max-w-5xl mx-auto flex items-center justify-center">
 

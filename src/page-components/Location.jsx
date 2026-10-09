@@ -7,20 +7,18 @@ import { useParams } from 'next/navigation';
 import HelpSection from '../components/Location/HelpSection'
 import Services from '../components/Location/Services'
 import WhyKreeya from '../components/Location/WhyKreeya'
-import Testimonial from '../components/Location/Testimonial'
+import Testimonial from '../components/Home/Testimonials'
 import YouMayLike from '../components/RelatedBlogs'
 import FaqSection from '../components/Location/LocationFaq'
 
 const Location = ({ location: propLocation, slug: propSlug, initialTestimonials = [] }) => {
   const params = useParams();
   const locationSlug = propSlug || params?.slug || params?.itemSlug;
-  const [location, setLocation] = useState(propLocation || null)
+  const [fetchedLocation, setFetchedLocation] = useState(null);
+  const location = propLocation || fetchedLocation;
 
   useEffect(() => {
-    if (propLocation) {
-      setLocation(propLocation);
-      return;
-    }
+    if (propLocation) return;
 
     const fetchSingleService = async () => {
       const allLocations = await getLocations();
@@ -38,7 +36,7 @@ const Location = ({ location: propLocation, slug: propSlug, initialTestimonials 
         }
       }
 
-      setLocation(selectedItem);
+      setFetchedLocation(selectedItem);
     };
 
     if (locationSlug) fetchSingleService();
@@ -68,7 +66,7 @@ const Location = ({ location: propLocation, slug: propSlug, initialTestimonials 
       <div className='relative max-w-330 mx-auto plus-jakarta-sans flex flex-col justify-center items-center px-4'>
         <YouMayLike />
 
-        <div className="py-24">
+        <div className="py-12 md:py-24 w-full">
           <FaqSection location={location} />
         </div>
       </div>

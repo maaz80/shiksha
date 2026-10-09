@@ -2,12 +2,12 @@
 
 import React from "react";
 import { Briefcase, BarChart3, Clock, UserCheck, Layers, Award } from "lucide-react";
+import CourseSectionHeading from "./CourseSectionHeading";
 
 export default function JobRoles({ data }) {
      const courseName = data?.title || "UI/UX Design";
 
      const jobRolesData = data?.jobRoles || {};
-     const tag = jobRolesData.tag?.trim() || "JOB ROLES";
      const title = jobRolesData.title?.trim() || `Job Roles After ${courseName}`;
      const description = jobRolesData.description?.trim() || `Unlock exciting career opportunities with in-demand ${courseName} roles. Plan your path from fundamental skills to industry leadership.`;
 
@@ -56,22 +56,18 @@ export default function JobRoles({ data }) {
           return <UserCheck className="w-5 h-5 stroke-[2.2]" />;
      };
 
+     const highlightText = title.toLowerCase().startsWith("job roles after ")
+          ? title.substring(16)
+          : courseName;
+
      return (
-          <section className="w-full bg-primary-bg/30 py-12 sm:py-16 md:py-20 font-open-sans border-b border-gray-100 relative z-1">
+          <section className="w-full bg-primary-bg/30 pb-12 sm:pb-16 md:pb-20 font-open-sans border-b border-gray-100 relative z-1">
                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0">
-                    <div className="text-center space-y-2 max-w-3xl mx-auto mb-10 md:mb-14">
-                         <div>
-                              <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-primary/10 text-[#0050B3] border border-primary/20 mb-1">
-                                   {tag}
-                              </span>
-                         </div>
-                         <h2 className="text-[24px] sm:text-[36px] md:text-[40px] lg:text-[48px] font-bold leading-tight text-secondary">
-                              {title}
-                         </h2>
-                         <p className="text-sm sm:text-base font-normal text-gray-600 max-w-2xl mx-auto leading-relaxed mt-2">
-                              {description}
-                         </p>
-                    </div>
+                    <CourseSectionHeading
+                         title={title}
+                         highlightText={highlightText}
+                         subtitle={description}
+                    />
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                          {items.map((item, idx) => {

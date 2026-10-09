@@ -27,7 +27,7 @@ export default function AuthorAbout({ author = {}, blog = {} }) {
     const linkedinUrl = (isObject ? author.linkedin : "") || social.linkedin || null;
 
     return (
-        <div className="bg-white rounded-xl sm:rounded-2xl p-3.5 sm:p-6 border border-slate-200/80 shadow-[0_2px_8px_rgba(0,0,0,0.04)] my-6 sm:my-10">
+        <div className="bg-white rounded-xl sm:rounded-2xl p-3.5 sm:p-6 border border-slate-200/80 shadow-[0_2px_8px_rgba(0,0,0,0.04)] mb-4">
             {/* Top row: Avatar + Info + Socials */}
             <div className="flex flex-row items-center gap-3 sm:gap-4">
                 {/* Avatar */}

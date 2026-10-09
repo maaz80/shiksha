@@ -5,6 +5,7 @@ import CourseCard from "./CourseCard";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { getCourses } from "../../utils/courseService";
 import { useCourses } from "../../context/CourseContext";
+import SectionHeading from "../SectionHeading";
 
 const ITEMS_PER_PAGE = 4;
 
@@ -98,12 +99,17 @@ const Courses = ({ title, initialCourses = [] }) => {
      return (
           <div className="text-secondary">
                {/* TITLE */}
-               <h1 className="text-[24px] md:text-[48px] leading-8 md:leading-15 2xl:leading-20 font-bold text-start mx-auto z-20 relative">
-                    {title || "All Courses"}
-               </h1>
+               <SectionHeading
+                    as="h1"
+                    variant="testimonial"
+                    title={title || "All Courses"}
+                    align="left"
+                    className="mb-4 md:mb-6"
+                    headingClassName="text-[31px] md:text-[48px] leading-8 md:leading-15 2xl:leading-20 font-bold"
+               />
 
                {/* COURSES */}
-               <div className="flex flex-col gap-6 mt-5 min-h-80">
+               <div className="flex flex-col gap-6 min-h-80">
                     {loading ? (
                          Array.from({ length: ITEMS_PER_PAGE }).map((_, index) => (
                               <CourseCardSkeleton key={index} />

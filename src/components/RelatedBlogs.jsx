@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import RelatedBlogCard from "./Blogs/RelatedBlogCard";
 import { useBlogs } from "../context/BlogContext";
+import CourseSectionHeading from "./CourseDetails/CourseSectionHeading";
 
 const DEFAULT_RELATED_BLOGS = [
      {
@@ -35,7 +36,13 @@ const DEFAULT_RELATED_BLOGS = [
      }
 ];
 
-const RelatedBlogs = ({ title, initialBlogs = [] }) => {
+const RelatedBlogs = ({
+     title,
+     subtitle = "Stay updated with the latest trends, insights, and career guides in design and tech.",
+     highlightText,
+     align = "center",
+     initialBlogs = []
+}) => {
      const [currentIndex, setCurrentIndex] = useState(0);
      const [visibleCards, setVisibleCards] = useState(3);
      const context = useBlogs() || {};
@@ -69,14 +76,20 @@ const RelatedBlogs = ({ title, initialBlogs = [] }) => {
           setCurrentIndex(prev => (prev >= blogs.length - visibleCards ? 0 : prev + 1));
      };
 
+     const displayTitle = title || "Related Blogs";
+     const autoHighlight = highlightText !== undefined
+          ? highlightText
+          : (displayTitle.toLowerCase().includes("blogs") ? "Blogs" : displayTitle.split(" ").pop());
+
      return (
           <div className="relative w-full open-sans z-10 mt-8 overflow-hidden px-0 md:px-3">
-               {/* Heading */}
-               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-                    <h2 className="text-2xl md:text-3xl font-bold text-primary">
-                         {title || "Related Blogs"}
-                    </h2>
-               </div>
+               <CourseSectionHeading
+                    variant="testimonial"
+                    title={displayTitle}
+                    highlightText={autoHighlight}
+                    subtitle={subtitle}
+                    align={align}
+               />
 
                {/* Carousel Track */}
                <div className="overflow-hidden relative w-full">
@@ -87,7 +100,7 @@ const RelatedBlogs = ({ title, initialBlogs = [] }) => {
                          {blogs.map((blog, index) => (
                               <div
                                    key={blog?._id || blog?.slug || index}
-                                   className="shrink-0 px-0 md:px-3"
+                                   className="shrink-0 px-2 md:px-0 py-1"
                                    style={{ width: `${100 / visibleCards}%` }}
                               >
                                    <RelatedBlogCard blog={blog} className="w-full" />

@@ -19,7 +19,7 @@ const JoinUs = () => {
                     </h1>
 
                     {/* Description */}
-                    <p className='text-[14px] 2xl:text-[16px] leading-6 md:leading-7 text-center mx-auto mt-6'>
+                    <p className='text-[14px] 2xl:text-[16px] leading-6 md:leading-7 text-center mx-auto mt-2 md:mt-6'>
                          We firmly believe in and embrace an open culture. Our teams comprise individuals from diverse backgrounds bringing about their own experiences Our experiences and processes are constantly evolving. We believe in innovative practices that continually push the boundaries of what’s possible for the industry.
                     </p>
 

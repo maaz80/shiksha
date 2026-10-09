@@ -75,7 +75,7 @@ const ProgramModal = ({ isModal, setIsModal, onMouseEnter, onMouseLeave }) => {
                               ))}
                          </div>
 
-                         <div onClick={(e) => e.stopPropagation()} className='flex items-center justify-between flex-wrap w-[70%] 2xl:w-[76%] space-y-2 max-h-[83vh] overflow-y-scroll hide-scrollbar'>
+                         <div onClick={(e) => e.stopPropagation()} className='flex flex-wrap gap-5 xl:gap-6 w-[70%] 2xl:w-[76%] max-h-[83vh] overflow-y-auto hide-scrollbar pl-4 items-start content-start'>
                               {filteredCourses.map((course) => (
                                    <CourseCard key={course._id} course={course} setIsModal={setIsModal} />
                               ))}
@@ -111,12 +111,12 @@ const ProgramModal = ({ isModal, setIsModal, onMouseEnter, onMouseLeave }) => {
                                         <div
                                              className={`
                   overflow-hidden transition-all duration-500 ease-in-out
-                  ${isOpen ? 'max-h-105 opacity-100 mt-3' : 'max-h-0 opacity-0'}
+                  ${isOpen ? 'max-h-125 opacity-100 mt-3' : 'max-h-0 opacity-0'}
                `}
                                         >
                                              <div
                                                   className={`
-                     flex gap-4 overflow-x-auto hide-scrollbar pb-2
+                     flex gap-4 overflow-x-auto hide-scrollbar pb-2 snap-x snap-mandatory
                      transform transition-transform duration-500 ease-in-out
                      ${isOpen ? 'translate-y-0' : '-translate-y-4'}
                   `}
@@ -125,9 +125,9 @@ const ProgramModal = ({ isModal, setIsModal, onMouseEnter, onMouseLeave }) => {
                                                        <div
                                                             key={course._id}
                                                             onClick={(e) => e.stopPropagation()}
-                                                            className="min-w-62.5 shrink-0"
+                                                            className="w-[calc(100vw-48px)] sm:w-85 shrink-0 snap-start"
                                                        >
-                                                            <CourseCard course={course} setIsModal={setIsModal} />
+                                                            <CourseCard course={course} setIsModal={setIsModal} className="w-full" />
                                                        </div>
                                                   ))}
                                              </div>

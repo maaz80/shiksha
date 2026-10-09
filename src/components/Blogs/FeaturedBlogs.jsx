@@ -61,20 +61,20 @@ const FeaturedBlogs = ({ title }) => {
           <div className="text-secondary mt-5 ">
 
                {/* TITLE */}
-               <h2 className="text-[24px] md:text-[32px] font-bold text-primary px-1.5 md:px-0">
+               <h2 className="text-[24px] md:text-[32px] font-bold text-primary">
                     {title || "Features"}
                </h2>
 
                {/* GRID */}
-               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-14 mt-2 px-1.5 md:px-0">
+               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-14 mt-4 w-full">
 
                     {currentFeaturedBlogs.map((blog, index) =>
                          blog ? (
-                              <BlogCard key={blog._id} blog={blog} />
+                              <BlogCard key={blog._id} blog={blog} className="w-full" />
                          ) : (
                               <div
                                    key={index}
-                                   className="w-[384px] h-118 bg-gray-100 rounded-xl animate-pulse"
+                                   className="w-full md:w-[384px] h-110 bg-gray-100 rounded-[20px] animate-pulse"
                               />
                          )
                     )}

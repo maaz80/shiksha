@@ -4,8 +4,8 @@ import CloudinaryImage from '../CloudinaryImage';
 const Hero = ({ data }) => {
      return (
           <div className='mx-auto w-full max-w-350 px-4 sm:px-6 lg:px-10 pt-10 md:pt-15 '>
-               <div className=' flex flex-col-reverse md:flex-row items-start justify-between gap-1 md:gap-4'>
-                    <div className='max-w-full sm:max-w-78.5 md:max-w-90.25 2xl:max-w-190'>
+               <div className='flex flex-col-reverse md:flex-row items-center md:items-start justify-between gap-6 md:gap-4'>
+                    <div className='w-full max-w-full sm:max-w-78.5 md:max-w-90.25 2xl:max-w-190'>
                          <h1 className='text-[24px] md:text-[48px] 2xl:text-[72px] leading-8 md:leading-15 2xl:leading-21 font-bold text-secondary'>
                               
                               {data?.startTitle || "We Transform Lives by "}{" "}
@@ -51,7 +51,7 @@ const Hero = ({ data }) => {
                          </p>
                     </div>
 
-                    <div className='w-full sm:w-71 h-50.5 md:w-130.75 md:h-141.75 2xl:w-155 2xl:h-159.25 p-0 md:p-2 flex justify-center items-start'>
+                    <div className='w-full max-w-sm sm:max-w-md md:max-w-none sm:w-71 md:w-130.75 2xl:w-155 h-auto md:h-141.75 2xl:h-159.25 p-0 md:p-2 flex justify-center items-center md:items-start overflow-hidden rounded-xl mx-auto md:mx-0'>
                          <CloudinaryImage
                               src={data?.image || Template}
                               alt="Template Image"
@@ -59,8 +59,8 @@ const Hero = ({ data }) => {
                               height={287}
                               priority={true}
                               fetchPriority="high"
-                              className='relative object-cover rounded-xl w-full'
-                              sizes="(max-width: 640px) 180px, (max-width: 768px) 284px, (max-width: 1536px) 523px, 620px"
+                              className='relative object-cover rounded-xl w-full h-auto max-h-55 sm:max-h-90 md:max-h-full'
+                              sizes="(max-width: 640px) 100vw, (max-width: 768px) 284px, (max-width: 1536px) 523px, 620px"
                          />
                     </div>
                </div>

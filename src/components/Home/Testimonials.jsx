@@ -7,6 +7,7 @@ import testiImage from '../../assets/testi-img.webp';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { getTestimonials } from '../../utils/testimonialService';
+import SectionHeading from '../SectionHeading';
 
 const DEFAULT_TESTIMONIALS = [
      {
@@ -100,6 +101,7 @@ const Testimonials = ({ data, initialTestimonials = [] }) => {
      useEffect(() => {
           let isMounted = true;
           const fetchTestimonialsData = async () => {
+               if (rawInitial.length > 0) return;
                try {
                     const resData = await getTestimonials();
                     if (isMounted && Array.isArray(resData) && resData.length > 0) {
@@ -183,41 +185,20 @@ const Testimonials = ({ data, initialTestimonials = [] }) => {
      }, []);
 
      return (
-          <div className='min-h-[80vh] md:min-h-screen mx-auto w-full px-3 sm:px-6 lg:px-10 py-10 lg:py-16 text-secondary bg-primary-bg relative'>
+          <div className='min-h-[80vh] md:min-h-screen mx-auto w-full px-3 sm:px-6 lg:px-10 py-10 lg:py-10 text-secondary bg-primary-bg relative'>
                <img src={Map?.src || Map} alt="Testimonial Map Bg" loading="lazy" decoding="async" className='absolute top-0 inset-0 w-full h-full z-0 object-cover pointer-events-none' />
 
-               {/* Heading */}
-               {isLocation ? (
-                    <h2 className="plus-jakarta-sans text-3xl md:text-5xl xl:text-[48px] font-bold leading-10 md:leading-15 max-w-140 text-primary text-center z-20 relative mx-auto">
-                         What our students say about us
-                    </h2>
-               ) : (
-                    <h2 className="text-[24px] md:text-[48px] 2xl:text-[72px] leading-8 md:leading-15 2xl:leading-20 font-bold text-center w-[99%] md:w-[60%] mx-auto z-20 relative">
-                         {data?.startTitle || "What Our"}{" "}
-                         <span className="relative inline-block text-orange">
-                              {data?.midTitle || "Students"}
-                              <svg
-                                   className="absolute left-0 -bottom-2 lg:-bottom-6 w-full"
-                                   viewBox="0 0 200 20"
-                                   preserveAspectRatio="none"
-                              >
-                                   <path
-                                        d="M5 15 Q100 -6 195 5"
-                                        stroke="#F97316"
-                                        strokeWidth="4"
-                                        fill="none"
-                                        strokeLinecap="round"
-                                   />
-                              </svg>
-                         </span>{' '}
-                         {data?.endTitle || "Say About Us"}
-                    </h2>
-               )}
-
-               {/* Description */}
-               <p className={`text-[14px] 2xl:text-[16px] leading-6 md:leading-7 text-center ${isLocation ? 'max-w-3xl':'max-w-7xl'} mx-auto mt-6 z-20 relative`}>
-                    {isLocation ? "Our students have gone on to build successful careers with leading organizations across diverse industries, showcasing the skills, knowledge, and confidence they gained through our programs." : (data?.description || "Our students have gone on to build successful careers with leading organizations across diverse industries, showcasing the skills, knowledge, and confidence they gained through our programs.") }
-               </p>
+               {/* Heading & Description */}
+               <SectionHeading
+                    variant="testimonial"
+                    startHeading={data?.startTitle || "What Our"}
+                    midHeading={data?.midTitle || "Students"}
+                    endHeading={data?.endTitle || "Say About Us"}
+                    subtitle={data?.description || "Our students have gone on to build successful careers with leading organizations across diverse industries, showcasing the skills, knowledge, and confidence they gained through our programs."}
+                    headingClassName="w-[99%] md:w-[80%]"
+                    subtitleClassName={isLocation ? "max-w-3xl" : "max-w-7xl"}
+                    className="mb-0"
+               />
 
                <div className="relative z-20 w-full pl-0 md:pl-16">
 
@@ -229,7 +210,7 @@ const Testimonials = ({ data, initialTestimonials = [] }) => {
                          {testimonialsList.map((item, i) => (
                               <div
                                    key={i}
-                                   className="min-w-75 max-w-59.25 2xl:max-w-[320px] rounded-3xl border bg-white/30 p-6 relative min-h-65"
+                                   className="min-w-75 max-w-59.25 2xl:max-w-[320px] rounded-[20px] border bg-white/30 p-6 relative min-h-65"
                               >
                                    <img src={comma?.src || comma} alt='comma' className='absolute w-17.5 -top-6 -left-6 z-20' />
 

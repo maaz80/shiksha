@@ -27,9 +27,9 @@ const WhatWeDo = ({ data }) => {
                </picture>
 
                {pointsToRender.map((pt, idx) => (
-                    <div key={idx} className='flex flex-row md:flex-col gap-3 items-center justify-start md:justify-center w-65.5 md:w-50 2xl:w-79 z-50 text-white'>
+                    <div key={idx} className='flex flex-row md:flex-col gap-3 items-center justify-start md:justify-center w-80 md:w-50 2xl:w-79 z-50 text-white'>
                          <img src={pt.image?.src || pt.image} width={44} height={44} alt={pt.text} loading="lazy" decoding="async" className='w-11 md:w-15 2xl:w-25 object-contain max-h-11 md:max-h-19 2xl:max-h-29' />
-                         <span className='text-[10px] md:text-[16px] 2xl:text-[26px] leading-6 2xl:leading-8 text-center'>{pt.text}</span>
+                         <span className='para text-center'>{pt.text}</span>
                     </div>
                ))}
           </div>

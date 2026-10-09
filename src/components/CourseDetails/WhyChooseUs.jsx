@@ -2,6 +2,7 @@
 
 import React from "react";
 import { GraduationCap, BadgeDollarSign, UserCog, Zap, Layers, CalendarCheck, Award, ShieldCheck, HeartHandshake } from "lucide-react";
+import CourseSectionHeading from "./CourseSectionHeading";
 
 const ICON_MAP = {
      graduationCap: GraduationCap,
@@ -68,17 +69,11 @@ export default function WhyChooseUs({ data }) {
                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0 relative z-10">
                     
                     {/* Header Section */}
-                    <div className="text-center space-y-2 max-w-3xl mx-auto mb-10 md:mb-14">
-                         <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-primary/10 text-[#0050B3] border border-primary/20 mb-1">
-                              WHY CHOOSE US
-                         </span>
-                         <h2 className="text-[24px] sm:text-[36px] md:text-[40px] lg:text-[48px] font-bold leading-tight text-secondary">
-                              {sectionTitle}
-                         </h2>
-                         <p className="text-sm sm:text-base font-normal text-gray-600 max-w-2xl mx-auto leading-relaxed mt-2">
-                              {sectionSubtitle}
-                         </p>
-                    </div>
+                    <CourseSectionHeading
+                         title={sectionTitle}
+                         highlightText={whyData.highlightText?.trim() || (sectionTitle.toLowerCase().includes("us") ? "Us" : "")}
+                         subtitle={sectionSubtitle}
+                    />
 
                     {/* 6 Cards Grid (3 columns on desktop) */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">

@@ -210,7 +210,7 @@ export default function Form() {
                     <img src={Template} alt="Template Image" loading="lazy" decoding="async" className="rounded-l-2xl mt-[5.5px] shadow-md object-cover h-130" />
                </div> */}
                {/* Card */}
-               <div className="w-full md:w-[50%] xl:w-full max-w-md bg-gray-50 rounded-2xl md:rounded-r-2xl xl:rounded-2xl shadow-md p-6 md:p-4">
+               <div className="w-full md:w-[50%] xl:w-full max-w-md bg-gray-50 rounded-2xl md:rounded-r-2xl xl:rounded-[20px] shadow-md p-6 md:p-4">
 
                     {/* Heading */}
                     <h2 className="text-[20px] md:text-[22px] font-semibold text-gray-800 text-center">

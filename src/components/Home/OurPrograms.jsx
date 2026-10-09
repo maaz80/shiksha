@@ -4,6 +4,7 @@ import { useState } from 'react'
 import ProgramsSidebar from '../ProgramsSidebar'
 import CourseCard from '../CourseCard'
 import { useCourses } from '../../context/CourseContext'
+import SectionHeading from '../SectionHeading'
 
 const OurPrograms = ({ data }) => {
      const [activeMobileIndex, setActiveMobileIndex] = useState(null);
@@ -17,28 +18,16 @@ const OurPrograms = ({ data }) => {
                : courses.filter(c => c?.category === activeCategory);
 
      return (
-          <div id='courses' className='mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10 pt-18 lg:pt-16'>
+          <div id='courses' className='mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10 pt-6 lg:pt-16'>
 
                {/* Heading */}
-               <h2 className="text-[24px] md:text-[48px] 2xl:text-[72px] leading-8 md:leading-15 2xl:leading-20 font-bold text-secondary text-center">
-                    {data?.startTitle || "Explore Our"}{" "}
-                    <span className="relative inline-block text-orange">
-                         {data?.endTitle || "Programs"}
-                         <svg
-                              className="absolute left-0 -bottom-2 lg:-bottom-6 w-full"
-                              viewBox="0 0 200 20"
-                              preserveAspectRatio="none"
-                         >
-                              <path
-                                   d="M5 20 Q100 0 195 1"
-                                   stroke="#F97316"
-                                   strokeWidth="4"
-                                   fill="none"
-                                   strokeLinecap="round"
-                              />
-                         </svg>
-                    </span>
-               </h2>
+               <SectionHeading
+                    variant="testimonial"
+                    title={data?.title}
+                    startHeading={!data?.title ? (data?.startTitle || "Explore Our") : undefined}
+                    midHeading={!data?.title ? (data?.endTitle || "Programs") : undefined}
+                    className="mb-6 md:mb-10"
+               />
 
                {/* DESKTOP */}
                <div className="hidden md:flex mt-10 items-start justify-center">
@@ -56,7 +45,7 @@ const OurPrograms = ({ data }) => {
                          ))}
                     </div>
 
-                    <div className='flex items-center justify-between flex-wrap w-[65%] 2xl:w-[80%] space-y-2 max-h-[72vh] overflow-y-scroll hide-scrollbar'>
+                    <div className='flex flex-wrap gap-5 xl:gap-6 w-[65%] 2xl:w-[75%] max-h-[75vh] overflow-y-auto hide-scrollbar pl-4 items-start content-start'>
                          {filteredCourses.map((course) => (
                               <CourseCard key={course._id || course.slug} course={course} setIsModal={false} />
                          ))}
@@ -91,12 +80,12 @@ const OurPrograms = ({ data }) => {
                                    <div
                                         className={`
                   overflow-hidden transition-all duration-500 ease-in-out
-                  ${isOpen ? 'max-h-105 opacity-100 mt-3' : 'max-h-0 opacity-0'}
+                  ${isOpen ? 'max-h-135 opacity-100 mt-3' : 'max-h-0 opacity-0'}
                `}
                                    >
                                         <div
                                              className={`
-                     flex gap-4 overflow-x-auto hide-scrollbar pb-2
+                     flex gap-4 overflow-x-auto hide-scrollbar pb-2 snap-x snap-mandatory
                      transform transition-transform duration-500 ease-in-out
                      ${isOpen ? 'translate-y-0' : '-translate-y-4'}
                   `}
@@ -104,9 +93,9 @@ const OurPrograms = ({ data }) => {
                                              {categoryCourses.map((course) => (
                                                   <div
                                                        key={course._id || course.slug}
-                                                       className="min-w-62.5 shrink-0"
+                                                       className="w-[calc(100vw-32px)] sm:w-85 shrink-0 snap-start"
                                                   >
-                                                       <CourseCard course={course} />
+                                                       <CourseCard course={course} className="w-full" />
                                                   </div>
                                              ))}
                                         </div>

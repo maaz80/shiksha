@@ -12,6 +12,7 @@ import FeaturedBlogs from '../components/Blogs/FeaturedBlogs';
 import Testimonials from '../components/Home/Testimonials';
 import RelatedBlogs from '../components/RelatedBlogs';
 import FAQ from '../components/FAQ';
+import SectionHeading from '../components/SectionHeading';
 
 const Blogs = ({ initialBlogs = [], initialTestimonials = [] }) => {
      const { blogs } = useBlogs();
@@ -52,15 +53,20 @@ const Blogs = ({ initialBlogs = [], initialTestimonials = [] }) => {
      return (
           <main className=''>
                <Breadcrumb />
-               <div className='pt-5 max-w-80 sm:max-w-190 lg:max-w-250 xl:max-w-7xl mx-1 md:mx-auto text-secondary'>
-                    <h1 className="text-[24px] md:text-[48px] leading-8 md:leading-15 2xl:leading-20 font-bold text-start mx-auto z-20 relative pb-4 md:pb-8 px-1.5 md:px-0">
-                         {blogPageData?.blogstitle || "Blog"}
-                    </h1>
+               <div className='pt-5 w-full max-w-340 mx-auto px-4 sm:px-6 lg:px-10 text-secondary'>
+                    <SectionHeading
+                         as="h1"
+                         variant="testimonial"
+                         title={blogPageData?.blogstitle || "Blog"}
+                         align="left"
+                         className="mb-4 md:mb-6"
+                         headingClassName="text-[31px] md:text-[48px] leading-8 md:leading-15 2xl:leading-20 font-bold"
+                    />
 
                     <div>
                          {/* Mobile */}
-                         <div className="block md:hidden px-1.5 md:px-0">
-                              <BlogCard blog={blog} isEager />
+                         <div className="block md:hidden">
+                              <BlogCard blog={blog} isEager className="w-full" />
                          </div>
 
                          {/* Desktop */}
@@ -76,7 +82,7 @@ const Blogs = ({ initialBlogs = [], initialTestimonials = [] }) => {
                     <Testimonials data={homeData?.testimonialstitle} initialTestimonials={initialTestimonials} />
                </div>
 
-               <div className='max-w-7xl mx-auto space-y-10 mt-10 '>
+               <div className='max-w-7xl mx-auto space-y-10 mt-10 px-2 sm:px-6 lg:px-10'>
                     <RelatedBlogs title={homeData?.relatedblogstitle} />
 
                     <FAQ faqData={faqData} />

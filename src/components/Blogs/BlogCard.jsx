@@ -4,10 +4,10 @@ import CloudinaryImage from '../CloudinaryImage';
 
 const Template = '/images/shiksha-template-image.webp';
 
-const BlogCard = ({ blog, isEager = false }) => {
+const BlogCard = ({ blog, isEager = false, className = "" }) => {
      if (!blog) {
           return (
-               <div className="w-91.25 md:w-[384px] h-118 bg-white rounded-[20px] border border-gray-200 shadow-sm p-3 text-secondary animate-pulse">
+               <div className={`w-full max-w-full md:max-w-[384px] h-110 bg-white rounded-[20px] border border-gray-200 shadow-sm p-3 text-secondary animate-pulse ${className}`}>
                     <div className="relative rounded-lg overflow-hidden">
                          <img
                               src={Template}
@@ -58,7 +58,7 @@ const BlogCard = ({ blog, isEager = false }) => {
           <Link
                href={blogHref}
                onClick={handleCardClick}
-               className="block w-80 md:w-[384px] h-118 bg-white rounded-[20px] border border-gray-200 shadow-sm p-3 text-secondary cursor-pointer group hover:shadow-md transition-all duration-300"
+               className={`block ${className ? className : "w-full max-w-full md:max-w-[384px]"} h-110 bg-white rounded-[20px] border border-gray-200 shadow-sm p-3 text-secondary cursor-pointer group hover:shadow-md transition-all duration-300`}
           >
 
                {/* IMAGE */}
@@ -90,7 +90,7 @@ const BlogCard = ({ blog, isEager = false }) => {
                     </h2>
 
                     {/* DESCRIPTION */}
-                    <p className="text-[16px] leading-6 mb-4 line-clamp-3">
+                    <p className="text-[16px] leading-6 mb-4 line-clamp-2">
                          {blog.description}
                     </p>
 

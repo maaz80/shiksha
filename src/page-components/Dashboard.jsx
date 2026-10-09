@@ -165,8 +165,8 @@ export default function Dashboard() {
      }
 
      return (
-          <main className="min-h-screen text-secondary py-10 mb-10 px-4 sm:px-6 lg:px-12 open-sans">
-               <div className="max-w-7xl mx-auto space-y-8">
+          <main className="min-h-screen text-secondary py-2 md:py-10 mb-10 px-4 sm:px-6 lg:px-12 open-sans">
+               <div className="max-w-7xl mx-auto space-y-4 md:space-y-8">
 
                     {/* GREETING BANNER */}
                     <div className="space-y-1">
@@ -175,7 +175,7 @@ export default function Dashboard() {
                                    Student Dashboard
                               </h1>
                          </div>
-                         <p className="text-xs sm:text-sm text-gray-600 font-medium">
+                         <p className="para text-gray-600 font-medium">
                               Welcome back, <strong className="text-secondary">{user?.name || "Student"}</strong>! Access your unlocked courses and live session recordings.
                          </p>
                     </div>
@@ -191,8 +191,8 @@ export default function Dashboard() {
                                    <h2 className="text-xl sm:text-2xl font-bold text-secondary">
                                         Course To Do
                                    </h2>
-                                   <p className="text-xs text-gray-600 font-medium">
-                                        <strong className="text-emerald-600 text-sm font-bold">{unlockedCourses.length}</strong> course{unlockedCourses.length !== 1 ? 's' : ''} enrolled & unlocked.
+                                   <p className="para text-gray-600 font-medium">
+                                        <strong className="text-emerald-600 text-lg font-bold">{unlockedCourses.length}</strong> course{unlockedCourses.length !== 1 ? 's' : ''} enrolled & unlocked.
                                    </p>
                               </div>
                               <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-100">
@@ -209,7 +209,7 @@ export default function Dashboard() {
                                    <h2 className="text-xl sm:text-2xl font-bold text-secondary">
                                         Recordings ({totalVideosCount})
                                    </h2>
-                                   <p className="text-xs text-gray-600 font-medium">
+                                   <p className="para text-gray-600 font-medium">
                                         Access recorded live lectures & session workshops for unlocked courses.
                                    </p>
                               </div>
@@ -252,7 +252,7 @@ export default function Dashboard() {
                     <div className="flex items-center gap-3 border-b border-gray-200 pb-4 overflow-x-auto">
                          <button
                               onClick={() => setActiveTab("my-courses")}
-                              className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 cursor-pointer shrink-0 ${activeTab === "my-courses"
+                              className={`px-5 py-2.5 rounded-md text-sm sm:text-sm fontsemi-bold transition-all flex items-center gap-2 cursor-pointer shrink-0 ${activeTab === "my-courses"
                                         ? "bg-primary text-white shadow-md font-bold"
                                         : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
                                    }`}
@@ -266,7 +266,7 @@ export default function Dashboard() {
 
                          <button
                               onClick={() => setActiveTab("session-recordings")}
-                              className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 cursor-pointer shrink-0 ${activeTab === "session-recordings"
+                              className={`px-5 py-2.5 rounded-md text-sm sm:text-sm font-semibold transition-all flex items-center gap-2 cursor-pointer shrink-0 ${activeTab === "session-recordings"
                                         ? "bg-primary text-white shadow-md font-bold"
                                         : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
                                    }`}
@@ -289,13 +289,13 @@ export default function Dashboard() {
                                         <div className="flex items-center justify-between">
                                              <div className="flex items-center gap-2">
                                                   <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-                                                  <h2 className="text-lg sm:text-xl font-bold text-secondary">
+                                                  <h2 className="text-xl font-bold text-secondary">
                                                        Enrolled Courses (Unlocked)
                                                   </h2>
                                              </div>
-                                             <span className="text-xs text-gray-500 font-semibold">
+                                             {/* <span className="text-xs text-gray-500 font-semibold">
                                                   {unlockedCourses.length} Unlocked
-                                             </span>
+                                             </span> */}
                                         </div>
 
                                         {unlockedCourses.length > 0 ? (
@@ -361,16 +361,16 @@ export default function Dashboard() {
                                                   <div key={course._id} className="bg-white border border-gray-200 rounded-2xl p-6 shadow-xs">
                                                        <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
                                                             <div>
-                                                                 <span className="text-[10px] font-bold uppercase tracking-wider text-primary">
+                                                                 <span className="para font-semibold uppercase tracking-wider text-primary">
                                                                       {course.category || "Track"}
                                                                  </span>
-                                                                 <h3 className="text-lg font-bold text-secondary mt-0.5">
+                                                                 <h3 className="text-2xl font-bold text-secondary mt-0.5">
                                                                       {course.title}
                                                                  </h3>
                                                             </div>
-                                                            <span className="text-xs font-semibold text-purple-700 bg-purple-50 px-2.5 py-1 rounded-lg border border-purple-200 flex items-center gap-1">
+                                                            {/* <span className="para font-semibold text-purple-700 bg-purple-50 px-2.5 py-1 rounded-lg border border-purple-200 flex items-center gap-1">
                                                                  <Film size={12} /> {courseVideos.length} Video{courseVideos.length !== 1 ? 's' : ''}
-                                                            </span>
+                                                            </span> */}
                                                        </div>
 
                                                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
@@ -415,22 +415,22 @@ export default function Dashboard() {
                                                                       {/* Card Content & Action Bar */}
                                                                       <div className="p-4 space-y-2.5 bg-white flex-1 flex flex-col justify-between">
                                                                            <div className="space-y-1">
-                                                                                <h4 className="font-bold text-xs sm:text-sm text-secondary group-hover:text-primary transition-colors line-clamp-1">
+                                                                                <h4 className="font-bold text-xl sm:text-xl text-secondary group-hover:text-primary transition-colors line-clamp-2">
                                                                                      {v.title || `Session Video #${vIdx + 1}`}
                                                                                 </h4>
                                                                                 {v.alt && (
-                                                                                     <p className="text-[11px] text-gray-500 line-clamp-2 leading-relaxed">
+                                                                                     <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed">
                                                                                           {v.alt}
                                                                                      </p>
                                                                                 )}
                                                                            </div>
 
-                                                                           <div className="flex items-center justify-between pt-2.5 border-t border-gray-100 text-xs font-bold text-primary">
+                                                                           <div className="flex items-center justify-between pt-2.5 border-t border-gray-100 text-sm font-semibold text-primary">
                                                                                 <span className="flex items-center gap-1.5">
                                                                                      <PlayCircle size={14} className="text-primary group-hover:rotate-12 transition-transform" />
                                                                                      Watch Recording
                                                                                 </span>
-                                                                                <span className="text-[11px] text-gray-400 group-hover:text-primary transition-colors font-medium">
+                                                                                <span className="text-sm text-gray-400 group-hover:text-primary transition-colors font-medium">
                                                                                      HD Video →
                                                                                 </span>
                                                                            </div>

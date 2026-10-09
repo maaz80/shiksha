@@ -4,7 +4,7 @@ const ProgramsSidebar = ({ isActive, onClick, category, isHeading }) => {
      if (isHeading) {
           return (
                <div
-                    className="w-full md:w-52 2xl:w-62.5 h-12 md:h-9 2xl:h-12 flex items-center text-[18px] md:text-[16px] 2xl:text-[18px] font-bold text-secondary px-4 py-1 select-none"
+                    className="w-full md:w-52 2xl:w-62.5 h-12 md:h-9 2xl:h-12 flex items-center text-[23px] 2xl:text-[18px] font-bold text-secondary px-0 md:px-4 py-1 select-none"
                >
                     <div>{category}</div>
                </div>

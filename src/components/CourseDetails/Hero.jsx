@@ -71,7 +71,7 @@ const Hero = ({ course, courseId, setIsLogin }) => {
      };
 
      return (
-          <div className="relative w-full bg-primary pt-8 pb-8 md:pt-24 md:pb-0 px-4 sm:px-6 md:px-10 h-auto md:h-[47vh] flex flex-col justify-center">
+          <div className="relative w-full bg-primary pt-8 pb-8 md:pt-8 md:pb-0 px-4 sm:px-6 md:px-10 h-auto md:h-[47vh] flex flex-col justify-center">
 
                {/* CONTENT WRAPPER */}
                <div className="max-w-7xl mx-auto w-full flex flex-col md:flex-row items-start justify-between gap-6 md:gap-10">
@@ -90,19 +90,19 @@ const Hero = ({ course, courseId, setIsLogin }) => {
                          </div>
 
                          {/* TITLE */}
-                         <h1 className="text-[24px] sm:text-[32px] md:text-[36px] xl:text-[48px] leading-tight font-bold text-start text-white">
+                         <h1 className="text-[26px] sm:text-[32px] md:text-[36px] xl:text-[48px] leading-tight font-bold text-start text-white">
                               {course?.title}
                          </h1>
 
-                         <p className="text-xs sm:text-base text-white mt-3 leading-relaxed max-w-3xl">
+                         <p className="para text-white mt-3  max-w-3xl">
                               {course?.overview || course?.description}
                          </p>
                     </div>
 
                     {/* MOBILE FLOATING CTA CARD */}
-                    <div className="block md:hidden mt-6 w-full text-secondary">
-                         <div className="bg-white rounded-2xl shadow-xl p-5 border border-gray-100 space-y-4">
-                              <div className="flex items-center justify-between">
+                    <div className="block md:hidden mt-0 w-full text-secondary">
+                         <div className="bg-white rounded-[20px] shadow-xl p-5 border border-gray-100 space-y-4">
+                              <div className="flex flex-col gap-3 items-center justify-between">
                                    <div>
                                         <p className="text-xs text-slate-600 font-medium">Total Admission Fee</p>
                                         <div className="flex items-baseline gap-1.5 mt-0.5">
@@ -118,7 +118,7 @@ const Hero = ({ course, courseId, setIsLogin }) => {
                                    <button
                                         onClick={handleStartNow}
                                         disabled={loading}
-                                        className="w-full bg-orange hover:bg-orange-hover active:scale-[0.98] disabled:bg-gray-400 disabled:cursor-not-allowed text-white py-3 rounded-xl font-semibold transition text-sm cursor-pointer shadow-sm"
+                                        className="w-full bg-orange hover:bg-orange-hover active:scale-[0.98] disabled:bg-gray-400 disabled:cursor-not-allowed text-white py-3 rounded-md font-semibold transition text-sm cursor-pointer shadow-sm"
                                    >
                                         {loading
                                              ? "Processing..."
@@ -131,7 +131,7 @@ const Hero = ({ course, courseId, setIsLogin }) => {
                                    </button>
 
                                    {/* DEADLINE (MOBILE) */}
-                                   <div className="pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-600">
+                                   <div className="pt-0 border-t border-gray-100 flex items-center justify-between text-xs text-gray-600">
                                         <span>Application Deadline:</span>
                                         <span className="text-[#C20001] font-bold">{course?.deadline || '4th Oct 2025'}</span>
                                    </div>
@@ -141,7 +141,7 @@ const Hero = ({ course, courseId, setIsLogin }) => {
 
                     {/* DESKTOP RIGHT CARD */}
                     <div className="hidden md:block relative w-full md:w-146 h-67.5 mb-0 xl:-mb-10 text-secondary z-30">
-                         <div className="bg-white rounded-xl shadow-xl p-5 border border-gray-100">
+                         <div className="bg-white rounded-[20px] shadow-xl p-5 border border-gray-100">
                               {/* PRICE */}
                               <div className="mb-4 text-center xl:text-start">
                                    <p className="text-[12px] xl:text-[16px] mb-1">

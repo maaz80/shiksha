@@ -21,7 +21,7 @@ const Hero = ({ data }) => {
              
 
 
-               <div className='lg:min-h-screen max-h-screen flex items-start justify-between gap-1 md:gap-4'>
+               <div className='lg:min-h-[85vh] max-h-screen flex items-start justify-between gap-1 md:gap-4'>
                     <div className='max-w-38.5 md:max-w-90.25 2xl:max-w-165 mt-0 md:mt-20'>
                          <h1 className='text-[24px] md:text-[48px] 2xl:text-[72px] leading-8 md:leading-15 2xl:leading-21 font-bold text-secondary '>{data?.startTitle || ' AI-Powered Design Courses.'} {" "}
                               <span className="relative inline-block text-orange">

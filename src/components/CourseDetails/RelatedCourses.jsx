@@ -3,6 +3,7 @@
 import React from "react";
 import { useCourses } from "@/context/CourseContext";
 import RelatedCourseCard from "./RelatedCourseCard";
+import CourseSectionHeading from "./CourseSectionHeading";
 
 const staticRelatedCourses = [
      {
@@ -41,7 +42,6 @@ export default function RelatedCourses({ currentSlug, data }) {
      const context = useCourses() || {};
      const coursesData = context.courses || [];
 
-     const tagline = (data?.tagline || data?.relatedCoursesTagline || "COURSES").trim();
      const startheading = (data?.startheading || "Explore").trim();
      const midheading = (data?.midheading || "Related").trim();
      const endheading = (data?.endheading || "Courses").trim();
@@ -75,27 +75,19 @@ export default function RelatedCourses({ currentSlug, data }) {
 
      return (
           <section className="w-full pt-12 sm:pt-16 md:pt-20 font-open-sans bg-primary-bg/40 relative z-1 overflow-hidden border-b border-gray-100">
-               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 relative z-10">
-                    <div className="text-center space-y-2 max-w-3xl mx-auto mb-10 md:mb-14">
-                         <div>
-                              <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-md bg-primary/10 text-[#0050B3] border border-primary/20 mb-1">
-                                   {tagline}
-                              </span>
-                         </div>
-                         <h2 className="text-[24px] sm:text-[36px] md:text-[40px] lg:text-[48px] font-bold leading-tight text-secondary">
-                              {startheading}{" "}
-                              {midheading && <span className="text-primary">{midheading}</span>}
-                              {endheading && <>{endheading.startsWith(" ") ? "" : " "}{endheading}</>}
-                         </h2>
-                         <p className="text-sm sm:text-base font-normal text-gray-600 max-w-2xl mx-auto leading-relaxed mt-2">
-                              {description}
-                         </p>
-                    </div>
+               <div className="max-w-330 mx-auto px-4 sm:px-6 md:px-7 py-1 relative z-10">
+                    <CourseSectionHeading
+                         title={data?.relatedCoursesTitle?.trim() || undefined}
+                         startHeading={!data?.relatedCoursesTitle ? startheading : undefined}
+                         midHeading={!data?.relatedCoursesTitle ? midheading : undefined}
+                         endHeading={!data?.relatedCoursesTitle ? endheading : undefined}
+                         subtitle={description}
+                    />
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch justify-items-center">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch justify-items-center">
                          {displayCourses.map((course, idx) => (
                               <div key={course._id || idx} className="w-full flex justify-center">
-                                   <RelatedCourseCard course={course} />
+                                   <RelatedCourseCard course={course} className="w-full" />
                               </div>
                          ))}
                     </div>

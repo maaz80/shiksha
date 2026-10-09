@@ -3,12 +3,23 @@
 .open-sans {
   font-family: var(--font-open-sans), sans-serif;
 }
+
 .plus-jakarta-sans {
   font-family: var(--font-plus-jakarta-sans), sans-serif;
 }
+
 .poiret-one-regular {
   font-family: var(--font-poiret-one), sans-serif;
 }
+
+.font-playfair {
+  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
+}
+
+.font-urbanist {
+  font-family: var(--font-urbanist), var(--font-plus-jakarta-sans), sans-serif;
+}
+
 html {
   scrollbar-gutter: stable;
 }
@@ -22,6 +33,7 @@ html {
 input[type="checkbox"] {
   accent-color: #0071E5;
 }
+
 @theme {
   --color-primary-bg: #F0F7FF;
   --color-primary: #0071E5;
@@ -30,6 +42,9 @@ input[type="checkbox"] {
   --color-orange: #F97316;
   --color-orange-hover: #9a3200;
   --color-dark-blue: #26394D;
+  --color-official: #FFD400;
+  --font-playfair: var(--font-playfair), 'Playfair Display', Georgia, serif;
+  --font-urbanist: var(--font-urbanist), var(--font-plus-jakarta-sans), sans-serif;
 
   /* Custom spacing classes used throughout the app */
   /* --spacing-17: 4.25rem;
@@ -224,4 +239,25 @@ input[type="checkbox"] {
   color: #ffffff;
   border-color: #ffffff;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+.para {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Media Query: Above 786px */
+@media (min-width: 786px) {
+  .para {
+    font-size: 18px;
+    line-height: 1.8;
+  }
+}
+
+/* Media Query: Above 1200px */
+@media (min-width: 1200px) {
+  .para {
+    font-size: 20px;
+    line-height: 1.9;
+  }
 }

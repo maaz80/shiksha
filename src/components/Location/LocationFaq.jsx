@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import CourseSectionHeading from "../CourseDetails/CourseSectionHeading";
 
 const defaultFaqs = [
      {
@@ -19,23 +20,36 @@ const defaultFaqs = [
      },
 ];
 
-export default function LocationFaq({ location }) {
-     const [faqs, setFaqs] = useState(defaultFaqs);
+export default function LocationFaq({ location, title, subtitle, align = "center" }) {
      const [activeIndex, setActiveIndex] = useState(0);
 
-     const data = location?.page?.faq;
-     useEffect(() => {
-          if (data && data.length > 0) {
-               setFaqs(data);
+     const faqs = (location?.page?.faq && location.page.faq.length > 0)
+          ? location.page.faq
+          : defaultFaqs;
+
+     const displayTitle = title || location?.page?.faqTitle || "Frequently Asked Questions";
+     let autoHighlight = undefined;
+     if (displayTitle) {
+          if (displayTitle.toLowerCase().includes("questions")) {
+               autoHighlight = "Questions";
+          } else if (displayTitle.toLowerCase().includes("faq")) {
+               autoHighlight = "FAQ";
           }
-     }, [data]);
+     }
+
+     const displaySubtitle = subtitle || location?.page?.faqSubtitle || "Have questions? Everything you need to know about our services and process.";
 
      return (
           <div id="faqs" className="px-5 py-6 h-auto w-full max-w-450 mx-auto">
                {/* Heading */}
-               <h2 className="text-[24px] xl:text-[32px] font-bold text-primary mb-5">
-                    FAQ
-               </h2>
+               <CourseSectionHeading
+                    variant="testimonial"
+                    title={displayTitle}
+                    highlightText={autoHighlight}
+                    subtitle={displaySubtitle}
+                    align={align}
+                    className="mb-8 md:mb-12"
+               />
 
                {/* List */}
                <div className="divide-y divide-gray-200">

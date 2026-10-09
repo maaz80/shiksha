@@ -38,7 +38,7 @@ const CustomSortDropdown = ({ sortBy, setSortBy }) => {
                <button
                     type="button"
                     onClick={() => setIsOpen(!isOpen)}
-                    className="flex items-center justify-between gap-3 bg-slate-50 hover:bg-slate-100 border border-slate-200 hover:border-primary/40 rounded-xl px-4 py-2 text-xs font-bold text-slate-800 transition-all duration-200 shadow-2xs cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    className="flex items-center justify-between gap-3 bg-slate-50 hover:bg-slate-100 border border-slate-200 hover:border-primary/40 rounded-md px-4 py-2 text-xs font-medium text-slate-800 transition-all duration-200 shadow-2xs cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/20"
                >
                     <span>{selectedOption.label}</span>
                     <FiChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${isOpen ? 'rotate-180 text-primary' : ''}`} />
@@ -189,7 +189,7 @@ const SearchResultsContent = () => {
                                         {matchingCourses.length > 0 ? (
                                              <>Showing <span className="text-white font-extrabold underline underline-offset-4">{matchingCourses.length}</span> course{matchingCourses.length === 1 ? '' : 's'} available</>
                                         ) : (
-                                             <>No exact matches for "{searchQuery}" — showing <span className="text-white font-extrabold underline underline-offset-4">{recommendedCourses.length}</span> related course{recommendedCourses.length === 1 ? '' : 's'}</>
+                                             <>No exact matches for &quot;{searchQuery}&quot; — showing <span className="text-white font-extrabold underline underline-offset-4">{recommendedCourses.length}</span> related course{recommendedCourses.length === 1 ? '' : 's'}</>
                                         )}
                                    </p>
                               </div>
@@ -201,7 +201,7 @@ const SearchResultsContent = () => {
                                         value={searchQuery}
                                         onChange={(e) => setSearchQuery(e.target.value)}
                                         placeholder="Search by course title or topic..."
-                                        className="w-full h-12 pl-4 pr-11 rounded-xl border-0 bg-white text-sm font-semibold text-slate-900 placeholder-slate-400 outline-none focus:ring-2 focus:ring-white/50 transition-all shadow-inner"
+                                        className="w-full h-12 pl-4 pr-11 rounded-md border-0 bg-white text-sm font-semibold text-slate-900 placeholder-slate-400 outline-none focus:ring-2 focus:ring-white/50 transition-all shadow-inner"
                                    />
                                    {searchQuery ? (
                                         <button
@@ -233,7 +233,7 @@ const SearchResultsContent = () => {
 
                                    {searchQuery.trim() && (
                                         <span className="inline-flex items-center gap-1.5 bg-white/20 text-white border border-white/30 text-xs font-bold px-3 py-1 rounded-xl backdrop-blur-xs">
-                                             Search: "{searchQuery}"
+                                             Search: &quot;{searchQuery}&quot;
                                              <button onClick={clearSearchQuery} className="hover:text-amber-200 transition-colors cursor-pointer">
                                                   <FiX size={14} />
                                              </button>
@@ -280,10 +280,10 @@ const SearchResultsContent = () => {
                                    <div className="lg:col-span-3 flex flex-col gap-6">
 
                                         {/* CATEGORIES ACCORDION / LIST */}
-                                        <div className="bg-white rounded-xl border border-slate-200/80 p-5 shadow-xs text-left">
+                                        <div className="bg-white rounded-[20px] border border-slate-200/80 p-5 shadow-xs text-left">
                                              <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-3.5">
-                                                  <h2 className="text-xs font-extrabold text-slate-900 flex items-center gap-2 uppercase tracking-wider open-sans">
-                                                       <FiFilter className="text-primary text-base" />
+                                                  <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2 uppercase tracking-wider">
+                                                       <FiFilter className="text-primary text-xl" />
                                                        Course Categories
                                                   </h2>
                                                   {selectedCategory !== "All" && (
@@ -309,13 +309,13 @@ const SearchResultsContent = () => {
                                                                  key={cat}
                                                                  type="button"
                                                                  onClick={() => handleCategorySelect(cat)}
-                                                                 className={`w-full flex items-center justify-between text-xs px-3.5 py-2.5 rounded-xl font-bold transition-all duration-200 cursor-pointer text-left ${isSelected
+                                                                 className={`w-full flex items-center justify-between text-sm px-3.5 py-2.5 rounded-md font-semibold transition-all duration-200 cursor-pointer text-left ${isSelected
                                                                       ? "bg-primary text-white shadow-xs"
                                                                       : "bg-slate-50 text-slate-700 hover:bg-slate-100 hover:text-slate-900"
                                                                       }`}
                                                             >
                                                                  <span className="truncate pr-2">{cat}</span>
-                                                                 <span className={`px-2.5 py-0.5 rounded-xl text-[10px] font-extrabold shrink-0 ${isSelected ? 'bg-white/25 text-white' : 'bg-slate-200 text-slate-600'}`}>
+                                                                 <span className={`px-2.5 py-1.5 rounded-full text-[10px] font-extrabold shrink-0 ${isSelected ? 'bg-white/25 text-white' : 'bg-slate-200 text-slate-600'}`}>
                                                                       {count}
                                                                  </span>
                                                             </button>
@@ -325,16 +325,16 @@ const SearchResultsContent = () => {
                                         </div>
 
                                         {/* QUICK COUNSELING BANNER */}
-                                        <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl border border-primary/20 p-5 text-left space-y-2">
-                                             <h3 className="text-xs font-bold text-primary uppercase tracking-wider">
+                                        <div className="bg-linear-to-br from-primary/10 to-primary/5 rounded-[20px] border border-primary/20 p-5 text-left space-y-2">
+                                             <h3 className="text-lg font-bold text-primary uppercase tracking-wider">
                                                   Need Academic Advice?
                                              </h3>
-                                             <p className="text-xs text-slate-600 leading-relaxed font-semibold">
+                                             <p className="text-base text-slate-600">
                                                   Speak directly with our learning counselors to find your perfect course path.
                                              </p>
                                              <a
                                                   href="tel:+919311500424"
-                                                  className="inline-block mt-1 text-xs font-bold text-primary hover:underline"
+                                                  className="inline-block mt-1 text-sm font-semibold text-primary hover:underline"
                                              >
                                                   📞 Call Counselor: +91 9311500424
                                              </a>
@@ -349,7 +349,7 @@ const SearchResultsContent = () => {
                                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white border border-slate-200/80 px-5 py-3.5 rounded-xl shadow-xs">
                                              <div className="flex items-center gap-2 open-sans">
                                                   <FiBookOpen className="text-primary text-lg" />
-                                                  <span className="text-sm font-bold text-slate-900">
+                                                  <span className="text-sm font-semibold text-slate-900">
                                                        {matchingCourses.length > 0
                                                             ? `${matchingCourses.length} Course${matchingCourses.length === 1 ? '' : 's'} Found`
                                                             : `0 Matches — Showing ${recommendedCourses.length} Related Courses`
@@ -359,7 +359,7 @@ const SearchResultsContent = () => {
 
                                              {/* CUSTOM POPPER SORT DROPDOWN */}
                                              <div className="flex items-center gap-2.5 self-end sm:self-center">
-                                                  <span className="text-xs text-slate-500 font-bold whitespace-nowrap">Sort By:</span>
+                                                  <span className="text-sm text-slate-500 font-medium whitespace-nowrap">Sort By:</span>
                                                   <CustomSortDropdown sortBy={sortBy} setSortBy={setSortBy} />
                                              </div>
                                         </div>
@@ -367,9 +367,9 @@ const SearchResultsContent = () => {
                                         {/* MATCHED COURSES GRID OR RELATED COURSES GRID */}
                                         {matchingCourses.length > 0 ? (
                                              <>
-                                                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                                  <div className="flex flex-wrap gap-5 xl:gap-6 items-start">
                                                        {matchingCourses.map((course) => (
-                                                            <CourseCard key={course._id} course={course} className="w-full" />
+                                                            <CourseCard key={course._id} course={course} className="w-full md:w-85 xl:w-107.5" />
                                                        ))}
                                                   </div>
 
@@ -383,9 +383,9 @@ const SearchResultsContent = () => {
                                                                  </h2>
                                                             </div>
 
-                                                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                                            <div className="flex flex-wrap gap-5 xl:gap-6 items-start">
                                                                  {recommendedCourses.map((course) => (
-                                                                      <CourseCard key={course._id} course={course} className="w-full" />
+                                                                      <CourseCard key={course._id} course={course} className="w-full md:w-85 xl:w-107.5" />
                                                                  ))}
                                                             </div>
                                                        </div>
@@ -398,24 +398,24 @@ const SearchResultsContent = () => {
                                                        <div className="space-y-1">
                                                             <h3 className="text-sm font-bold text-amber-900 flex items-center gap-2">
                                                                  <FiCompass className="text-amber-600 text-lg" />
-                                                                 No exact match found for "{searchQuery}"
+                                                                 No exact match found for &quot;{searchQuery}&quot;
                                                             </h3>
                                                             <p className="text-xs text-amber-800 font-medium">
-                                                                 We couldn't find exact courses matching <span className="font-bold">"{searchQuery}"</span>. Showing popular and related courses below that you can explore.
+                                                                 We couldn&apos;t find exact courses matching <span className="font-bold">&quot;{searchQuery}&quot;</span>. Showing popular and related courses below that you can explore.
                                                             </p>
                                                        </div>
                                                        <button
                                                             onClick={clearAllFilters}
-                                                            className="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-4 py-2 rounded-xl transition-all shrink-0 cursor-pointer shadow-xs"
+                                                            className="bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold px-4 py-2 rounded-md transition-all shrink-0 cursor-pointer shadow-xs"
                                                        >
                                                             Clear Search Filter
                                                        </button>
                                                   </div>
 
                                                   {recommendedCourses.length > 0 && (
-                                                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                                       <div className="flex flex-wrap gap-5 xl:gap-6 items-start">
                                                             {recommendedCourses.map((course) => (
-                                                                 <CourseCard key={course._id} course={course} className="w-full" />
+                                                                 <CourseCard key={course._id} course={course} className="w-full md:w-85 xl:w-107.5" />
                                                             ))}
                                                        </div>
                                                   )}

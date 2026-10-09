@@ -49,7 +49,7 @@ export default function SocialProofBar({ items }) {
     Array.isArray(items) && items.length > 0 ? items : defaultItems;
 
   return (
-    <section className="w-full bg-primary-bg/60 border-y border-primary/10 relative z-20 py-4 sm:pt-20 sm:pb-5 font-open-sans">
+    <section className="w-full bg-primary-bg/60 border-y border-primary/10 relative z-20 py-4 sm:pt-12 sm:pb-5 font-open-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
           {displayItems.slice(0, 4).map((item, idx) => {
@@ -62,7 +62,7 @@ export default function SocialProofBar({ items }) {
                   group flex flex-wrap flex-col md:flex-row items-start md:items-center
                   gap-2.5 sm:gap-3.5
                   px-3.5 py-3 sm:px-5 sm:py-3.5
-                  rounded-xl
+                  rounded-[20px]
                   shadow-2xs
                   bg-white
                   border border-gray-200/80
